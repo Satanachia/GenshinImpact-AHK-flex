@@ -9,6 +9,6 @@
 
 - Скачать и установить [autohotkey.com](https://www.autohotkey.com)
 
-- Скачать репозиторий (зеленая кнопка Code > Download Zip)
+- Скачать репозиторий (Code > Download Zip)
 
 - Запустить "Genshi AHK Flex.ahk"
