@@ -1,7 +1,7 @@
 # Genshi AHK Flex v2
 AHK скрипт для Gayshit Impact
 
-![hippo](https://media.giphy.com/media/yBup8dQJElWFHNCqxT/giphy.gif)
+![hippo](https://media.giphy.com/media/NzYdagIF77YzXf1W6S/giphy.gif)
 
 Играл в Генши и подумал, ща что нибуть интересного намучу на Автохоткее и каааак понесло...
 
