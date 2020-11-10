@@ -46,5 +46,21 @@ End - Завершить работу скрипта
 - В трее настройки
 
 # Description
-123
+:musical_keyboard:__Hotkeys:__:musical_keyboard:
+```
+F1 - Map
+F2 - Overlay
+F3 - Auto Walk
+F - Fastloot
+Z - Dialogue skip
+X - Witcher instinct (double click on, single click off)
+Space - Banihop
+RButton - Rapidfire
+WheelUp - Toggle Rapidfire
+WheelDown - Toggle Rapidfire
+Left - Scroll overlay
+Right - Scroll overlay
+Home - Reboot
+End - End the script
+```
 
