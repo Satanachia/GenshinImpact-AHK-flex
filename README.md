@@ -39,7 +39,7 @@ __Возможности:__
 
 2. Запускаем батник в папке с скриптом data\pip instal.bat, батник установит недостающие библиотеки
 
-3. Пылесосим пабчик в поисках интересных мелодий в формате .mid по следующим ссылкам [Onlinesequencer](https://onlinesequencer.net/sequences) или [Midistock](https://midistock.ru/) или [Bitmidi](https://bitmidi.com/) или в тупую конвертируем mp3 в midi [Bearaudiotool](https://www.bearaudiotool.com/ru/mp3-to-midi)
+3. Пылесосим пабчик в поисках интересных мелодий в формате .mid по следующим ссылкам [Onlinesequencer](https://onlinesequencer.net/sequences) или [Midistock](https://midistock.ru/) или [Bitmidi](https://bitmidi.com/)
 
 4. Понравившиеся мелодии закидываем в папку со скриптом где расположен файл "Genshi AHK Flex.ahk", позже файлы сами распределятся
 
