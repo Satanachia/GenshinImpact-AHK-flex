@@ -19,7 +19,7 @@
 
 AHK скрипт для Gayshit Impact
 
-![hippo](https://media.giphy.com/media/YOpxW8r6f4nKXTKgdP/giphy.gif)
+![hippo](https://media.giphy.com/media/FPmSLp5pdVrEn4Y4x8/giphy.gif)
 
 
 
