@@ -1,4 +1,4 @@
-# Genshi AHK Flex v4.1
+# Genshi AHK Flex v4.2
 
 AHK скрипт для Genshin Impact
 
@@ -107,7 +107,7 @@ Home - Открыть ReShade меню
 Insert - Включить/отключить ReShade
 ```
 <details>
-<summary>__Последние изменения__</summary>
+__<summary>__Последние изменения__</summary>__
 Изменения: 10.08.2021
  
 - Не работает автопуть с реестра, на релизе путь в одном месте в реестре, через год в другом, автопуть взял тут "UninstallString"
