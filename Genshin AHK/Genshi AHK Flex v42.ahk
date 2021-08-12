@@ -1,52 +1,79 @@
 ﻿; ==============================Genshin AHK by Kramar1337==================
-; AHK
-; F1 - Карта
-; F2 - Оверлей
-; F3 - Автоходьба
-; F - Фастлут
-; Z - Скип диалогов
-; X - Ведьмачье чутье (дабл клик вкл, сингл клик выкл)
-; N - Плавание
-; Space - Банихоп
-; Left - Пролистать оверлей
-; Right - Пролистать оверлей
-; End - Завершить работу скрипта
-; V - Macro Key
-; Numpad 0 - Отключить макро
-; Numpad 1 - Стрельба на Amber по легиту но нужно быть в движении на +W
-; Numpad 2 - Стрельба на Fischl по легиту но нужно быть в движении на +W
-; Numpad 3 - Xiangling DragonStrike
-; Numpad 4 - Fischl и Amber рейдж +W
-; Numpad 5 - Venti Ganyu MachineGun
-; Numpad 6 - Klee Сombo
-; Numpad 7 - Diluc+Beidou DragonStrike
-; Numpad 8 - Noelle DragonStrike
-; Numpad 9 - Eula DragonStrike
-
-; Python
-; Tab + ~(тильт или Ё) - Обновить список мелодий
-; Tab + 1 2 3 4 5 6 7 8 9 0 - Воспроизвести мелодию на лире ветров
-; Tab + Space - Остановить воспроизведение
-
-; ReShade
-; Home - Открыть ReShade меню
-; Insert - Включить/отключить ReShade
-;===============================дерективы
-
-
 /*
-Что добавить: 29.07.2021
+AHK
+F1 - Карта
+F2 - Оверлей
+F3 - Автоходьба
+F - Фастлут
+Z - Скип диалогов
+X - Ведьмачье чутье (дабл клик вкл, сингл клик выкл)
+N - Плавание
+Space - Банихоп
+Left - Пролистать оверлей
+Right - Пролистать оверлей
+End - Завершить работу скрипта
+V - Macro Key
+Numpad 0 - Включить/отключить банихоп
+Numpad 1 - Стрельба на Amber по легиту но нужно быть в движении на +W
+Numpad 2 - Стрельба на Fischl по легиту но нужно быть в движении на +W
+Numpad 3 - Xiangling DragonStrike
+Numpad 4 - Fischl и Amber рейдж +W
+Numpad 5 - Venti Ganyu Yoimiya MachineGun
+Numpad 6 - Klee Сombo
+Numpad 7 - Diluc+Beidou DragonStrike
+Numpad 8 - Noelle DragonStrike
+Numpad 9 - Eula DragonStrike
+
+Python
+Tab + ~(тильт или Ё) - Обновить список мелодий
+Tab + 1 2 3 4 5 6 7 8 9 0 - Воспроизвести мелодию на лире ветров
+Tab + Space - Остановить воспроизведение
+
+ReShade
+Home - Открыть ReShade меню
+Insert - Включить/отключить ReShade
+
+Windows Shortcut
+CTRL-ALT-Numpad0 - Запустить ярлык GenshAHK.lnk
+
+
+
+Изменения: 10.08.2021
+ + Не работает автопуть с реестра, на релизе путь в одном месте в реестре, через год в другом, автопуть взял тут "UninstallString"
+ + Оверлей на ноутах с задушеным масштабированием? разрешением? плотностью пикселей? работает правильно, FIX Overlay Scale
+
+Изменения: 04.08.2021
+ + Изменил темп сао опенинга в .mid(главное изменение этого патча) в FL Studio 20
+
+Изменения: 02.08.2021
+ + RCS WinApi Bow, Двигать камеру вместе с макросом на нампад 4 и 5
+ + Переключение бхопа, бхоп мешает плавать на лодочке и кнопка "нампад 0" переключает бхоп вкл-выкл
+ + Исправил переключатель на карте, F1 стал умнее
+ + В трее добавил кнопку "Создать ярлык" которая биндит CTRL-ALT-Numpad0 для запуска ярлыка, хз почему но ярлык работает даже с неймченжером
+ + Мелкие исправления, шифт блочил работу кнопок, исправлено 2 кнопки
+
+Изменения: 31.07.2021
+ + Добавлен драг анд дропс(перетаскивание) в GUI для песен лиры ветров
+
+Изменения: 29.07.2021
  + Фвтоходьбу переделать
- + Изменить логику оверлея
-Почистить решейд
- + Сделать дефолт ВинАпи режим ввода
- + Переделать Гуи
+ + Изменил логику оверлея, кликабельные кнопки "листать оверлей" в гуи
+ + Почистил решейд
+ + Сделал дефолт ВинАпи режим ввода
+ + Переделал Гуи
  + Не скрывать меню Гуи
 
+Изменения: 05.2021
+ + Большая обнова изменено все
+ + Решейд
+ 
+Изменения: 11.2020
+ + Фастлут
+ + Скип диалогов
 */
 
-
-WinName:= "Genshi AHK Flex v4.1 by Kramar1337"
+;===============================дерективы
+WinName:= "Genshi AHK Flex v4.2 by Kramar1337"
 #NoEnv
 SendMode Input
 SetWorkingDir %A_ScriptDir%
@@ -59,6 +86,8 @@ SetWinDelay,-1
 #SingleInstance force
 DetectHiddenWindows, On
 DetectHiddenText, On
+
+
 
 
 ;=====================================безопасность
@@ -96,10 +125,10 @@ Gui,uid: Color, 0x000000
 Random, rand1488, 33, 35
 password := gen_password(rand1488)	
 ;получить координаты 1 и 2 точки и вычесть 3 и 4
-HpBarW2:=round((A_ScreenWidth*.9695) - (A_ScreenWidth*.8738))
-HpBarH2:=round((A_ScreenHeight*.9965) - (A_ScreenHeight*.9743))
-HpBarX2:=round(A_ScreenWidth*.8738)
-HpBarY2:=round(A_ScreenHeight*.9743)
+HpBarW2:=round((ScreenWidthRe1*.9695) - (ScreenWidthRe1*.8738))
+HpBarH2:=round((ScreenHeightRe1*.9965) - (ScreenHeightRe1*.9743))
+HpBarX2:=round(ScreenWidthRe1*.8738)
+HpBarY2:=round(ScreenHeightRe1*.9743)
 ; MsgBox %HpBarW2% %HpBarH2% %HpBarX2% %HpBarY2%
 Gui,uid: Show, w%HpBarW2% h%HpBarH2% x%HpBarX2% y%HpBarY2%, %password%
 ;==============
@@ -141,6 +170,18 @@ IniRead, key_bhop, data\genConfig.ini, Binds, key_bhop
 IniRead, key_autoswim, data\genConfig.ini, Binds, key_autoswim
 IniRead, key_vi4er_sens, data\genConfig.ini, Binds, key_vi4er_sens
 
+;====================Подгрузка конфига: дополнительные
+IniRead, ShortcutKey, data\genConfig.ini, Extra, ShortcutKey 	;Забиндить ярлык системными кнопками, по дефолту CTRL-ALT-Numpad5
+
+
+IniRead, MousemoveBow, data\genConfig.ini, Extra, MousemoveBow 	;двигать мышку вправо когда идет стрельба с макроса на винапи
+IniRead, FishMouseMoveX, data\genConfig.ini, Extra, FishMouseMoveX 	;сколько двигать для фишль по X = 43 на дефолтных настройках
+IniRead, FishMouseMoveY, data\genConfig.ini, Extra, FishMouseMoveY 	;сколько двигать для фишль по Y = 0
+
+IniRead, VentiMouseMoveX, data\genConfig.ini, Extra, VentiMouseMoveX 	;двигать для венти по X = 43 на дефолтных настройках
+IniRead, VentiMouseMoveY, data\genConfig.ini, Extra, VentiMouseMoveY 	;двигать для венти по X = 0
+
+
 ;====================Подгрузка конфига: основные
 IniRead, BrauzerCheck, data\genConfig.ini, Setings, BrauzerCheck ; проверка браузера
 IniRead, BrauzerPick, data\genConfig.ini, Setings, BrauzerPick ; выбор браузера
@@ -152,6 +193,7 @@ IniRead, DirGame, data\genConfig.ini, Setings, DirGame
 IniRead, metodVvoda, data\genConfig.ini, Setings, metodVvoda
 IniRead, showtooltipVvoba, data\genConfig.ini, Setings, showtooltipVvoba
 IniRead, showmegui, data\genConfig.ini, Setings, showmegui
+IniRead, ScaleFIX, data\genConfig.ini, Setings, ScaleFIX
 
 IniRead, Checkbox1map, data\genConfig.ini, Setings, Checkbox1map
 IniRead, Checkbox1overlay, data\genConfig.ini, Setings, Checkbox1overlay
@@ -176,10 +218,33 @@ IniRead, RegeditCheckBox4, data\genConfig.ini, Setings, RegeditCheckBox4
 
 IniRead, GlLanguage, data\genConfig.ini, Setings, GlLanguage
 
+
+;========================если с конфига подтянули ScaleFIX=1 то оверлей будет исправлен для систем с масштабированием например ноуты
+if ScaleFIX
+{
+; Стандартный масштаб(100) умножить на A_ScreenDPI и разделить на стандартный DPI(96) получим GetScaleFactorForMonitor без API, т.е масштабирование
+; Получаем масштаб экрана
+ScaleFactor:=round(100 * A_ScreenDPI / 96)
+ScaleFactorEq:=ScaleFactor / 100
+; ScaleFactor:=115
+; MsgBox %ScaleFactorEq%
+ScreenWidthRe1:=round(A_ScreenWidth / ScaleFactorEq)
+ScreenHeightRe1:=round(A_ScreenHeight / ScaleFactorEq)
+}
+Else
+{
+ScreenWidthRe1:=A_ScreenWidth
+ScreenHeightRe1:=A_ScreenHeight
+}
+
+
 If (ONregreadDir == 1) ; Если в конфиге путь к игре реестр вкл, то:
 {
 ;=====================Реестр расположение папки с игрой
-RegRead, DirVarGensh, HKEY_LOCAL_MACHINE, SOFTWARE\launcher, InstPath
+; Старый путь здох, работал на релизе, через год не робит, стоило догадаться путь и вправду странный
+; RegRead, DirVarGensh, HKEY_LOCAL_MACHINE, SOFTWARE\launcher, InstPath
+RegRead, DirVarGensh, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Genshin Impact, UninstallString
+SplitPath, DirVarGensh,,DirVarGensh
 }
 If (ONregreadDir == 0)
 {
@@ -193,7 +258,7 @@ Hotkey, %key_overlay%, Metkakey_overlay, on
 if Checkbox1autowalk = 1
 Hotkey, %key_autowalk%, Metkakey_autowalk, on
 if Checkbox1fastlyt = 1
-Hotkey, ~%key_fastlyt%, Metkakey_fastlyt, on
+Hotkey, *~%key_fastlyt%, Metkakey_fastlyt, on
 if Checkbox1skipNPS = 1
 Hotkey, ~%key_skipNPS%, Metkakey_skipNPS, on
 if Checkbox1autoswim = 1
@@ -203,7 +268,8 @@ Hotkey, ~%key_vi4er_sens%, Metkakey_key_vi4er_sens, on
 if Checkbox1animcancel = 1
 Hotkey, ~%key_animcancel%, Metkakey_animcancel, on		;исправить
 if Checkbox1bhop = 1
-Hotkey, ~%key_bhop%, Metkakey_bhop, on
+Hotkey, *~%key_bhop%, Metkakey_bhop, on
+;не забыть что звездочка перед кнопкой разрешает несколько клавиш, тоесть W + Shift + Bhop, бхоп не тупит
 
 if RegeditCheckBox1 = 1
 Hotkey, F9, Metkakey_regeditstart1, on
@@ -221,11 +287,13 @@ Menu,Tray,DeleteAll
 Menu,Tray, add, Setings, MetkaMenu1
 Menu,Tray, Default , Setings
 Menu,Tray, add
+Menu,Tray, add, Сreate shortcut, Metkashortcut1
+Menu,Tray, add
 Menu,Tray, add, Info, MetkaMenu2
 Menu,Tray, add, Exit, MetkaMenu0
 Menu Tray, Icon, data\genicon.ico
 ;====================Gui настройки
-Gui, 1: -MinimizeBox
+; Gui, 1: -MinimizeBox
 if GlLanguage
 Gui, 1: Add, Tab3, x0 y0 w469 h277, Бинды|Настройки|Безопасность|Реестр|Решейд		;|Hecks
 Else
@@ -336,7 +404,9 @@ Gui, 1: Add, CheckBox, vCheckboxshowmegui x16 y224 w120 h23 Checked%showmegui%, 
 
 Gui, 1: Add, CheckBox, vCheckboxGlLanguage x16 y176 w120 h23 Checked%GlLanguage%, RU language GUI
 
+Gui, 1: Add, CheckBox, vCheckboxMousemoveBow x16 y248 w120 h23 Checked%MousemoveBow%, RCS WinApi Bow
 
+Gui, 1: Add, CheckBox, vCheckboxScaleFIX x160 y176 w120 h23 Checked%ScaleFIX%, FIX Overlay Scale
 
 ;===============================Лира ветров
 
@@ -475,8 +545,8 @@ run_param:="https://yuanshen.site/"
 }
 
 ;===============================Оверлей создание
-HpBarW:=A_ScreenWidth
-HpBarH:=A_ScreenHeight
+HpBarW:=ScreenWidthRe1
+HpBarH:=ScreenHeightRe1
 HpBarX:=0
 HpBarY:=0
 Gui, 99: +AlwaysOnTop +ToolWindow -Caption +LastFound
@@ -484,14 +554,26 @@ WinSet, TransColor, 12345
 Gui, 99: Color, 12345
 Path = "%A_ScriptDir%\data\paimon.gif"
 ;width := 184, height := 281
-width := Round(A_ScreenWidth *.07187)
-height := Round(A_ScreenHeight *.19513)
-;MsgBox %width% %height% 
-width2 := Round(A_ScreenWidth *.78125)
-height2 := Round(A_ScreenHeight *.74305)
+width := Round(ScreenWidthRe1 *.07187)
+height := Round(ScreenHeightRe1 *.19513)
+
+
+if ScaleFIX
+{
+widthex1 := Round(width * ScaleFactorEq + 1), heightex1 := Round(height * ScaleFactorEq + 1)
+}
+Else
+{
+widthex1 := Round(ScreenWidthRe1 *.07187)
+heightex1 := Round(ScreenHeightRe1 *.19513)
+}
+
+
+width2 := Round(ScreenWidthRe1 *.78125)
+height2 := Round(ScreenHeightRe1 *.74305)
 Gui, 99: Add, ActiveX, x%width2% y%height2% w%width% h%height% Disabled voIE, Shell.Explorer
 oIE.Navigate("about:blank")
-oIE.Document.Write("<body style=""overflow: hidden; margin: 0px""><img src=" Path " width=" width "px; height=" height "></body>" ) 
+oIE.Document.Write("<body style=""overflow: hidden; margin: 0px""><img src=" Path " width=" widthex1 "px; height=" heightex1 "></body>" ) 
 oIE.Document.close
 GuiControl, 99: hide, oIE
 Gui, 99: Add, Picture, w%HpBarW% h%HpBarH% x0 y0 vMyPictureVar1, data\genOverlay1.png
@@ -505,12 +587,13 @@ Gui, 99: Add, Picture, w%HpBarW% h%HpBarH% x0 y0 vMyPictureVar1, data\genOverlay
 
 ; 0,02070
 ; 0,03819
-XwidthPicOver := Round(A_ScreenWidth *.93554)
-YheightPicOver := Round(A_ScreenHeight *.95625)
-widthPicOver := Round(A_ScreenWidth *.02070)
-heightPicOver := Round(A_ScreenHeight *.03819)
-XwidthPicOver2 := Round(A_ScreenWidth *.96718)
-YheightPicOver2 := Round(A_ScreenHeight *.95625)
+
+XwidthPicOver := Round(ScreenWidthRe1 *.93554)
+YheightPicOver := Round(ScreenHeightRe1 *.95625)
+widthPicOver := Round(ScreenWidthRe1 *.02070)
+heightPicOver := Round(ScreenHeightRe1 *.03819)
+XwidthPicOver2 := Round(ScreenWidthRe1 *.96718)
+YheightPicOver2 := Round(ScreenHeightRe1 *.95625)
 Gui, 99: Add, Picture, w%widthPicOver% h%heightPicOver% x%XwidthPicOver% y%YheightPicOver% +BackgroundTrans gPicOverlay1, data\genOverlayNext.png
 Gui, 99: Add, Picture, w%widthPicOver% h%heightPicOver% x%XwidthPicOver2% y%YheightPicOver2% +BackgroundTrans gPicOverlay2, data\genOverlayNext.png
 
@@ -526,6 +609,25 @@ return
 
 AntiVACHashChanger:="fghfh3534gjdgdfgfj6867jhmbdsq4123asddfgdfgaszxxcasdf423dfght7657ghnbnghrtwer32esdfgr65475dgdgdf6867ghjkhji7456wsdfsf34sdfsdf324sdfgdfg453453453456345gdgdgdfsf"
 
+
+;==========================Создать ярлык на рабочем столе
+Metkashortcut1:
+FileCreateShortcut, %A_ScriptFullPath%, %A_Desktop%\GenshAHK.lnk,,,Gachibaser things, %A_ScriptDir%\data\genicon.ico, %ShortcutKey%,,
+return
+
+;==========================дропаем файл или файлы в окно скрипта
+GuiDropFiles:
+z1FileList = %A_GuiEvent%
+Sort , z1FileList				;сортируем по имени, стоп а зачем?
+Loop, Parse, z1FileList, `n		;парсим каждую строчку
+{
+SplitPath, A_LoopField,,, z1ext,, 	;извлечь из строки расширение
+	if (z1ext == "mid")			;если расширение .mid то выполнить действие ниже
+	{
+	FileCopy, %A_LoopField%, data\soundall, 0
+	}
+}
+Return
 
 
 1ReshadeRun:
@@ -565,18 +667,6 @@ FileRemoveDir, %EditDir%\Genshin Impact Game\Preset, 1
 FileRemoveDir, %EditDir%\Genshin Impact Game\reshade-shaders, 1
 return
 
-; 1pickRes:
-; ListResPickVarNext := 0
-; Gui, 1: Submit, nohide
-; if ListResPick = 1
-; ListResPickVarNext := 1
-; if ListResPick = 2
-; ListResPickVarNext := 2
-; if ListResPick = 3
-; ListResPickVarNext := 3
-; if ListResPick = 4
-; ListResPickVarNext := 4
-; return
 
 
 1pickreg1:
@@ -676,7 +766,7 @@ IfWinActive, %gameexe1337%		;ahk_exe GenshinImpact.exe
 {
 if Checkbox1bhopDelay
 {
-Sleep 180
+Sleep 230
 }
 Else
 {
@@ -703,9 +793,17 @@ return
 ;===============================Карта
 Metkakey_map:
 sleep 50
+
+IfWinActive, %gameexe1337%
+toggle1 := 0
+IfWinActive, ahk_group GroupNameMap1337
+toggle1 := 1
+
+
 toggle1 := !toggle1
 if (toggle1)
 {
+	MapOpen1 := 1
 WinMinimize %gameexe1337% ;свернуть игру
 IfWinExist, ahk_group GroupNameMap1337 ;если найдено окно с катрой то..
 	{
@@ -854,19 +952,25 @@ Send {LShift Up}
 return
 
 
-;===============================Откл макро
+;===============================Откл бхоп
 Numpad0::
-jopa1:=false
-jopa2:=false
-jopa3:=false
-jopa4:=false
-jopa5:=false
-jopa6:=false
-jopa7:=false
-jopa8:=false
-jopa9:=false
-jopa10:=false
-ToolTip
+sleep 50
+if Checkbox1bhop = 1
+{
+BhopToggler1 := !BhopToggler1
+if (BhopToggler1)
+{
+Hotkey, *~%key_bhop%, Metkakey_bhop, off
+if showtooltipVvoba
+ToolTip, Bhop off, 0, 0
+}
+Else
+{
+Hotkey, *~%key_bhop%, Metkakey_bhop, on
+if showtooltipVvoba
+ToolTip, Bhop on, 0, 0
+}
+}
 Return
 ;===============================эмбер
 Numpad1::
@@ -1188,6 +1292,9 @@ Loop
     If 2SpaceVar2 = U
         break
 		
+		if MousemoveBow
+		DllCall("mouse_event", uint, 1, int, VentiMouseMoveX, int, VentiMouseMoveY, uint, 0, int, 0) 	;двигаю мышку чтобы выровнять спрей
+		
 		DllCall("keybd_event", int, 0x52, int, 0xA0, int, 0, int, 0)
 		sleep 20
 		DllCall("keybd_event", int, 0x52, int, 0xA0, int, 2, int, 0)
@@ -1260,7 +1367,9 @@ Loop
 {
 	if !GetKeyState(key_animcancel, "P") 	;идеальный фишль+эмбер
 	break
-
+		if MousemoveBow
+		DllCall("mouse_event", uint, 1, int, FishMouseMoveX, int, FishMouseMoveY, uint, 0, int, 0) 	;двигаю мышку чтобы выровнять спрей
+		
 		DllCall("keybd_event", int, 0x52, int, 0xA0, int, 0, int, 0)
 		sleep 1
 		DllCall("keybd_event", int, 0x52, int, 0xA0, int, 2, int, 0)
@@ -1275,6 +1384,7 @@ Loop
 		sleep 1
 		DllCall("keybd_event", int, 0x52, int, 0xA0, int, 2, int, 0)
 		sleep 23 	;Sleep 23
+		
 }
 }
 
@@ -1592,8 +1702,10 @@ toogglertumbler:=1
 IniWrite, %CheckboxRegDir%, data\genConfig.ini, Setings, ONregreadDir
 IniWrite, %CheckboxtooltipVvoba%, data\genConfig.ini, Setings, showtooltipVvoba
 
+IniWrite, %CheckboxMousemoveBow%, data\genConfig.ini, Extra, MousemoveBow
 IniWrite, %CheckboxGlLanguage%, data\genConfig.ini, Setings, GlLanguage
 IniWrite, %Checkboxshowmegui%, data\genConfig.ini, Setings, showmegui
+IniWrite, %CheckboxScaleFIX%, data\genConfig.ini, Setings, ScaleFIX
 IniWrite, %CheckboxScWinrenamer%, data\genConfig.ini, Setings, ScWinrenamer
 IniWrite, %CheckboxScRenamer%, data\genConfig.ini, Setings, ScRenamer
 IniWrite, %CheckboxScScHachCh%, data\genConfig.ini, Setings, ScHachCh
@@ -1637,7 +1749,7 @@ Return
 
 
 GuiClose:
-Gui,1: Minimize
+ExitApp
 Return
 
 
@@ -1690,7 +1802,8 @@ Gui, 1: Submit, nohide
 If (CheckboxRegDir == 1) ; Если в конфиге путь к игре реестр вкл, то:
 {
 ;=====================Реестр расположение папки с игрой
-RegRead, DirVarGensh, HKEY_LOCAL_MACHINE, SOFTWARE\launcher, InstPath
+RegRead, DirVarGensh, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Genshin Impact, UninstallString
+SplitPath, DirVarGensh,,DirVarGensh
 GuiControl,1:, EditDir, %DirVarGensh%
 IniWrite, 1, data\genConfig.ini, Setings, ONregreadDir
 }

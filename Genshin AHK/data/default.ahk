@@ -16,7 +16,18 @@ key_skipNPS=Z
 key_bhop=Space
 key_vi4er_sens=X
 key_autoswim=N
+[Extra]
+ShortcutKey=Numpad0
+;Горячая клавиша для забинжевания ярлыка в системе CTRL-ALT-Numpad5 запускает программу
+MousemoveBow=1
+;Выравнивать спрей при макросной стрельбе с лука на фишль эмбер дионе ганьюй венти ёмии используя винапи режим, 1 - вкл, 0 - выкл
+FishMouseMoveX=43
+FishMouseMoveY=0
+;Дефолтные значения Слабые лучники X - 43, Сильные лучники X - 61
+VentiMouseMoveX=61
+VentiMouseMoveY=0
 [Setings]
+ScaleFIX=0
 GlLanguage=0
 ScRenamer=0
 ScWinrenamer=0
@@ -67,7 +78,7 @@ ONregreadDir=0
 DirGame=C:\
 ;Указать путь к игре вручную
 )
-MsgBox После нажатия Ок конфиг будет сброшен
+MsgBox Restore genConfig.ini ?
 FileDelete, genConfig.ini
 FileAppend, %def_config_go%, genConfig.ini
 MsgBox Ok
