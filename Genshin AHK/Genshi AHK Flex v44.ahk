@@ -6,7 +6,7 @@ F2 - *Оверлей
 F3 - *Автоходьба
 F - Фастлут
 Z - Скип диалогов
-X - Ведьмачье чутье (дабл клик вкл, сингл клик выкл)
+X - Авторыбалка (дабл клик вкл, сингл клик выкл)
 N - Плавание
 Space - Банихоп
 Left - Пролистать оверлей
@@ -65,8 +65,43 @@ https://map.genshinpact.com/
 https://genshin-info.ru/interaktivnaya-karta/
 
 
+Не забыть что при добавлении строк конфига нужно менять в дефолте-1, запись-2, импортер-3
+Береза Кедр Пихта Цуйхуа Сосна Песчаное дерево
+Birch Cedar Fir Cuihua Pine Sandy tree
+Бамбук Отоги Клен Аралия Юмэмиру
+Bamboo Otogi Maple Aralia Yumemiru
 
 
+Добавить рыбал'очку
+Добавить интерсепшн
+
+
+
+Изменения: 29.08.2021
+ - Уид хайдер не работал
+ - Удалено ведьмачье чутье
+ - Вместо него теперь рыбал'очка
+ - Оверлей 5стр
+
+Изменения: 29.08.2021
+ - В фикс чат добавлен фастлут(фастлут не будет работать когда открыт игровой чат)
+ - Подправил "Info" в трей меню
+ - Рандомизатор рандомит 15-40мс(фастлут, бхоп, )
+ - Другая иконка
+
+Изменения: 29.08.2021
+ - В трей добавлена кнопка создать ярлык игры с параметром запуска (-popupwindow) для игры в оконном без рамки(если не работает нужно Alt+Enter и перезайти)
+ - Исправлены некоторые проблемы с интерактивной картой(и добавлены новые... проблемы)
+
+Изменения: 28.08.2021
+ - Возможность выставить в genConfig.ini дефолтный макрос DefaultJopaTrue=0
+ - Добавлен Импорт настроек, старый genConfig.ini кидаем прям в окно скрипта и тот считает все настройки и перезапишет новый файл
+ - Переделать оверлей 6стр(деревья)
+ - На все хоткеи повесил "*" чтобы потоки не залипали(не забыть снять если чтото пойдет не так)
+ - Подготовиться к рыбалке (скачать Рататуй?(механика рыбаловства 2004 года))
+
+Изменения: 27.08.2021
+ - Поправить оверлей 4стр(герои)
 
 Изменения: 17.08.2021
  - Скип диалогов задержка срабатывания +70мс, сумарно 270мс
@@ -117,11 +152,11 @@ https://genshin-info.ru/interaktivnaya-karta/
  - Переделал Гуи
  - Не скрывать меню Гуи
 
-Изменения: 05.2021
+Изменения: ~05.2021
  - Большая обнова изменено все
  - Решейд
  
-Изменения: 11.2020
+Изменения: ~11.2020
  - Фастлут
  - Скип диалогов
 */
@@ -129,7 +164,7 @@ https://genshin-info.ru/interaktivnaya-karta/
 
 
 ;===============================дерективы
-WinName:= "Genshi AHK Flex v4.3 by Kramar1337"
+WinName:= "Genshi AHK Flex v4.4 by Kramar1337"
 #NoEnv
 SendMode Input
 SetWorkingDir %A_ScriptDir%
@@ -156,6 +191,19 @@ If !(A_IsAdmin || RegExMatch(CommandLine, " /restart(?!\S)")) {
 }
 }
 
+;========================конфиг под авторыбалку
+CoordMode Mouse, Screen 	;двигать мышку от окна
+CoordMode Pixel, Screen 	;искать пиксели от окна
+; Prozra4nostiFis = TransBlack 	;прозрачность если PNG (TransWhite, TransBlack, TransFFFFAA хромокей)
+IniRead, Prozra4nostiFis, data\genConfig.ini, Fish, Prozra4nostiFis
+; OttenokFis = 11 				;диапазон(0-256), 11 норм находит.
+IniRead, OttenokFis, data\genConfig.ini, Fish, OttenokFis
+X1Fis := round(A_ScreenWidth * .37109)
+Y1Fis := round(A_ScreenHeight * .09375)
+X2Fis := round(A_ScreenWidth * .63281)
+Y2Fis := round(A_ScreenHeight * .11805)
+; OptimizationFis = 1 			;оптимизация рыбалки
+IniRead, OptimizationFis, data\genConfig.ini, Fish, OptimizationFis
 
 ;===============================дерективы из конфига для работы на слабых ПК
 IniRead, Highperformancemode, data\genConfig.ini, Setings, Highperformancemode
@@ -204,6 +252,8 @@ savereloadvar = %A_ScriptDir%\%password%.ahk
 }
 If ScOverlay
 {
+ScreenWidthRe1:=A_ScreenWidth
+ScreenHeightRe1:=A_ScreenHeight
 Gui,uid: +AlwaysOnTop +ToolWindow -Caption +LastFound +E0x20
 Gui,uid: Color, 0x000000
 Random, rand1488, 33, 35
@@ -244,6 +294,33 @@ jopa9:=false
 jopa10:=false
 jopa11:=false
 
+IniRead, DefaultJopaTrue, data\genConfig.ini, Extra, DefaultJopaTrue
+if DefaultJopaTrue = 1
+jopa1:=true
+if DefaultJopaTrue = 2
+jopa2:=true
+if DefaultJopaTrue = 3
+jopa3:=true
+if DefaultJopaTrue = 4
+jopa4:=true
+if DefaultJopaTrue = 5
+jopa5:=true
+if DefaultJopaTrue = 6
+jopa6:=true
+if DefaultJopaTrue = 7
+jopa7:=true
+if DefaultJopaTrue = 8
+jopa8:=true
+if DefaultJopaTrue = 9
+jopa9:=true
+if DefaultJopaTrue = 10
+jopa10:=true
+if DefaultJopaTrue = 11
+jopa11:=true
+
+
+
+
 ;====================Подгрузка конфига: бинды
 IniRead, key_animcancel, data\genConfig.ini, Binds, key_animcancel
 IniRead, key_map, data\genConfig.ini, Binds, key_map
@@ -271,10 +348,10 @@ IniRead, VentiMouseMoveY, data\genConfig.ini, Extra, VentiMouseMoveY 	;двиг�
 ;====================Подгрузка конфига: основные
 IniRead, BrauzerCheck, data\genConfig.ini, Setings, BrauzerCheck ; проверка браузера
 IniRead, BrauzerPick, data\genConfig.ini, Setings, BrauzerPick ; выбор браузера
-IniRead, Map2toggle, data\genConfig.ini, Setings, map
+IniRead, Map2toggle, data\genConfig.ini, Setings, Map2toggle
 IniRead, gameexe1337, data\genConfig.ini, Setings, GameExe	; исполняемый файл игры
 IniRead, ONregreadDir, data\genConfig.ini, Setings, ONregreadDir ; поиск папки в реестре для откл кастсцен
-IniRead, CheckboxRegDir, data\genConfig.ini, Setings, ONregreadDir
+; IniRead, CheckboxRegDir, data\genConfig.ini, Setings, ONregreadDir
 IniRead, DirGame, data\genConfig.ini, Setings, DirGame
 IniRead, metodVvoda, data\genConfig.ini, Setings, metodVvoda
 IniRead, showtooltipVvoba, data\genConfig.ini, Setings, showtooltipVvoba
@@ -349,13 +426,13 @@ Hotkey, %key_autowalk%, Metkakey_autowalk, on
 if Checkbox1fastlyt = 1
 Hotkey, *~%key_fastlyt%, Metkakey_fastlyt, on
 if Checkbox1skipNPS = 1
-Hotkey, ~%key_skipNPS%, Metkakey_skipNPS, on
+Hotkey, *~%key_skipNPS%, Metkakey_skipNPS, on
 if Checkbox1autoswim = 1
-Hotkey, ~%key_autoswim%, Metkakey_autoswim, on
+Hotkey, *~%key_autoswim%, Metkakey_autoswim, on
 if Checkbox1vi4ersens = 1
-Hotkey, ~%key_vi4er_sens%, Metkakey_key_vi4er_sens, on
+Hotkey, *~%key_vi4er_sens%, Metkakey_key_vi4er_sens, on
 if Checkbox1animcancel = 1
-Hotkey, ~%key_animcancel%, Metkakey_animcancel, on		;исправить
+Hotkey, *~%key_animcancel%, Metkakey_animcancel, on		;исправить
 if Checkbox1bhop = 1
 Hotkey, *~%key_bhop%, Metkakey_bhop, on
 ;не забыть что звездочка перед кнопкой разрешает несколько клавиш, тоесть W + Shift + Bhop, бхоп не тупит
@@ -376,7 +453,8 @@ Menu,Tray,DeleteAll
 Menu,Tray, add, Setings, MetkaMenu1
 Menu,Tray, Default , Setings
 Menu,Tray, add
-Menu,Tray, add, Сreate shortcut, Metkashortcut1
+Menu,Tray, add, Сreate AHK shortcut, Metkashortcut1
+Menu,Tray, add, Сreate Game shortcut, Metkashortcut2
 Menu,Tray, add
 Menu,Tray, add, Info, MetkaMenu2
 Menu,Tray, add, Exit, MetkaMenu0
@@ -438,9 +516,9 @@ Gui, 1: Add, Text, v1Textautoswim x104 y160 w66 h23, Swimming
 Gui, 1: Add, CheckBox, vCheckbox0autoswim x16 y160 w13 h18 Checked%Checkbox1autoswim%
 Gui, 1: Add, Edit, x40 y184 w61 h21 vkey_vi4er_sens, %key_vi4er_sens%
 if GlLanguage
-Gui, 1: Add, Text, v1Textvi4er_sens x104 y184 w90 h23, Ведьмачье чутье
+Gui, 1: Add, Text, v1Textvi4er_sens x104 y184 w90 h23, Рыбал'очка
 Else
-Gui, 1: Add, Text, v1Textvi4er_sens x104 y184 w90 h23, Witcher instinct
+Gui, 1: Add, Text, v1Textvi4er_sens x104 y184 w90 h23, Fishing
 
 Gui, 1: Add, CheckBox, vCheckbox0vi4ersens x16 y184 w13 h18 Checked%Checkbox1vi4ersens%
 Gui, 1: Add, Edit, x40 y208 w61 h21 vkey_animcancel, %key_animcancel%
@@ -471,9 +549,9 @@ Else
 Gui, 1: Add, Text, x16 y48 w114 h23, Path to the game folder
 
 if GlLanguage
-Gui, 1: Add, CheckBox, vCheckboxRegDir gCheckboxRegDirG x16 y64 w121 h23 Checked%ONregreadDir%, Автопуть с реестра
+Gui, 1: Add, CheckBox, vONregreadDir gCheckboxRegDirG x16 y64 w121 h23 Checked%ONregreadDir%, Автопуть с реестра
 Else
-Gui, 1: Add, CheckBox, vCheckboxRegDir gCheckboxRegDirG x16 y64 w121 h23 Checked%ONregreadDir%, Autopath from registry
+Gui, 1: Add, CheckBox, vONregreadDir gCheckboxRegDirG x16 y64 w121 h23 Checked%ONregreadDir%, Autopath from registry
 
 Gui, 1: Add, Edit, x16 y88 w92 h21 vEditDir +Disabled, %DirVarGensh%
 Gui, 1: Add, Button, ggameway x112 y88 w23 h21, ...
@@ -521,7 +599,7 @@ Gui, 1: Add, ListBox, x16 y40 w68 h43 vListKeyDif AltSubmit, SendInput|SendPlay|
 Gui, 1: Add, Button, gpickinput x88 y48 w54 h23, Pick
 Gui, 1: Add, CheckBox, vCheckboxScScHachCh x10 y120 w129 h23 Checked%ScHachCh%, Hash changer
 Gui, 1: Add, CheckBox, vCheckboxScWinrenamer x10 y144 w129 h23 Checked%ScWinrenamer%, WindowNameChanger
-Gui, 1: Add, CheckBox, vCheckboxScRandomT x10 y168 w140 h23 Checked%ScRandomT%, Random 20ms (NoMacro)
+Gui, 1: Add, CheckBox, vCheckboxScRandomT x10 y168 w140 h23 Checked%ScRandomT%, Random 40ms (NoMacro)
 Gui, 1: Add, CheckBox, vCheckboxScRenamer x10 y96 w129 h23 Checked%ScRenamer%, Name changer
 Gui, 1: Add, CheckBox, vCheckboxScOverlay x10 y192 w140 h23 Checked%ScOverlay%, UID Hide (-popupwindow)
 Gui, 1: Tab, 4 	;===============Реестр
@@ -621,6 +699,7 @@ GroupAdd, GroupNameMap1337, Goldapfelarchipel
 GroupAdd, GroupNameMap1337, 金苹果群岛
 GroupAdd, GroupNameMap1337, 金蘋果群島
 GroupAdd, GroupNameMap1337, Archipel de la pomme dorée
+; run_param:="https://webstatic-sea.mihoyo.com/app/ys-map-sea/" 	;старые параметры запуска
 run_param:="https://webstatic-sea.mihoyo.com/app/ys-map-sea/"
 }
 if (Map2toggle == 2)
@@ -714,6 +793,11 @@ AntiVACHashChanger:="fghfh3534gjdgdfgfj6867jhmbdsq4123asddfgdfgaszxxcasdf423dfgh
 Metkashortcut1:
 FileCreateShortcut, %A_ScriptFullPath%, %A_Desktop%\GenshAHK.lnk,,,Gachibaser things, %A_ScriptDir%\data\genicon.ico, %ShortcutKey%,,
 return
+Metkashortcut2:
+Gui, 1: Submit, NoHide
+FileCreateShortcut, %EditDir%\Genshin Impact Game\GenshinImpact.exe, %A_Desktop%\Genshin Windowed mode.lnk,,-popupwindow,Borderless windowed mode
+return
+
 
 ;==========================дропаем файл или файлы в окно скрипта
 GuiDropFiles:
@@ -721,10 +805,133 @@ z1FileList = %A_GuiEvent%
 Sort , z1FileList				;сортируем по имени, стоп а зачем?
 Loop, Parse, z1FileList, `n		;парсим каждую строчку
 {
-SplitPath, A_LoopField,,, z1ext,, 	;извлечь из строки расширение
+SplitPath, A_LoopField,z1name,, z1ext,, 	;извлечь из строки расширение
 	if (z1ext == "mid")			;если расширение .mid то выполнить действие ниже
 	{
 	FileCopy, %A_LoopField%, data\soundall, 0
+	}
+	if (z1name == "genConfig.ini")
+	{
+	MsgBox Импорт настроек из:`n`n%A_LoopField%`n`nПосле нажатия ОК конфиг будет обновлен и скрипт перезагрузится
+;===============================Считываем содержимое нового конфига
+	IniRead, Prozra4nostiFis, %A_LoopField%, Fish, Prozra4nostiFis
+	IniRead, OttenokFis, %A_LoopField%, Fish, OttenokFis
+	IniRead, OptimizationFis, %A_LoopField%, Fish, OptimizationFis
+
+	IniRead, Highperformancemode, %A_LoopField%, Setings, Highperformancemode
+	IniRead, ScWinrenamer, %A_LoopField%, Setings, ScWinrenamer ; проверка Winrenamer
+	IniRead, ScRenamer, %A_LoopField%, Setings, ScRenamer ; проверка Renamera
+	IniRead, ScHachCh, %A_LoopField%, Setings, ScHachCh ; проверка ScHachCh
+	IniRead, ScRandomT, %A_LoopField%, Setings, ScRandomT ; проверка рандом таймер
+	IniRead, ScOverlay, %A_LoopField%, Setings, ScOverlay ; проверка uid overlay
+	IniRead, DefaultJopaTrue, %A_LoopField%, Extra, DefaultJopaTrue
+	IniRead, key_animcancel, %A_LoopField%, Binds, key_animcancel
+	IniRead, key_map, %A_LoopField%, Binds, key_map
+	IniRead, key_autowalk, %A_LoopField%, Binds, key_autowalk
+	IniRead, key_overlay, %A_LoopField%, Binds, key_overlay
+	IniRead, key_fastlyt, %A_LoopField%, Binds, key_fastlyt
+	IniRead, key_skipNPS, %A_LoopField%, Binds, key_skipNPS
+	IniRead, key_bhop, %A_LoopField%, Binds, key_bhop
+	IniRead, key_autoswim, %A_LoopField%, Binds, key_autoswim
+	IniRead, key_vi4er_sens, %A_LoopField%, Binds, key_vi4er_sens
+	IniRead, ShortcutKey, %A_LoopField%, Extra, ShortcutKey 	;Забиндить ярлык системными кнопками, по дефолту CTRL-ALT-Numpad5
+	IniRead, FIXchat, %A_LoopField%, Setings, FIXchat
+	IniRead, MousemoveBow, %A_LoopField%, Extra, MousemoveBow 	;двигать мышку вправо когда идет стрельба с макроса на винапи
+	IniRead, FishMouseMoveX, %A_LoopField%, Extra, FishMouseMoveX 	;сколько двигать для фишль по X = 43 на дефолтных настройках
+	IniRead, FishMouseMoveY, %A_LoopField%, Extra, FishMouseMoveY 	;сколько двигать для фишль по Y = 0
+	IniRead, VentiMouseMoveX, %A_LoopField%, Extra, VentiMouseMoveX 	;двигать для венти по X = 43 на дефолтных настройках
+	IniRead, VentiMouseMoveY, %A_LoopField%, Extra, VentiMouseMoveY 	;двигать для венти по X = 0
+	IniRead, BrauzerCheck, %A_LoopField%, Setings, BrauzerCheck ; проверка браузера
+	IniRead, BrauzerPick, %A_LoopField%, Setings, BrauzerPick ; выбор браузера
+	IniRead, Map2toggle, %A_LoopField%, Setings, Map2toggle
+	IniRead, gameexe1337, %A_LoopField%, Setings, GameExe	; исполняемый файл игры
+	IniRead, ONregreadDir, %A_LoopField%, Setings, ONregreadDir ; поиск папки в реестре для откл кастсцен
+	IniRead, DirGame, %A_LoopField%, Setings, DirGame
+	IniRead, metodVvoda, %A_LoopField%, Setings, metodVvoda
+	IniRead, showtooltipVvoba, %A_LoopField%, Setings, showtooltipVvoba
+	IniRead, showmegui, %A_LoopField%, Setings, showmegui
+	IniRead, ScaleFIX, %A_LoopField%, Setings, ScaleFIX
+	IniRead, Checkbox1map, %A_LoopField%, Setings, Checkbox1map
+	IniRead, Checkbox1overlay, %A_LoopField%, Setings, Checkbox1overlay
+	IniRead, Checkbox1autowalk, %A_LoopField%, Setings, Checkbox1autowalk
+	IniRead, Checkbox1fastlyt, %A_LoopField%, Setings, Checkbox1fastlyt
+	IniRead, Checkbox1skipNPS, %A_LoopField%, Setings, Checkbox1skipNPS
+	IniRead, Checkbox1autoswim, %A_LoopField%, Setings, Checkbox1autoswim
+	IniRead, Checkbox1vi4ersens, %A_LoopField%, Setings, Checkbox1vi4ersens
+	IniRead, Checkbox1animcancel, %A_LoopField%, Setings, Checkbox1animcancel
+	IniRead, Checkbox1bhop, %A_LoopField%, Setings, Checkbox1bhop
+	IniRead, Checkbox1bhopDelay, %A_LoopField%, Setings, Checkbox1bhopDelay
+	IniRead, Checkbox1bhopDelayMs, %A_LoopField%, Setings, Checkbox1bhopDelayMs
+	IniRead, RegeditExport1, %A_LoopField%, Setings, RegeditExport1
+	IniRead, RegeditExport2, %A_LoopField%, Setings, RegeditExport2
+	IniRead, RegeditExport3, %A_LoopField%, Setings, RegeditExport3
+	IniRead, RegeditExport4, %A_LoopField%, Setings, RegeditExport4
+	IniRead, RegeditCheckBox1, %A_LoopField%, Setings, RegeditCheckBox1
+	IniRead, RegeditCheckBox2, %A_LoopField%, Setings, RegeditCheckBox2
+	IniRead, RegeditCheckBox3, %A_LoopField%, Setings, RegeditCheckBox3
+	IniRead, RegeditCheckBox4, %A_LoopField%, Setings, RegeditCheckBox4
+	IniRead, GlLanguage, %A_LoopField%, Setings, GlLanguage
+;================начинаем записывать данные в новый файл
+IniWrite, %Prozra4nostiFis%, data\genConfig.ini, Fish, Prozra4nostiFis
+IniWrite, %OttenokFis%, data\genConfig.ini, Fish, OttenokFis
+IniWrite, %OptimizationFis%, data\genConfig.ini, Fish, OptimizationFis
+
+IniWrite, %Highperformancemode%, data\genConfig.ini, Setings, Highperformancemode
+IniWrite, %ScWinrenamer%, data\genConfig.ini, Setings, ScWinrenamer ; проверка Winrenamer
+IniWrite, %ScRenamer%, data\genConfig.ini, Setings, ScRenamer ; проверка Renamera
+IniWrite, %ScHachCh%, data\genConfig.ini, Setings, ScHachCh ; проверка ScHachCh
+IniWrite, %ScRandomT%, data\genConfig.ini, Setings, ScRandomT ; проверка рандом таймер
+IniWrite, %ScOverlay%, data\genConfig.ini, Setings, ScOverlay ; проверка uid overlay
+IniWrite, %DefaultJopaTrue%, data\genConfig.ini, Extra, DefaultJopaTrue
+IniWrite, %key_animcancel%, data\genConfig.ini, Binds, key_animcancel
+IniWrite, %key_map%, data\genConfig.ini, Binds, key_map
+IniWrite, %key_autowalk%, data\genConfig.ini, Binds, key_autowalk
+IniWrite, %key_overlay%, data\genConfig.ini, Binds, key_overlay
+IniWrite, %key_fastlyt%, data\genConfig.ini, Binds, key_fastlyt
+IniWrite, %key_skipNPS%, data\genConfig.ini, Binds, key_skipNPS
+IniWrite, %key_bhop%, data\genConfig.ini, Binds, key_bhop
+IniWrite, %key_autoswim%, data\genConfig.ini, Binds, key_autoswim
+IniWrite, %key_vi4er_sens%, data\genConfig.ini, Binds, key_vi4er_sens
+IniWrite, %ShortcutKey%, data\genConfig.ini, Extra, ShortcutKey 	;Забиндить ярлык системными кнопками, по дефолту CTRL-ALT-Numpad5
+IniWrite, %FIXchat%, data\genConfig.ini, Setings, FIXchat
+IniWrite, %MousemoveBow%, data\genConfig.ini, Extra, MousemoveBow 	;двигать мышку вправо когда идет стрельба с макроса на винапи
+IniWrite, %FishMouseMoveX%, data\genConfig.ini, Extra, FishMouseMoveX 	;сколько двигать для фишль по X = 43 на дефолтных настройках
+IniWrite, %FishMouseMoveY%, data\genConfig.ini, Extra, FishMouseMoveY 	;сколько двигать для фишль по Y = 0
+IniWrite, %VentiMouseMoveX%, data\genConfig.ini, Extra, VentiMouseMoveX 	;двигать для венти по X = 43 на дефолтных настройках
+IniWrite, %VentiMouseMoveY%, data\genConfig.ini, Extra, VentiMouseMoveY 	;двигать для венти по X = 0
+IniWrite, %BrauzerCheck%, data\genConfig.ini, Setings, BrauzerCheck ; проверка браузера
+IniWrite, %BrauzerPick%, data\genConfig.ini, Setings, BrauzerPick ; выбор браузера
+IniWrite, %Map2toggle%, data\genConfig.ini, Setings, Map2toggle
+IniWrite, %gameexe1337%, data\genConfig.ini, Setings, GameExe	; исполняемый файл игры
+IniWrite, %ONregreadDir%, data\genConfig.ini, Setings, ONregreadDir ; поиск папки в реестре для откл кастсцен
+IniWrite, %DirGame%, data\genConfig.ini, Setings, DirGame
+IniWrite, %metodVvoda%, data\genConfig.ini, Setings, metodVvoda
+IniWrite, %showtooltipVvoba%, data\genConfig.ini, Setings, showtooltipVvoba
+IniWrite, %showmegui%, data\genConfig.ini, Setings, showmegui
+IniWrite, %ScaleFIX%, data\genConfig.ini, Setings, ScaleFIX
+IniWrite, %Checkbox1map%, data\genConfig.ini, Setings, Checkbox1map
+IniWrite, %Checkbox1overlay%, data\genConfig.ini, Setings, Checkbox1overlay
+IniWrite, %Checkbox1autowalk%, data\genConfig.ini, Setings, Checkbox1autowalk
+IniWrite, %Checkbox1fastlyt%, data\genConfig.ini, Setings, Checkbox1fastlyt
+IniWrite, %Checkbox1skipNPS%, data\genConfig.ini, Setings, Checkbox1skipNPS
+IniWrite, %Checkbox1autoswim%, data\genConfig.ini, Setings, Checkbox1autoswim
+IniWrite, %Checkbox1vi4ersens%, data\genConfig.ini, Setings, Checkbox1vi4ersens
+IniWrite, %Checkbox1animcancel%, data\genConfig.ini, Setings, Checkbox1animcancel
+IniWrite, %Checkbox1bhop%, data\genConfig.ini, Setings, Checkbox1bhop
+IniWrite, %Checkbox1bhopDelay%, data\genConfig.ini, Setings, Checkbox1bhopDelay
+IniWrite, %Checkbox1bhopDelayMs%, data\genConfig.ini, Setings, Checkbox1bhopDelayMs
+IniWrite, %RegeditExport1%, data\genConfig.ini, Setings, RegeditExport1
+IniWrite, %RegeditExport2%, data\genConfig.ini, Setings, RegeditExport2
+IniWrite, %RegeditExport3%, data\genConfig.ini, Setings, RegeditExport3
+IniWrite, %RegeditExport4%, data\genConfig.ini, Setings, RegeditExport4
+IniWrite, %RegeditCheckBox1%, data\genConfig.ini, Setings, RegeditCheckBox1
+IniWrite, %RegeditCheckBox2%, data\genConfig.ini, Setings, RegeditCheckBox2
+IniWrite, %RegeditCheckBox3%, data\genConfig.ini, Setings, RegeditCheckBox3
+IniWrite, %RegeditCheckBox4%, data\genConfig.ini, Setings, RegeditCheckBox4
+IniWrite, %GlLanguage%, data\genConfig.ini, Setings, GlLanguage
+Reload
+Exitapp
+Return
 	}
 }
 Return
@@ -907,7 +1114,7 @@ Loop
 	multisendinput("Space", "", "Space", "", "0x20", "0", "", "")
 	if ScRandomT
 	{
-	Random, RandomVarSc, 15, 20
+	Random, RandomVarSc, 15, 40
 	sleep %RandomVarSc%
 	}
 	Sleep 1
@@ -966,12 +1173,15 @@ if (toggle1)
 {
 	if !(MonitorFound1) 	;если карта на основном монике то не сворачивать игру
 	{
-	WinMinimize %gameexe1337% ;свернуть игру
+	; проблемная строчка
+	; WinMinimize %gameexe1337% ;свернуть игру
 	}
 IfWinExist, ahk_group GroupNameMap1337 ;если найдено окно с катрой то..
 	{
+
 WinMaximize ahk_group GroupNameMap1337 ;максимизировать
 WinActivate ahk_group GroupNameMap1337 ;сделать активным
+
 	if MonitorFound1
 	MouseMove, X1mapMa, Y1mapMa
 	}
@@ -983,16 +1193,18 @@ IfWinNotExist, ahk_group GroupNameMap1337 ;если окно карты не н�
 		}
 	if BrauzerCheck = 1
 		{
-		run_path	= %BrauzerPick% -maximized
-		Run,%run_path%  %run_param% ;подрубить выбраный браузер и завести карту
+		run_path	= %BrauzerPick%
+		Run,%run_path% %run_param% ;подрубить выбраный браузер и завести карту
 		}
 loop 7
 {
 IfWinExist, ahk_group GroupNameMap1337 ;ожидание окна карты
 {
 sleep 1
+
 WinMaximize ahk_group GroupNameMap1337 ;максимизировать окно
 WinActivate ahk_group GroupNameMap1337 ;сделать активным
+
 break
 }
 sleep 900
@@ -1005,10 +1217,27 @@ if MonitorFound1
 {
 MouseMove, ScreenWidthMap2mon228, ScreenHeightMap2mon228
 }
+; проблемная строчка
+
 WinMaximize %gameexe1337%
 WinActivate %gameexe1337%
+
+
 }
 return
+
+; F6::
+; WinWaitActive, %gameexe1337%,, 2
+; if ErrorLevel
+; {
+    ; tooltip, Не активно
+; }
+; else
+; {
+    ; tooltip, Активно
+; }
+; return
+
 ;===============================Оверлей с подсказками
 Metkakey_overlay:
 sleep 50
@@ -1038,16 +1267,16 @@ Metkakey_fastlyt:
 IfWinActive, %gameexe1337%
 {
 Sleep 115
-; if FIXchat
-; {
-	; StructSize1337 := A_PtrSize + 16
-	; VarSetCapacity(InfoStruct1337, StructSize1337)
-	; NumPut(StructSize1337, InfoStruct1337)
-	; DllCall("GetCursorInfo", UInt, &InfoStruct1337)
-	; Result1337 := NumGet(InfoStruct1337, 8)
-	; if (Result1337 <> 0) 			;если размер курсора больше 0 то мы в чате и скрипт не нажимает кнопки
-		; Return
-; }
+if FIXchat
+{
+	StructSize1337 := A_PtrSize + 16
+	VarSetCapacity(InfoStruct1337, StructSize1337)
+	NumPut(StructSize1337, InfoStruct1337)
+	DllCall("GetCursorInfo", UInt, &InfoStruct1337)
+	Result1337 := NumGet(InfoStruct1337, 8)
+	if (Result1337 <> 0) 			;если размер курсора больше 0 то мы в чате и скрипт не нажимает кнопки
+		Return
+}
 Loop
 {
     GetKeyState, SpaceVar2, %key_fastlyt%, P
@@ -1056,13 +1285,13 @@ Loop
     Sleep 1
 	if ScRandomT
 	{
-	Random, RandomVarSc, 15, 20
+	Random, RandomVarSc, 15, 40
 	sleep %RandomVarSc%
 	}
 	multisendinput("F", "", "F", "", "0x46", "0", "", "")
 	if ScRandomT
 	{
-	Random, RandomVarSc, 15, 20
+	Random, RandomVarSc, 15, 40
 	sleep %RandomVarSc%
 	}
 	; sleep 1
@@ -1121,7 +1350,7 @@ Loop
     Sleep 15
 	if ScRandomT
 	{
-	Random, RandomVarSc, 15, 20
+	Random, RandomVarSc, 15, 40
 	sleep %RandomVarSc%
 	}
 Click %xSkip% %ySkip%
@@ -1152,7 +1381,7 @@ Loop
         break
 multisendinput("W", "", "W", "", "0x57", "0", "", "")
 ; Sendplay, {Blind}{W}
-Random, RandomVarSw, 500, 520
+Random, RandomVarSw, 500, 540
 sleep %RandomVarSw%
 }
 Send {LShift Up}
@@ -1973,7 +2202,7 @@ toogglertumbler:=1
 }
 
 
-IniWrite, %CheckboxRegDir%, data\genConfig.ini, Setings, ONregreadDir
+IniWrite, %ONregreadDir%, data\genConfig.ini, Setings, ONregreadDir
 IniWrite, %CheckboxtooltipVvoba%, data\genConfig.ini, Setings, showtooltipVvoba
 
 
@@ -2036,7 +2265,7 @@ Return
 
 ;============================================Указать путь к игре
 gameway:
-if (CheckboxRegDir == 0)
+if (ONregreadDir == 0)
 {
 FileSelectFolder, DirVar228,::{20d04fe0-3aea-1069-a2d8-08002b30309d},3,Путь к папке с игрой `nПример "F:\Program Files\Genshin Impact"
 if DirVar228 !=
@@ -2055,13 +2284,13 @@ AntiVACHashChanger:="fghfh3534gjdgdfgfj6867jhmbdsq4123asddfgdfgaszxxcasdf423dfgh
 pickmap:
 Gui, 1: Submit, nohide
 if list1488 = 1
-IniWrite, 1, data\genConfig.ini, Setings, map
+IniWrite, 1, data\genConfig.ini, Setings, Map2toggle
 if list1488 = 2
-IniWrite, 2, data\genConfig.ini, Setings, map
+IniWrite, 2, data\genConfig.ini, Setings, Map2toggle
 if list1488 = 3
-IniWrite, 3, data\genConfig.ini, Setings, map
+IniWrite, 3, data\genConfig.ini, Setings, Map2toggle
 if list1488 = 4
-IniWrite, 4, data\genConfig.ini, Setings, map
+IniWrite, 4, data\genConfig.ini, Setings, Map2toggle
 Return
 
 ;==================================================Выбор метода ввода
@@ -2079,7 +2308,7 @@ Return
 
 CheckboxRegDirG:
 Gui, 1: Submit, nohide
-If (CheckboxRegDir == 1) ; Если в конфиге путь к игре реестр вкл, то:
+If (ONregreadDir == 1) ; Если в конфиге путь к игре реестр вкл, то:
 {
 ;=====================Реестр расположение папки с игрой
 RegRead, DirVarGensh, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Genshin Impact, UninstallString
@@ -2087,7 +2316,7 @@ SplitPath, DirVarGensh,,DirVarGensh
 GuiControl,1:, EditDir, %DirVarGensh%
 IniWrite, 1, data\genConfig.ini, Setings, ONregreadDir
 }
-If (CheckboxRegDir == 0) ; Если в конфиге путь к игре реестр вкл, то:
+If (ONregreadDir == 0) ; Если в конфиге путь к игре реестр вкл, то:
 {
 IniRead, DirGame, data\genConfig.ini, Setings, DirGame
 GuiControl,1:, EditDir, %DirGame%
@@ -2276,14 +2505,20 @@ Return
 #UseHook, On
 metka-2-kli1:
   SetTimer, metka-2-kli2-start, off
+  Pereklu4atelFis = 0
+  Tooltip Auto fishing: OFF,0,0,2
+  sleep 200
+  Tooltip,,0,0,2
 Return
 metka-2-kli2:
   SetTimer, metka-2-kli2-start, on
+  Tooltip Auto fishing: ON,0,0,2
 Return
+
+
+
 #UseHook, Off
 Metkakey_key_vi4er_sens:
-IfWinActive, %gameexe1337%
-{
   Pause_=300     ; настройки
   If not Second
   {
@@ -2295,37 +2530,46 @@ IfWinActive, %gameexe1337%
     Second=0
     SetTimer, metka-2-kli2, -1
   }
-}
 Return
+
+
+
 DoublePress:
   If not Second
     Return
   Second=0
   SetTimer, metka-2-kli1, -1
 Return
+
+
+
 metka-2-kli2-start:
-sleep 1
-IfWinActive, %gameexe1337%
+Pereklu4atelFis = 1
+while Pereklu4atelFis
 {
-SendInput {MButton down}
-
-	Random, RandomVarSc, 15, 20
-	sleep %RandomVarSc%
-
-sleep 1500
-IfWinNotActive, %gameexe1337%
-SendInput {MButton up}
-sleep 1000
-IfWinNotActive, %gameexe1337%
-SendInput {MButton up}
-sleep 1000
-
-SendInput {MButton up}
-
-	Random, RandomVarSc, 15, 20
-	sleep %RandomVarSc%
-
-sleep 200
+sleep %OptimizationFis%
+ImageSearch, FoundXFis, FoundYFis, X1Fis, Y1Fis, X2Fis, Y2Fis, *%OttenokFis%, *%Prozra4nostiFis% data\find.png
+; SendInput {LButton Up}
+if ErrorLevel = 0
+	{
+		SendInput {LButton Up}
+		ImageSearch, FoundX2Fis, FoundY2Fis, X1Fis, Y1Fis, X2Fis, Y2Fis, *%OttenokFis%, *%Prozra4nostiFis% data\find2.png
+		if ErrorLevel = 0
+			{
+				if (A_ScreenWidth > 1920)
+				FoundX2Fis+=10
+				if (A_ScreenWidth <= 1920)
+				FoundX2Fis-=10
+				if (FoundX2Fis < FoundXFis)
+				{
+				SendInput {LButton Down}
+				}
+				if (FoundX2Fis > FoundXFis)
+				{
+				SendInput {LButton Up}
+				}
+			}
+	}
 }
 Return
 
@@ -2808,9 +3052,93 @@ Return
 
 MetkaMenu2:
 if GlLanguage
-MsgBox %WinName%`n`nF1 - Карта`nF2 - Оверлей`nF3 - Автоходьба`nF - Фастлут`nZ - Скип диалогов`nX - Ведьмачье чутье (дабл клик вкл, сингл клик выкл)`nN - Плавание`nV - Macro Key`nSpace - Банихоп`nLeft - Пролистать оверлей`nRight - Пролистать оверлей`nEnd - Завершить работу скрипта
+{
+MsgBox_info_get1= 	;подготовить переменную
+(
+AHK
+F1 - *Карта
+F2 - *Оверлей
+F3 - *Автоходьба
+F - Фастлут
+Z - Скип диалогов
+X - Авто рыбалка (дабл клик вкл, сингл клик выкл)
+N - Плавание
+Space - Банихоп
+Left - Пролистать оверлей
+Right - Пролистать оверлей
+End - Завершить работу скрипта
+Page Up - *Приостановить-Возобновить работу скрипта
+V - Macro Key
+Numpad 0 - Включить/отключить банихоп
+Numpad 1 - Стрельба на Amber по легиту но нужно быть в движении на +W
+Numpad 2 - Стрельба на Fischl по легиту но нужно быть в движении на +W
+Numpad 3 - Xiangling DragonStrike
+Numpad 4 - Fischl и Amber рейдж +W
+Numpad 5 - Venti Ganyu Yoimiya MachineGun
+Numpad 6 - Klee Сombo
+Numpad 7 - Diluc+Beidou DragonStrike
+Numpad 8 - Noelle DragonStrike
+Numpad 9 - Eula DragonStrike
+Numpad + - Klee
+
+Python
+Tab + ~(тильт или Ё) - Обновить список мелодий
+Tab + 1 2 3 4 5 6 7 8 9 0 - Воспроизвести мелодию на лире ветров
+Tab + Space - Остановить воспроизведение
+
+ReShade
+Home - Открыть ReShade меню
+Insert - Включить/отключить ReShade
+
+Windows Shortcut
+CTRL-ALT-Numpad0 - Запустить ярлык GenshAHK.lnk
+)
+MsgBox %WinName%`n`n%MsgBox_info_get1%
+}
 Else
-MsgBox %WinName%`n`nF1 - Map`nF2 - Overlay`nF3 - Auto Walk`nF - Fastloot`nZ - Dialogue skip`nX - Witcher instinct (double click on, single click off)`nN - Swimming`nV - Macro Key`nSpace - Banihop`nLeft - Scroll overlay`nRight - Scroll overlay`nEnd - End the script
+{
+MsgBox_info_get2= 	;подготовить переменную
+(
+AHK
+F1 - * Map
+F2 - * Overlay
+F3 - * Auto walking
+F - Fastloot
+Z - Dialogue skip
+X - Auto fishing (double click on, single click off)
+N - Swimming
+Space - Banihop
+Left - Scroll overlay
+Right - Scroll overlay
+End - End the script
+Page Up - * Suspend-Resume the script
+V - Macro Key
+Numpad 0 - Enable / Disable Banihop
+Numpad 1 - Shoot Amber on Legit but need to be in motion + W
+Numpad 2 - Shooting Fischl on Legit but you need to be in motion + W
+Numpad 3 - Xiangling DragonStrike
+Numpad 4 - Fischl and Amber Rage + W
+Numpad 5 - Venti Ganyu Yoimiya MachineGun
+Numpad 6 - Klee Combo
+Numpad 7 - Diluc + Beidou DragonStrike
+Numpad 8 - Noelle DragonStrike
+Numpad 9 - Eula DragonStrike
+Numpad + - Klee
+
+Python
+Tab + ~ (tilt or Ё) - Refresh the list of melodies
+Tab + 1 2 3 4 5 6 7 8 9 0 - Play a melody on the lyre of the winds
+Tab + Space - Stop playback
+
+ReShade
+Home - Open ReShade menu
+Insert - Enable / Disable ReShade
+
+Windows Shortcut
+CTRL-ALT-Numpad0 - Run shortcut GenshAHK.lnk
+)
+MsgBox %WinName%`n`n%MsgBox_info_get2%
+}
 Return
 
 
