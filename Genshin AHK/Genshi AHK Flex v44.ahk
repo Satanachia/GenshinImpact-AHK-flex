@@ -72,18 +72,20 @@ Birch Cedar Fir Cuihua Pine Sandy tree
 Bamboo Otogi Maple Aralia Yumemiru
 
 
-Добавить рыбал'очку
 Добавить интерсепшн
 
 
+Изменения: 03.09.2021
+ - Челы полоску с рыбалкой передвинули чи шо
+ - Оверлей с рыбой-наживкой-спотами 8стр
 
-Изменения: 29.08.2021
+Изменения: 01.09.2021
  - Уид хайдер не работал
  - Удалено ведьмачье чутье
  - Вместо него теперь рыбал'очка
  - Оверлей 5стр
 
-Изменения: 29.08.2021
+Изменения: 30.08.2021
  - В фикс чат добавлен фастлут(фастлут не будет работать когда открыт игровой чат)
  - Подправил "Info" в трей меню
  - Рандомизатор рандомит 15-40мс(фастлут, бхоп, )
@@ -199,7 +201,7 @@ IniRead, Prozra4nostiFis, data\genConfig.ini, Fish, Prozra4nostiFis
 ; OttenokFis = 11 				;диапазон(0-256), 11 норм находит.
 IniRead, OttenokFis, data\genConfig.ini, Fish, OttenokFis
 X1Fis := round(A_ScreenWidth * .37109)
-Y1Fis := round(A_ScreenHeight * .09375)
+Y1Fis := round(A_ScreenHeight * .0625)
 X2Fis := round(A_ScreenWidth * .63281)
 Y2Fis := round(A_ScreenHeight * .11805)
 ; OptimizationFis = 1 			;оптимизация рыбалки
@@ -2404,6 +2406,15 @@ GuiControl, 99: +Redraw, MyPictureVar1
 zaglushka:=0
 }
 
+if (var0ov == 8)
+{
+GuiControl, 99: -Redraw, MyPictureVar1
+GuiControl, 99: ,MyPictureVar1, data\genOverlay8.png
+GuiControl, 99: hide, oIE
+GuiControl, 99: +Redraw, MyPictureVar1
+zaglushka:=0
+}
+
 }
 Else
 {
@@ -2419,7 +2430,7 @@ PicOverlay2:
 if overlay1toggle
 {
 var0ov += 1
-if (var0ov > 7)
+if (var0ov > 8)
 var0ov -= 1
 if (var0ov < 1)
 var0ov += 1
@@ -2487,9 +2498,22 @@ GuiControl, 99: -Redraw, MyPictureVar1
 GuiControl, 99: ,MyPictureVar1, data\genOverlay7.png
 GuiControl, 99: hide, oIE
 GuiControl, 99: +Redraw, MyPictureVar1
+zaglushka:=0
+}
+}
+
+if (var0ov == 8)
+{
+if (zaglushka == 0)
+{
+GuiControl, 99: -Redraw, MyPictureVar1
+GuiControl, 99: ,MyPictureVar1, data\genOverlay8.png
+GuiControl, 99: hide, oIE
+GuiControl, 99: +Redraw, MyPictureVar1
 zaglushka:=1
 }
 }
+
 
 }
 Else
