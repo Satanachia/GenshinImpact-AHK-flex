@@ -3,7 +3,7 @@
   "songs": [
     {
       "key": "1",
-      "file": "data/soundall/GravityFalls.mid",
+      "file": "data/soundall/41193_Dance-monkey-Flaps-Midi.mid",
       "channel_filter": [],
       "track_filter": [],
       "no_hold": true,
@@ -18,7 +18,7 @@
     },
     {
       "key": "2",
-      "file": "data/soundall/Imagine dragons - Radioactive.mid",
+      "file": "data/soundall/GravityFalls.mid",
       "channel_filter": [],
       "track_filter": [],
       "no_hold": true,
@@ -33,7 +33,7 @@
     },
     {
       "key": "3",
-      "file": "data/soundall/MortalKombat.mid",
+      "file": "data/soundall/Imagine dragons - Radioactive.mid",
       "channel_filter": [],
       "track_filter": [],
       "no_hold": true,
@@ -48,7 +48,7 @@
     },
     {
       "key": "4",
-      "file": "data/soundall/pirati.mid",
+      "file": "data/soundall/Neon_Genesis_Evangelion_-_Cruel_Angel_'s_Thesis.mid",
       "channel_filter": [],
       "track_filter": [],
       "no_hold": true,
@@ -63,7 +63,7 @@
     },
     {
       "key": "5",
-      "file": "data/soundall/sao2.mid",
+      "file": "data/soundall/pirati.mid",
       "channel_filter": [],
       "track_filter": [],
       "no_hold": true,
@@ -78,7 +78,7 @@
     },
     {
       "key": "6",
-      "file": "data/soundall/Saw.mid",
+      "file": "data/soundall/sao.mid",
       "channel_filter": [],
       "track_filter": [],
       "no_hold": true,

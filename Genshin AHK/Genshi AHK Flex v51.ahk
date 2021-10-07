@@ -38,47 +38,34 @@ Insert - Включить/отключить ReShade
 Windows Shortcut
 CTRL-ALT-Numpad0 - Запустить ярлык GenshAHK.lnk
 
-
-
-
-
-Список карт:
-Карта от официалов
-https://webstatic-sea.mihoyo.com/app/ys-map-sea/
-
-Самая первая карта
-https://genshin-impact-map.appsample.com/
-
-2я карта
-https://mapgenie.io/genshin-impact/maps/teyvat
-
-Китайская карта
-https://yuanshen.site/
-
-Нонейм1 карта
-https://mapofgenshin.com/
-
-Нонейм2 карта
-https://map.genshinpact.com/
-
-Нонейм3 карта, от RU челов
-https://genshin-info.ru/interaktivnaya-karta/
-
-
 Не забыть что при добавлении строк конфига нужно менять в дефолте-1, запись-2, импортер-3
-Береза Кедр Пихта Цуйхуа Сосна Песчаное дерево
-Birch Cedar Fir Cuihua Pine Sandy tree
-Бамбук Отоги Клен Аралия Юмэмиру
-Bamboo Otogi Maple Aralia Yumemiru
+
+
+!play
 
 
 
 
+Изменения: 06.10.2021
+ - Вкладка ресурсы
+ - Импортер настроек был в говне, терь фулл работает
+ - Ганьюй гифку сюда
 
+Изменения: 03.10.2021
+ - Если случайно выбрать драйверный ввод не установив драйвер то скрипт не запустится и сбросит режим ввода до стандартного
+ - Изменения в GUI
+ - Нормальный импорт настроек в "настройках"
 
+Изменения: 03.10.2021
+ - В манипуляторе реестром удален ид и добавлен 1 слот
+ - Больше разных пикч
+ - Больше треков для лиры ветров
+
+Изменения: 28.09.2021
+ - Оверлей с пушками, +Рыба
 
 Изменения: 27.09.2021
- - Перетаскивание через драг анд дропс(импорт genConfig и .mid песни для лиры) работает только когда скрипт запущен не от админа снять галку и перезапустить "Настройки"=>"Run as Admin"
+ - Перетаскивание через драг анд дропс(импорт genConfig и .mid песни для лиры) работает только когда скрипт запущен не от админа, снять галку и перезапустить "Настройки"=>"Run as Admin"
  - На таймере проверка чата
 
 Изменения: 26.09.2021
@@ -201,7 +188,7 @@ Bamboo Otogi Maple Aralia Yumemiru
 
 
 ;===============================дерективы
-WinName:= "Genshi AHK Flex v5 by Kramar1337"
+WinName:= "Genshi AHK Flex v5.1 by Kramar1337"
 #NoEnv
 SendMode Input
 SetWorkingDir %A_ScriptDir%
@@ -546,11 +533,11 @@ Menu,Tray, Icon, data\genicon.ico, ,1
 ;====================Gui настройки
 ; Gui, 1: -MinimizeBox
 if GlLanguage
-Gui, 1: Add, Tab3, x0 y0 w469 h277, Бинды|Настройки|Безопасность|Реестр|Решейд		;|Hecks
+Gui, 1: Add, Tab3, x0 y0 w469 h277, Бинды|Настройки|Безопасность|Реестр|Решейд|Ресурсы
 Else
-Gui, 1: Add, Tab3, x0 y0 w469 h277, Binds|Settings|Security|Registry|ReShade		;|Hecks
+Gui, 1: Add, Tab3, x0 y0 w469 h277, Binds|Settings|Security|Registry|ReShade|Links
 
-Gui, 1: Tab, 1 	;================главная
+Gui, 1: Tab, 1 	;================главная======================================================================главная(бинды)===Tab
 if GlLanguage
 Gui, 1: Add, GroupBox, x8 y24 w200 h239, Бинды
 Else
@@ -621,7 +608,7 @@ Gui, 1: Add, Edit, vCheckbox1bhopDelayMs x160 y232 w28 h17 Number Limit4, %Check
 Gui, 1: Add, Text, v1TextaMs x192 y232 w14 h20, ms
 Gui, 1: Add, CheckBox, vCheckbox0bhopDelay x136 y232 w23 h18 Checked%Checkbox1bhopDelay%, >
 Gui, 1: Add, Picture, x208 y16 w252 h256 +BackgroundTrans, data\page1fish.png
-Gui, 1: Tab, 2 	;================настройки
+Gui, 1: Tab, 2 	;================настройки=======================================================================настройки==Tab
 if GlLanguage
 Gui, 1: Add, GroupBox, x8 y24 w139 h143, Доп. фишки
 Else
@@ -674,12 +661,27 @@ Gui, 1: Add, GroupBox, x152 y104 w184 h63, Windsong Lyre
 Gui, 1: Add, Button, gParsButton x160 y136 w43 h23, Pars
 Gui, 1: Add, Button, gClearButton x224 y136 w43 h23, Clear
 Gui, 1: Add, Button, gRunButton x288 y136 w43 h23, Run
-Gui, 1: Tab, 3 	;===============безопасность
+
+
+;===============================импорт-экспорт настроек
+if GlLanguage
+Gui, 1: Add, GroupBox, x344 y24 w113 h80, Импорт настроек
+Else
+Gui, 1: Add, GroupBox, x344 y24 w113 h80, Import settings
+
+
+
+Gui, 1: Add, CheckBox, vCheckboxImportAll x352 y40 w100 h23 +Checked, Reg + Midi files
+Gui, 1: Add, Button, gImportSettButton x352 y72 w97 h23, Import
+; Gui, 1: Add, Button, gExportSettButton x352 y72 w43 h23, Export
+
+
+Gui, 1: Tab, 3 	;===============безопасность=====================================================================безопасность====Tab
 Gui, 1: Add, Picture, x200 y10 w252 h256 +BackgroundTrans, data\page2noell.png
 if GlLanguage
-Gui, 1: Add, GroupBox, x8 y24 w139 h81, Режим эмитации ввода
+Gui, 1: Add, GroupBox, x8 y24 w142 h111, Режим эмитации ввода
 Else
-Gui, 1: Add, GroupBox, x8 y24 w139 h81, Input mode
+Gui, 1: Add, GroupBox, x8 y24 w142 h111, Input mode
 
 
 If (metodVvoda == 1)
@@ -693,53 +695,67 @@ Gui, 1: Add, ListBox, x16 y40 w82 h56 vListKeyDif AltSubmit, SendInput|SendPlay|
 
 
 Gui, 1: Add, Button, gpickinput x104 y56 w38 h23, Pick
-Gui, 1: Add, CheckBox, vCheckboxScScHachCh x16 y128 w129 h23 Checked%ScHachCh%, Hash changer
-Gui, 1: Add, CheckBox, vCheckboxScWinrenamer x16 y152 w129 h23 Checked%ScWinrenamer%, WindowNameChanger
-Gui, 1: Add, CheckBox, vCheckboxScRandomT x16 y176 w140 h23 Checked%ScRandomT%, Random 40ms (NoMacro)
-Gui, 1: Add, CheckBox, vCheckboxScRenamer x16 y104 w129 h23 Checked%ScRenamer%, Name changer
-Gui, 1: Add, CheckBox, vCheckboxScOverlay x16 y200 w140 h23 Checked%ScOverlay%, UID Hide (Window)
+Gui, 1: Add, CheckBox, vCheckboxScScHachCh x16 y160 w129 h23 Checked%ScHachCh%, Hash changer
+Gui, 1: Add, CheckBox, vCheckboxScWinrenamer x16 y184 w129 h23 Checked%ScWinrenamer%, WindowNameChanger
+Gui, 1: Add, CheckBox, vCheckboxScRandomT x16 y208 w140 h23 Checked%ScRandomT%, Random 40ms (NoMacro)
+Gui, 1: Add, CheckBox, vCheckboxScRenamer x16 y136 w129 h23 Checked%ScRenamer%, Name changer
+Gui, 1: Add, CheckBox, vCheckboxScOverlay x16 y232 w140 h23 Checked%ScOverlay%, UID Hide (Window)
 
-Gui, 1: Add, Button, gPickInterDriver x16 y232 w128 h23, Interception driver (AHI)
-Gui, 1: Tab, 4 	;===============Реестр
+Gui, 1: Add, Button, gPickInterDriver x16 y104 w126 h23, Interception driver (AHI)
+Gui, 1: Tab, 4 	;===============Реестр=====================================================================Реестр====Tab
+Gui, 1: Add, Picture, x208 y16 w252 h256 +BackgroundTrans, data\page4re.png
 if GlLanguage
-Gui, 1: Add, GroupBox, x8 y24 w226 h191, Работа с реестром
+Gui, 1: Add, GroupBox, x8 y24 w226 h176, Работа с реестром
 Else
-Gui, 1: Add, GroupBox, x8 y24 w226 h191, Working with the registry
-
-Gui, 1: Add, Text, x72 y128 w120 h23 +0x200, DEVICE_ID
-Gui, 1: Add, Button, gpickregedit x16 y184 w210 h21, Open Regedit
+Gui, 1: Add, GroupBox, x8 y24 w226 h176, Working with the registry
+Gui, 1: Add, Button, gpickregedit x16 y168 w210 h21, Open Regedit
 Gui, 1: Add, Edit, x48 y40 w45 h21 +Disabled, F9
 Gui, 1: Add, Edit, x48 y72 w45 h21 +Disabled, F10
 Gui, 1: Add, Edit, x48 y104 w45 h21 +Disabled, F11
-Gui, 1: Add, Edit, x48 y152 w45 h21 +Disabled, F12
+Gui, 1: Add, Edit, x48 y136 w45 h21 +Disabled, F12
 Gui, 1: Add, Edit, x104 y40 w83 h21 vVarRegeditExport1 +Disabled, %RegeditExport1%
 Gui, 1: Add, Edit, x104 y72 w83 h21 vVarRegeditExport2 +Disabled, %RegeditExport2%
 Gui, 1: Add, Edit, x104 y104 w83 h21 vVarRegeditExport3 +Disabled, %RegeditExport3%
-Gui, 1: Add, Edit, x104 y152 w83 h21 vVarRegeditExport4 +Disabled, %RegeditExport4%
+Gui, 1: Add, Edit, x104 y136 w83 h21 vVarRegeditExport4 +Disabled, %RegeditExport4%
 Gui, 1: Add, Button, g1pickreg1 x200 y40 w23 h23, ...
 Gui, 1: Add, Button, g2pickreg2 x200 y72 w23 h23, ...
 Gui, 1: Add, Button, g3pickreg3 x200 y104 w23 h23, ...
-Gui, 1: Add, Button, g4pickreg4 x200 y152 w23 h23, ...
+Gui, 1: Add, Button, g4pickreg4 x200 y136 w23 h23, ...
 Gui, 1: Add, CheckBox, vCheckboxRegeditCheckBox1 x24 y40 w21 h22 Checked%RegeditCheckBox1%
 Gui, 1: Add, CheckBox, vCheckboxRegeditCheckBox2 x24 y72 w21 h22 Checked%RegeditCheckBox2%
 Gui, 1: Add, CheckBox, vCheckboxRegeditCheckBox3 x24 y104 w21 h22 Checked%RegeditCheckBox3%
-Gui, 1: Add, CheckBox, vCheckboxRegeditCheckBox4 x24 y152 w21 h22 Checked%RegeditCheckBox4%
-Gui, 1: Tab, 5 	;===============Решейд
+Gui, 1: Add, CheckBox, vCheckboxRegeditCheckBox4 x24 y136 w21 h22 Checked%RegeditCheckBox4%
+Gui, 1: Tab, 5 	;===============Решейд=====================================================================Решейд====Tab
 if GlLanguage
 Gui, 1: Add, GroupBox, x8 y24 w186 h103, Решейд
 Else
 Gui, 1: Add, GroupBox, x8 y24 w186 h103, ReShade
-
-; Gui, 1: Add, ListBox, x16 y40 w120 h69 vListResPick AltSubmit, HDR by Rozza12|DefaultPreset2|Haze|TripWire|FPS Lite
-; Gui, 1: Add, Button, g1pickRes x144 y64 w35 h23, Pick
 Gui, 1: Add, Button, g1ReshadeInstal x16 y40 w39 h23, Instal
 Gui, 1: Add, Button, g1ReshadeRemove x72 y40 w55 h23, Remove
 Gui, 1: Add, Button, g1ReshadeRun x144 y40 w39 h23, Run
-; Gui, 1: Add, Text, x16 y160 w120 h23 +0x200, Step 1. Remove
-; Gui, 1: Add, Text, x16 y184 w120 h23 +0x200, Step 2. Pick
 Gui, 1: Add, Text, x16 y72 w120 h23, Step 1. Instal
 Gui, 1: Add, Text, x16 y96 w157 h23, Step 2. Run and start the game
-Gui, 1: Tab, 6 	;===============Хекс
+Gui, 1: Add, Picture, x208 y16 w252 h256 +BackgroundTrans, data\page5pcmr.png
+Gui, 1: Tab, 6 	;==============ссылки=====================================================================ссылки====Tab
+Gui, 1: Add, GroupBox, x8 y24 w147 h244, Разное
+Gui, 1: Add, Link, x16 y48 w120 h23, <a href="https://paimon.moe/timeline/">Лента событий</a>
+Gui, 1: Add, Link, x16 y72 w120 h23, <a href="https://genshin.aspirine.su/">ASPirine Калькулятор</a>
+Gui, 1: Add, Link, x16 y96 w120 h23, <a href="https://frzyc.github.io/genshin-optimizer/#/">Genshin Optimizer</a>
+Gui, 1: Add, Link, x16 y120 w120 h23, <a href="https://genshin.honeyhunterworld.com/">Honeyhunterworld.com</a>
+Gui, 1: Add, Link, x16 y144 w120 h23, <a href="https://genshin-impact.fandom.com/wiki/Genshin_Impact_Wiki">Genshin Impact Wiki</a>
+Gui, 1: Add, GroupBox, x160 y24 w147 h244, Карты
+Gui, 1: Add, Link, x168 y48 w120 h23, <a href="https://genshin-impact-map.appsample.com/">Genshin-Impact-Map</a>
+Gui, 1: Add, Link, x168 y72 w120 h23, <a href="https://webstatic-sea.mihoyo.com/app/ys-map-sea/">Mihoyo Map</a>
+Gui, 1: Add, Link, x168 y96 w120 h23, <a href="https://mapgenie.io/genshin-impact/maps/teyvat">MapGenie.io</a>
+Gui, 1: Add, Link, x168 y120 w120 h23, <a href="https://yuanshen.site/">Chinese map</a>
+Gui, 1: Add, Link, x168 y144 w120 h23, <a href="https://genshin-info.ru/interaktivnaya-karta/">Genshin-Info.ru</a>
+Gui, 1: Add, GroupBox, x312 y24 w146 h244, Сливочники
+Gui, 1: Add, Link, x320 y48 w120 h23, <a href="https://www.reddit.com/r/Genshin_Impact_Leaks/">Reddit GI Leaks</a>
+Gui, 1: Add, Link, x320 y48 w120 h23, <a href="https://www.reddit.com/r/Genshin_Impact_Leaks/">Reddit GI Leaks</a>
+Gui, 1: Add, Link, x320 y72 w120 h23, <a href="https://twitter.com/Genshin_Intel">Twitter Genshin Intel</a>
+Gui, 1: Add, Link, x320 y96 w120 h23, <a href="https://twitter.com/projectcelestia">Twitter Project Celestia</a>
+Gui, 1: Add, Link, x320 y120 w120 h23, <a href="https://twitter.com/Xwides">Twitter RU Xwides</a>
+Gui, 1: Add, Link, x320 y144 w120 h23, <a href="https://t.me/s/slivu_genshin_impact">Telegram RU Лизa</a>
 
 Gui, 1: Tab
 
@@ -836,7 +852,11 @@ Gui, 99: +AlwaysOnTop +ToolWindow -Caption +LastFound
 ; Gui, 99: Color, 12345
 ;====================================гладкий переход
 Gui, 99: Color, 0x000000
+Random, RandomGifVar1, 1, 2
+if (RandomGifVar1 = 1)
 Path = "%A_ScriptDir%\data\paimon.gif"
+if (RandomGifVar1 = 2)
+Path = "%A_ScriptDir%\data\ganyu.gif"
 ;width := 184, height := 281
 width := Round(ScreenWidthRe1 *.07187)
 height := Round(ScreenHeightRe1 *.19513)
@@ -895,6 +915,231 @@ return
 AntiVACHashChanger:="fghfh3534gjdgdfgfj6867jhmbdsq4123asddfgdfgaszxxcasdf423dfght7657ghnbnghrtwer32esdfgr65475dgdgdf6867ghjkhji7456wsdfsf34sdfsdf324sdfgdfg453453453456345gdgdgdfsf"
 
 
+
+
+
+ImportSettButton:
+FileSelectFile, FileVarImport, 3,,INI File genConfig.ini,Config (genConfig.ini)
+LabelImportSett:
+Gui, 1: Submit, NoHide
+if !(FileVarImport = "")
+	{
+	SplitPath, FileVarImport,x2name,x2dir,,, 	;извлечь из строки имя файла и папку файла
+if (x2name == "genConfig.ini")
+	{
+	MsgBox Импорт настроек из:`n`n%FileVarImport%`n`nПосле нажатия ОК конфиг будет обновлен и скрипт перезагрузится
+		if CheckboxImportAll 	;если мы копируем все то мы берем: реестр, песни, кфг песен
+		{
+		FileCopy, %x2dir%\reg\*.reg, %A_ScriptDir%\data\reg\, 1 	;копируем рег файлы из папки со скриптом в новую
+		FileCopy, %x2dir%\soundall\*.mid, %A_ScriptDir%\data\soundall\, 1 	;копируем миди файлы из папки со скриптом в новую
+		FileCopy, %x2dir%\midi_config.json, %A_ScriptDir%\data\midi_config.json, 1 	;копируем миди конфиг из папки со скриптом в новую
+		}
+	IniRead, KeyboardVID, %FileVarImport%, Extra, KeyboardVID
+	if !(KeyboardVID = "ERROR")
+IniWrite, %KeyboardVID%, data\genConfig.ini, Extra, KeyboardVID
+	IniRead, KeyboardPID, %FileVarImport%, Extra, KeyboardPID
+	if !(KeyboardPID = "ERROR")
+IniWrite, %KeyboardPID%, data\genConfig.ini, Extra, KeyboardPID
+	IniRead, MouseVID, %FileVarImport%, Extra, MouseVID
+	if !(MouseVID = "ERROR")
+IniWrite, %MouseVID%, data\genConfig.ini, Extra, MouseVID
+	IniRead, MousePID, %FileVarImport%, Extra, MousePID
+	if !(MousePID = "ERROR")
+IniWrite, %MousePID%, data\genConfig.ini, Extra, MousePID
+	IniRead, InterceptionFishMouseMoveX, %FileVarImport%, Extra, InterceptionFishMouseMoveX
+	if !(InterceptionFishMouseMoveX = "ERROR")
+IniWrite, %InterceptionFishMouseMoveX%, data\genConfig.ini, Extra, InterceptionFishMouseMoveX
+	IniRead, InterceptionFishMouseMoveY, %FileVarImport%, Extra, InterceptionFishMouseMoveY
+	if !(InterceptionFishMouseMoveY = "ERROR")
+IniWrite, %InterceptionFishMouseMoveY%, data\genConfig.ini, Extra, InterceptionFishMouseMoveY
+	IniRead, InterceptionVentiMouseMoveX, %FileVarImport%, Extra, InterceptionVentiMouseMoveX
+	if !(InterceptionVentiMouseMoveX = "ERROR")
+IniWrite, %InterceptionVentiMouseMoveX%, data\genConfig.ini, Extra, InterceptionVentiMouseMoveX
+	IniRead, InterceptionVentiMouseMoveY, %FileVarImport%, Extra, InterceptionVentiMouseMoveY
+	if !(InterceptionVentiMouseMoveY = "ERROR")
+IniWrite, %InterceptionVentiMouseMoveY%, data\genConfig.ini, Extra, InterceptionVentiMouseMoveY
+	IniRead, Prozra4nostiFis, %FileVarImport%, Fish, Prozra4nostiFis
+	if !(Prozra4nostiFis = "ERROR")
+IniWrite, %Prozra4nostiFis%, data\genConfig.ini, Fish, Prozra4nostiFis
+	IniRead, OttenokFis, %FileVarImport%, Fish, OttenokFis
+	if !(OttenokFis = "ERROR")
+IniWrite, %OttenokFis%, data\genConfig.ini, Fish, OttenokFis
+	IniRead, OptimizationFis, %FileVarImport%, Fish, OptimizationFis
+	if !(OptimizationFis = "ERROR")
+IniWrite, %OptimizationFis%, data\genConfig.ini, Fish, OptimizationFis
+	IniRead, Highperformancemode, %FileVarImport%, Setings, Highperformancemode
+	if !(Highperformancemode = "ERROR")
+IniWrite, %Highperformancemode%, data\genConfig.ini, Setings, Highperformancemode
+	IniRead, ScWinrenamer, %FileVarImport%, Setings, ScWinrenamer ; проверка Winrenamer
+	if !(ScWinrenamer = "ERROR")
+IniWrite, %ScWinrenamer%, data\genConfig.ini, Setings, ScWinrenamer ; проверка Winrenamer
+	IniRead, ScRenamer, %FileVarImport%, Setings, ScRenamer ; проверка Renamera
+	if !(ScRenamer = "ERROR")
+IniWrite, %ScRenamer%, data\genConfig.ini, Setings, ScRenamer ; проверка Renamera
+	IniRead, ScHachCh, %FileVarImport%, Setings, ScHachCh ; проверка ScHachCh
+	if !(ScHachCh = "ERROR")
+IniWrite, %ScHachCh%, data\genConfig.ini, Setings, ScHachCh ; проверка ScHachCh
+	IniRead, ScRandomT, %FileVarImport%, Setings, ScRandomT ; проверка рандом таймер
+	if !(ScRandomT = "ERROR")
+IniWrite, %ScRandomT%, data\genConfig.ini, Setings, ScRandomT ; проверка рандом таймер
+	IniRead, ScOverlay, %FileVarImport%, Setings, ScOverlay ; проверка uid overlay
+	if !(ScOverlay = "ERROR")
+IniWrite, %ScOverlay%, data\genConfig.ini, Setings, ScOverlay ; проверка uid overlay
+	IniRead, DefaultJopaTrue, %FileVarImport%, Extra, DefaultJopaTrue
+	if !(DefaultJopaTrue = "ERROR")
+IniWrite, %DefaultJopaTrue%, data\genConfig.ini, Extra, DefaultJopaTrue
+	IniRead, key_animcancel, %FileVarImport%, Binds, key_animcancel
+	if !(key_animcancel = "ERROR")
+IniWrite, %key_animcancel%, data\genConfig.ini, Binds, key_animcancel
+	IniRead, key_map, %FileVarImport%, Binds, key_map
+	if !(key_map = "ERROR")
+IniWrite, %key_map%, data\genConfig.ini, Binds, key_map
+	IniRead, key_autowalk, %FileVarImport%, Binds, key_autowalk
+	if !(key_autowalk = "ERROR")
+IniWrite, %key_autowalk%, data\genConfig.ini, Binds, key_autowalk
+	IniRead, key_overlay, %FileVarImport%, Binds, key_overlay
+	if !(key_overlay = "ERROR")
+IniWrite, %key_overlay%, data\genConfig.ini, Binds, key_overlay
+	IniRead, key_fastlyt, %FileVarImport%, Binds, key_fastlyt
+	if !(key_fastlyt = "ERROR")
+IniWrite, %key_fastlyt%, data\genConfig.ini, Binds, key_fastlyt
+	IniRead, key_skipNPS, %FileVarImport%, Binds, key_skipNPS
+	if !(key_skipNPS = "ERROR")
+IniWrite, %key_skipNPS%, data\genConfig.ini, Binds, key_skipNPS
+	IniRead, key_bhop, %FileVarImport%, Binds, key_bhop
+	if !(key_bhop = "ERROR")
+IniWrite, %key_bhop%, data\genConfig.ini, Binds, key_bhop
+	IniRead, key_autoswim, %FileVarImport%, Binds, key_autoswim
+	if !(key_autoswim = "ERROR")
+IniWrite, %key_autoswim%, data\genConfig.ini, Binds, key_autoswim
+	IniRead, key_vi4er_sens, %FileVarImport%, Binds, key_vi4er_sens
+	if !(key_vi4er_sens = "ERROR")
+IniWrite, %key_vi4er_sens%, data\genConfig.ini, Binds, key_vi4er_sens
+	IniRead, ShortcutKey, %FileVarImport%, Extra, ShortcutKey 	;Забиндить ярлык системными кнопками, по дефолту CTRL-ALT-Numpad5
+	if !(ShortcutKey = "ERROR")
+IniWrite, %ShortcutKey%, data\genConfig.ini, Extra, ShortcutKey 	;Забиндить ярлык системными кнопками, по дефолту CTRL-ALT-Numpad5
+	IniRead, FIXchat, %FileVarImport%, Setings, FIXchat
+	if !(FIXchat = "ERROR")
+IniWrite, %FIXchat%, data\genConfig.ini, Setings, FIXchat
+	IniRead, IsAdmin, %FileVarImport%, Setings, IsAdmin
+	if !(IsAdmin = "ERROR")
+IniWrite, %IsAdmin%, data\genConfig.ini, Setings, IsAdmin
+	IniRead, MousemoveBow, %FileVarImport%, Extra, MousemoveBow 	;двигать мышку вправо когда идет стрельба с макроса на винапи
+	if !(MousemoveBow = "ERROR")
+IniWrite, %MousemoveBow%, data\genConfig.ini, Extra, MousemoveBow 	;двигать мышку вправо когда идет стрельба с макроса на винапи
+	IniRead, FishMouseMoveX, %FileVarImport%, Extra, FishMouseMoveX 	;сколько двигать для фишль по X = 43 на дефолтных настройках
+	if !(FishMouseMoveX = "ERROR")
+IniWrite, %FishMouseMoveX%, data\genConfig.ini, Extra, FishMouseMoveX 	;сколько двигать для фишль по X = 43 на дефолтных настройках
+	IniRead, FishMouseMoveY, %FileVarImport%, Extra, FishMouseMoveY 	;сколько двигать для фишль по Y = 0
+	if !(FishMouseMoveY = "ERROR")
+IniWrite, %FishMouseMoveY%, data\genConfig.ini, Extra, FishMouseMoveY 	;сколько двигать для фишль по Y = 0
+	IniRead, VentiMouseMoveX, %FileVarImport%, Extra, VentiMouseMoveX 	;двигать для венти по X = 43 на дефолтных настройках
+	if !(VentiMouseMoveX = "ERROR")
+IniWrite, %VentiMouseMoveX%, data\genConfig.ini, Extra, VentiMouseMoveX 	;двигать для венти по X = 43 на дефолтных настройках
+	IniRead, VentiMouseMoveY, %FileVarImport%, Extra, VentiMouseMoveY 	;двигать для венти по X = 0
+	if !(VentiMouseMoveY = "ERROR")
+IniWrite, %VentiMouseMoveY%, data\genConfig.ini, Extra, VentiMouseMoveY 	;двигать для венти по X = 0
+	IniRead, BrauzerCheck, %FileVarImport%, Setings, BrauzerCheck ; проверка браузера
+	if !(BrauzerCheck = "ERROR")
+IniWrite, %BrauzerCheck%, data\genConfig.ini, Setings, BrauzerCheck ; проверка браузера
+	IniRead, BrauzerPick, %FileVarImport%, Setings, BrauzerPick ; выбор браузера
+	if !(BrauzerPick = "ERROR")
+IniWrite, %BrauzerPick%, data\genConfig.ini, Setings, BrauzerPick ; выбор браузера
+	IniRead, Map2toggle, %FileVarImport%, Setings, Map2toggle
+	if !(Map2toggle = "ERROR")
+IniWrite, %Map2toggle%, data\genConfig.ini, Setings, Map2toggle
+	IniRead, gameexe1337, %FileVarImport%, Setings, GameExe	; исполняемый файл игры
+	if !(gameexe1337 = "ERROR")
+IniWrite, %gameexe1337%, data\genConfig.ini, Setings, GameExe	; исполняемый файл игры
+	IniRead, ONregreadDir, %FileVarImport%, Setings, ONregreadDir ; поиск папки в реестре для откл кастсцен
+	if !(ONregreadDir = "ERROR")
+IniWrite, %ONregreadDir%, data\genConfig.ini, Setings, ONregreadDir ; поиск папки в реестре для откл кастсцен
+	IniRead, DirGame, %FileVarImport%, Setings, DirGame
+	if !(DirGame = "ERROR")
+IniWrite, %DirGame%, data\genConfig.ini, Setings, DirGame
+	IniRead, metodVvoda, %FileVarImport%, Setings, metodVvoda
+	if !(metodVvoda = "ERROR")
+IniWrite, %metodVvoda%, data\genConfig.ini, Setings, metodVvoda
+	IniRead, showtooltipVvoba, %FileVarImport%, Setings, showtooltipVvoba
+	if !(showtooltipVvoba = "ERROR")
+IniWrite, %showtooltipVvoba%, data\genConfig.ini, Setings, showtooltipVvoba
+	IniRead, showmegui, %FileVarImport%, Setings, showmegui
+	if !(showmegui = "ERROR")
+IniWrite, %showmegui%, data\genConfig.ini, Setings, showmegui
+	IniRead, ScaleFIX, %FileVarImport%, Setings, ScaleFIX
+	if !(ScaleFIX = "ERROR")
+IniWrite, %ScaleFIX%, data\genConfig.ini, Setings, ScaleFIX
+	IniRead, Checkbox1map, %FileVarImport%, Setings, Checkbox1map
+	if !(Checkbox1map = "ERROR")
+IniWrite, %Checkbox1map%, data\genConfig.ini, Setings, Checkbox1map
+	IniRead, Checkbox1overlay, %FileVarImport%, Setings, Checkbox1overlay
+	if !(Checkbox1overlay = "ERROR")
+IniWrite, %Checkbox1overlay%, data\genConfig.ini, Setings, Checkbox1overlay
+	IniRead, Checkbox1autowalk, %FileVarImport%, Setings, Checkbox1autowalk
+	if !(Checkbox1autowalk = "ERROR")
+IniWrite, %Checkbox1autowalk%, data\genConfig.ini, Setings, Checkbox1autowalk
+	IniRead, Checkbox1fastlyt, %FileVarImport%, Setings, Checkbox1fastlyt
+	if !(Checkbox1fastlyt = "ERROR")
+IniWrite, %Checkbox1fastlyt%, data\genConfig.ini, Setings, Checkbox1fastlyt
+	IniRead, Checkbox1skipNPS, %FileVarImport%, Setings, Checkbox1skipNPS
+	if !(Checkbox1skipNPS = "ERROR")
+IniWrite, %Checkbox1skipNPS%, data\genConfig.ini, Setings, Checkbox1skipNPS
+	IniRead, Checkbox1autoswim, %FileVarImport%, Setings, Checkbox1autoswim
+	if !(Checkbox1autoswim = "ERROR")
+IniWrite, %Checkbox1autoswim%, data\genConfig.ini, Setings, Checkbox1autoswim
+	IniRead, Checkbox1vi4ersens, %FileVarImport%, Setings, Checkbox1vi4ersens
+	if !(Checkbox1vi4ersens = "ERROR")
+IniWrite, %Checkbox1vi4ersens%, data\genConfig.ini, Setings, Checkbox1vi4ersens
+	IniRead, Checkbox1animcancel, %FileVarImport%, Setings, Checkbox1animcancel
+	if !(Checkbox1animcancel = "ERROR")
+IniWrite, %Checkbox1animcancel%, data\genConfig.ini, Setings, Checkbox1animcancel
+	IniRead, Checkbox1bhop, %FileVarImport%, Setings, Checkbox1bhop
+	if !(Checkbox1bhop = "ERROR")
+IniWrite, %Checkbox1bhop%, data\genConfig.ini, Setings, Checkbox1bhop
+	IniRead, Checkbox1bhopDelay, %FileVarImport%, Setings, Checkbox1bhopDelay
+	if !(Checkbox1bhopDelay = "ERROR")
+IniWrite, %Checkbox1bhopDelay%, data\genConfig.ini, Setings, Checkbox1bhopDelay
+	IniRead, Checkbox1bhopDelayMs, %FileVarImport%, Setings, Checkbox1bhopDelayMs
+	if !(Checkbox1bhopDelayMs = "ERROR")
+IniWrite, %Checkbox1bhopDelayMs%, data\genConfig.ini, Setings, Checkbox1bhopDelayMs
+	IniRead, RegeditExport1, %FileVarImport%, Setings, RegeditExport1
+	if !(RegeditExport1 = "ERROR")
+IniWrite, %RegeditExport1%, data\genConfig.ini, Setings, RegeditExport1
+	IniRead, RegeditExport2, %FileVarImport%, Setings, RegeditExport2
+	if !(RegeditExport2 = "ERROR")
+IniWrite, %RegeditExport2%, data\genConfig.ini, Setings, RegeditExport2
+	IniRead, RegeditExport3, %FileVarImport%, Setings, RegeditExport3
+	if !(RegeditExport3 = "ERROR")
+IniWrite, %RegeditExport3%, data\genConfig.ini, Setings, RegeditExport3
+	IniRead, RegeditExport4, %FileVarImport%, Setings, RegeditExport4
+	if !(RegeditExport4 = "ERROR")
+IniWrite, %RegeditExport4%, data\genConfig.ini, Setings, RegeditExport4
+	IniRead, RegeditCheckBox1, %FileVarImport%, Setings, RegeditCheckBox1
+	if !(RegeditCheckBox1 = "ERROR")
+IniWrite, %RegeditCheckBox1%, data\genConfig.ini, Setings, RegeditCheckBox1
+	IniRead, RegeditCheckBox2, %FileVarImport%, Setings, RegeditCheckBox2
+	if !(RegeditCheckBox2 = "ERROR")
+IniWrite, %RegeditCheckBox2%, data\genConfig.ini, Setings, RegeditCheckBox2
+	IniRead, RegeditCheckBox3, %FileVarImport%, Setings, RegeditCheckBox3
+	if !(RegeditCheckBox3 = "ERROR")
+IniWrite, %RegeditCheckBox3%, data\genConfig.ini, Setings, RegeditCheckBox3
+	IniRead, RegeditCheckBox4, %FileVarImport%, Setings, RegeditCheckBox4
+	if !(RegeditCheckBox4 = "ERROR")
+IniWrite, %RegeditCheckBox4%, data\genConfig.ini, Setings, RegeditCheckBox4
+	IniRead, GlLanguage, %FileVarImport%, Setings, GlLanguage
+	if !(GlLanguage = "ERROR")
+IniWrite, %GlLanguage%, data\genConfig.ini, Setings, GlLanguage
+	Reload
+	Exitapp
+	}
+	
+
+	}
+return
+
+
+
+
 ;=====================================Установщик драйвера
 PickInterDriver:
 Run, %A_ScriptDir%\data\DriverLoader.ahk
@@ -925,151 +1170,9 @@ SplitPath, A_LoopField,z1name,, z1ext,, 	;извлечь из строки ра�
 	}
 	if (z1name == "genConfig.ini")
 	{
-	MsgBox Импорт настроек из:`n`n%A_LoopField%`n`nПосле нажатия ОК конфиг будет обновлен и скрипт перезагрузится
-;===============================Считываем содержимое нового конфига
-
-IniRead, KeyboardVID, %A_LoopField%, Extra, KeyboardVID
-IniRead, KeyboardPID, %A_LoopField%, Extra, KeyboardPID
-IniRead, MouseVID, %A_LoopField%, Extra, MouseVID
-IniRead, MousePID, %A_LoopField%, Extra, MousePID
-
-IniRead, InterceptionFishMouseMoveX, %A_LoopField%, Extra, InterceptionFishMouseMoveX
-IniRead, InterceptionFishMouseMoveY, %A_LoopField%, Extra, InterceptionFishMouseMoveY
-IniRead, InterceptionVentiMouseMoveX, %A_LoopField%, Extra, InterceptionVentiMouseMoveX
-IniRead, InterceptionVentiMouseMoveY, %A_LoopField%, Extra, InterceptionVentiMouseMoveY
-
-	IniRead, Prozra4nostiFis, %A_LoopField%, Fish, Prozra4nostiFis
-	IniRead, OttenokFis, %A_LoopField%, Fish, OttenokFis
-	IniRead, OptimizationFis, %A_LoopField%, Fish, OptimizationFis
-
-	IniRead, Highperformancemode, %A_LoopField%, Setings, Highperformancemode
-	IniRead, ScWinrenamer, %A_LoopField%, Setings, ScWinrenamer ; проверка Winrenamer
-	IniRead, ScRenamer, %A_LoopField%, Setings, ScRenamer ; проверка Renamera
-	IniRead, ScHachCh, %A_LoopField%, Setings, ScHachCh ; проверка ScHachCh
-	IniRead, ScRandomT, %A_LoopField%, Setings, ScRandomT ; проверка рандом таймер
-	IniRead, ScOverlay, %A_LoopField%, Setings, ScOverlay ; проверка uid overlay
-	IniRead, DefaultJopaTrue, %A_LoopField%, Extra, DefaultJopaTrue
-	IniRead, key_animcancel, %A_LoopField%, Binds, key_animcancel
-	IniRead, key_map, %A_LoopField%, Binds, key_map
-	IniRead, key_autowalk, %A_LoopField%, Binds, key_autowalk
-	IniRead, key_overlay, %A_LoopField%, Binds, key_overlay
-	IniRead, key_fastlyt, %A_LoopField%, Binds, key_fastlyt
-	IniRead, key_skipNPS, %A_LoopField%, Binds, key_skipNPS
-	IniRead, key_bhop, %A_LoopField%, Binds, key_bhop
-	IniRead, key_autoswim, %A_LoopField%, Binds, key_autoswim
-	IniRead, key_vi4er_sens, %A_LoopField%, Binds, key_vi4er_sens
-	IniRead, ShortcutKey, %A_LoopField%, Extra, ShortcutKey 	;Забиндить ярлык системными кнопками, по дефолту CTRL-ALT-Numpad5
-	IniRead, FIXchat, %A_LoopField%, Setings, FIXchat
-	IniRead, IsAdmin, %A_LoopField%, Setings, IsAdmin
-	
-	IniRead, MousemoveBow, %A_LoopField%, Extra, MousemoveBow 	;двигать мышку вправо когда идет стрельба с макроса на винапи
-	IniRead, FishMouseMoveX, %A_LoopField%, Extra, FishMouseMoveX 	;сколько двигать для фишль по X = 43 на дефолтных настройках
-	IniRead, FishMouseMoveY, %A_LoopField%, Extra, FishMouseMoveY 	;сколько двигать для фишль по Y = 0
-	IniRead, VentiMouseMoveX, %A_LoopField%, Extra, VentiMouseMoveX 	;двигать для венти по X = 43 на дефолтных настройках
-	IniRead, VentiMouseMoveY, %A_LoopField%, Extra, VentiMouseMoveY 	;двигать для венти по X = 0
-	IniRead, BrauzerCheck, %A_LoopField%, Setings, BrauzerCheck ; проверка браузера
-	IniRead, BrauzerPick, %A_LoopField%, Setings, BrauzerPick ; выбор браузера
-	IniRead, Map2toggle, %A_LoopField%, Setings, Map2toggle
-	IniRead, gameexe1337, %A_LoopField%, Setings, GameExe	; исполняемый файл игры
-	IniRead, ONregreadDir, %A_LoopField%, Setings, ONregreadDir ; поиск папки в реестре для откл кастсцен
-	IniRead, DirGame, %A_LoopField%, Setings, DirGame
-	IniRead, metodVvoda, %A_LoopField%, Setings, metodVvoda
-	IniRead, showtooltipVvoba, %A_LoopField%, Setings, showtooltipVvoba
-	IniRead, showmegui, %A_LoopField%, Setings, showmegui
-	IniRead, ScaleFIX, %A_LoopField%, Setings, ScaleFIX
-	IniRead, Checkbox1map, %A_LoopField%, Setings, Checkbox1map
-	IniRead, Checkbox1overlay, %A_LoopField%, Setings, Checkbox1overlay
-	IniRead, Checkbox1autowalk, %A_LoopField%, Setings, Checkbox1autowalk
-	IniRead, Checkbox1fastlyt, %A_LoopField%, Setings, Checkbox1fastlyt
-	IniRead, Checkbox1skipNPS, %A_LoopField%, Setings, Checkbox1skipNPS
-	IniRead, Checkbox1autoswim, %A_LoopField%, Setings, Checkbox1autoswim
-	IniRead, Checkbox1vi4ersens, %A_LoopField%, Setings, Checkbox1vi4ersens
-	IniRead, Checkbox1animcancel, %A_LoopField%, Setings, Checkbox1animcancel
-	IniRead, Checkbox1bhop, %A_LoopField%, Setings, Checkbox1bhop
-	IniRead, Checkbox1bhopDelay, %A_LoopField%, Setings, Checkbox1bhopDelay
-	IniRead, Checkbox1bhopDelayMs, %A_LoopField%, Setings, Checkbox1bhopDelayMs
-	IniRead, RegeditExport1, %A_LoopField%, Setings, RegeditExport1
-	IniRead, RegeditExport2, %A_LoopField%, Setings, RegeditExport2
-	IniRead, RegeditExport3, %A_LoopField%, Setings, RegeditExport3
-	IniRead, RegeditExport4, %A_LoopField%, Setings, RegeditExport4
-	IniRead, RegeditCheckBox1, %A_LoopField%, Setings, RegeditCheckBox1
-	IniRead, RegeditCheckBox2, %A_LoopField%, Setings, RegeditCheckBox2
-	IniRead, RegeditCheckBox3, %A_LoopField%, Setings, RegeditCheckBox3
-	IniRead, RegeditCheckBox4, %A_LoopField%, Setings, RegeditCheckBox4
-	IniRead, GlLanguage, %A_LoopField%, Setings, GlLanguage
-;================начинаем записывать данные в новый файл
-IniWrite, %KeyboardVID%, data\genConfig.ini, Extra, KeyboardVID
-IniWrite, %KeyboardPID%, data\genConfig.ini, Extra, KeyboardPID
-IniWrite, %MouseVID%, data\genConfig.ini, Extra, MouseVID
-IniWrite, %MousePID%, data\genConfig.ini, Extra, MousePID
-IniWrite, %InterceptionFishMouseMoveX%, data\genConfig.ini, Extra, InterceptionFishMouseMoveX
-IniWrite, %InterceptionFishMouseMoveY%, data\genConfig.ini, Extra, InterceptionFishMouseMoveY
-IniWrite, %InterceptionVentiMouseMoveX%, data\genConfig.ini, Extra, InterceptionVentiMouseMoveX
-IniWrite, %InterceptionVentiMouseMoveY%, data\genConfig.ini, Extra, InterceptionVentiMouseMoveY
-
-
-IniWrite, %Prozra4nostiFis%, data\genConfig.ini, Fish, Prozra4nostiFis
-IniWrite, %OttenokFis%, data\genConfig.ini, Fish, OttenokFis
-IniWrite, %OptimizationFis%, data\genConfig.ini, Fish, OptimizationFis
-
-IniWrite, %Highperformancemode%, data\genConfig.ini, Setings, Highperformancemode
-IniWrite, %ScWinrenamer%, data\genConfig.ini, Setings, ScWinrenamer ; проверка Winrenamer
-IniWrite, %ScRenamer%, data\genConfig.ini, Setings, ScRenamer ; проверка Renamera
-IniWrite, %ScHachCh%, data\genConfig.ini, Setings, ScHachCh ; проверка ScHachCh
-IniWrite, %ScRandomT%, data\genConfig.ini, Setings, ScRandomT ; проверка рандом таймер
-IniWrite, %ScOverlay%, data\genConfig.ini, Setings, ScOverlay ; проверка uid overlay
-IniWrite, %DefaultJopaTrue%, data\genConfig.ini, Extra, DefaultJopaTrue
-IniWrite, %key_animcancel%, data\genConfig.ini, Binds, key_animcancel
-IniWrite, %key_map%, data\genConfig.ini, Binds, key_map
-IniWrite, %key_autowalk%, data\genConfig.ini, Binds, key_autowalk
-IniWrite, %key_overlay%, data\genConfig.ini, Binds, key_overlay
-IniWrite, %key_fastlyt%, data\genConfig.ini, Binds, key_fastlyt
-IniWrite, %key_skipNPS%, data\genConfig.ini, Binds, key_skipNPS
-IniWrite, %key_bhop%, data\genConfig.ini, Binds, key_bhop
-IniWrite, %key_autoswim%, data\genConfig.ini, Binds, key_autoswim
-IniWrite, %key_vi4er_sens%, data\genConfig.ini, Binds, key_vi4er_sens
-IniWrite, %ShortcutKey%, data\genConfig.ini, Extra, ShortcutKey 	;Забиндить ярлык системными кнопками, по дефолту CTRL-ALT-Numpad5
-IniWrite, %FIXchat%, data\genConfig.ini, Setings, FIXchat
-IniWrite, %IsAdmin%, data\genConfig.ini, Setings, IsAdmin
-
-IniWrite, %MousemoveBow%, data\genConfig.ini, Extra, MousemoveBow 	;двигать мышку вправо когда идет стрельба с макроса на винапи
-IniWrite, %FishMouseMoveX%, data\genConfig.ini, Extra, FishMouseMoveX 	;сколько двигать для фишль по X = 43 на дефолтных настройках
-IniWrite, %FishMouseMoveY%, data\genConfig.ini, Extra, FishMouseMoveY 	;сколько двигать для фишль по Y = 0
-IniWrite, %VentiMouseMoveX%, data\genConfig.ini, Extra, VentiMouseMoveX 	;двигать для венти по X = 43 на дефолтных настройках
-IniWrite, %VentiMouseMoveY%, data\genConfig.ini, Extra, VentiMouseMoveY 	;двигать для венти по X = 0
-IniWrite, %BrauzerCheck%, data\genConfig.ini, Setings, BrauzerCheck ; проверка браузера
-IniWrite, %BrauzerPick%, data\genConfig.ini, Setings, BrauzerPick ; выбор браузера
-IniWrite, %Map2toggle%, data\genConfig.ini, Setings, Map2toggle
-IniWrite, %gameexe1337%, data\genConfig.ini, Setings, GameExe	; исполняемый файл игры
-IniWrite, %ONregreadDir%, data\genConfig.ini, Setings, ONregreadDir ; поиск папки в реестре для откл кастсцен
-IniWrite, %DirGame%, data\genConfig.ini, Setings, DirGame
-IniWrite, %metodVvoda%, data\genConfig.ini, Setings, metodVvoda
-IniWrite, %showtooltipVvoba%, data\genConfig.ini, Setings, showtooltipVvoba
-IniWrite, %showmegui%, data\genConfig.ini, Setings, showmegui
-IniWrite, %ScaleFIX%, data\genConfig.ini, Setings, ScaleFIX
-IniWrite, %Checkbox1map%, data\genConfig.ini, Setings, Checkbox1map
-IniWrite, %Checkbox1overlay%, data\genConfig.ini, Setings, Checkbox1overlay
-IniWrite, %Checkbox1autowalk%, data\genConfig.ini, Setings, Checkbox1autowalk
-IniWrite, %Checkbox1fastlyt%, data\genConfig.ini, Setings, Checkbox1fastlyt
-IniWrite, %Checkbox1skipNPS%, data\genConfig.ini, Setings, Checkbox1skipNPS
-IniWrite, %Checkbox1autoswim%, data\genConfig.ini, Setings, Checkbox1autoswim
-IniWrite, %Checkbox1vi4ersens%, data\genConfig.ini, Setings, Checkbox1vi4ersens
-IniWrite, %Checkbox1animcancel%, data\genConfig.ini, Setings, Checkbox1animcancel
-IniWrite, %Checkbox1bhop%, data\genConfig.ini, Setings, Checkbox1bhop
-IniWrite, %Checkbox1bhopDelay%, data\genConfig.ini, Setings, Checkbox1bhopDelay
-IniWrite, %Checkbox1bhopDelayMs%, data\genConfig.ini, Setings, Checkbox1bhopDelayMs
-IniWrite, %RegeditExport1%, data\genConfig.ini, Setings, RegeditExport1
-IniWrite, %RegeditExport2%, data\genConfig.ini, Setings, RegeditExport2
-IniWrite, %RegeditExport3%, data\genConfig.ini, Setings, RegeditExport3
-IniWrite, %RegeditExport4%, data\genConfig.ini, Setings, RegeditExport4
-IniWrite, %RegeditCheckBox1%, data\genConfig.ini, Setings, RegeditCheckBox1
-IniWrite, %RegeditCheckBox2%, data\genConfig.ini, Setings, RegeditCheckBox2
-IniWrite, %RegeditCheckBox3%, data\genConfig.ini, Setings, RegeditCheckBox3
-IniWrite, %RegeditCheckBox4%, data\genConfig.ini, Setings, RegeditCheckBox4
-IniWrite, %GlLanguage%, data\genConfig.ini, Setings, GlLanguage
-Reload
-Exitapp
-Return
+	FileVarImport:=A_LoopField
+	Goto, LabelImportSett
+	Return
 	}
 }
 Return
@@ -1160,14 +1263,14 @@ InputBox, RegeditExport3,, Задать имя сохраненой ветки �
 return
 
 4pickreg4:
-InputBox, RegeditExport4,, Задать имя сохраненой ветки реестра SDK-id,, 200, 150,,,,,%RegeditExport4%
+InputBox, RegeditExport4,, Задать имя сохраненой ветки реестра,, 200, 150,,,,,%RegeditExport4%
 	if ErrorLevel
 		Return
 	else
 	{
 	if (RegeditExport4 = "")
 		Return
-	RunWait, cmd /k reg export "HKEY_CURRENT_USER\Software\miHoYoSDK" %A_ScriptDir%\data\reg\%RegeditExport4%.reg /y & exit
+	RunWait, cmd /k reg export "HKEY_CURRENT_USER\Software\miHoYo" %A_ScriptDir%\data\reg\%RegeditExport4%.reg /y & exit
 	IniWrite, %RegeditExport4%, data\genConfig.ini, Setings, RegeditExport4
 	Gui, 1: Submit, NoHide
 	GuiControl,1:, VarRegeditExport4, %RegeditExport4%
@@ -1198,7 +1301,7 @@ return
 
 Metkakey_regeditstart4:
 MsgBox,,, Через 5 сек применится пресет №4`nPresets = %RegeditExport4%, 5
-RunWait, cmd /k reg DELETE "HKEY_CURRENT_USER\Software\miHoYoSDK" /f & exit
+RunWait, cmd /k reg DELETE "HKEY_CURRENT_USER\Software\miHoYo" /f & exit
 RunWait, cmd /k reg import %A_ScriptDir%\data\reg\%RegeditExport4%.reg & exit
 SoundBeep
 return
