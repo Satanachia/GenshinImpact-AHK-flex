@@ -2,7 +2,7 @@
 
 AHK скрипт для Genshin Impact. [Wiki](https://github.com/Kramar1337/GenshinImpact-AHK-flex/wiki)
 
-Ps. 65MB скачивает долго
+Ps. 63.5 MB скачивает долго...
 
 ![hippo](https://media.giphy.com/media/m5NjNK20jwcY3JviE4/giphy.gif)
 
@@ -26,10 +26,10 @@ __Возможности:__
 - Отключение CGI кастсцен
 - Автоматическая игра на "Лире ветров" (все сложно... но проще чем у других)
 - Выбор режима имитации ввода SendInput, SendPlay, WinApi, Interception (по стандарту стоит SendInput)
-  + SendInput (Стоит по стандарту, самый безопасный)
+  + SendInput (Стоит по стандарту, простой и безопасный)
   + SendPlay + SendInput (UAC OFF only или Run UI Access, для лечения фантомных шифтов)
-  + WinApi + SendInput (Самый безотказный, +RCS на луке, палится многими античитами кроме геншиновского)
-  + Interception + SendPlay (Для себя, умеет все, нипалится ничем)
+  + WinApi + SendInput (Самый безотказный, +RCS на луке, не безопасен!)
+  + Interception + SendPlay (Для себя, умеет все, непалится ничем*)
 - Импорт настроек скрипта
 - Ручной сброс настроек если скрипт не запускается "data\default.ahk"
 - Вкладка безопасность: Name changer, Hash changer, WindowNameChanger, Random 15-40ms (NoMacro)
