@@ -26,9 +26,9 @@ KeyboardVID=0
 KeyboardPID=0
 MouseVID=0
 MousePID=0
-InterceptionFishMouseMoveX=0
+InterceptionFishMouseMoveX=43
 InterceptionFishMouseMoveY=0
-InterceptionVentiMouseMoveX=0
+InterceptionVentiMouseMoveX=61
 InterceptionVentiMouseMoveY=0
 DefaultJopaTrue=0
 ;Активный макрос запускаемый вместе со скриптом. 4 - Эмбер-фишль, 5 - Венти-ганьюй и тд
