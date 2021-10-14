@@ -4,6 +4,10 @@ AHK скрипт для Genshin Impact.
 
 [Подробное описание](https://github.com/Kramar1337/GenshinImpact-AHK-flex/wiki)
 
+Иногда в скрипте встречаются баги и не всем удобно сообщать о них через гитхаб. По вопросам, багам, идеям пишите в дискорд.
+
+Discord: Kramar228#3764
+
 Ps. 63.5 MB скачивает долго...
 
 ![hippo](https://media.giphy.com/media/tzZuVHOS40g2x3S0m5/giphy.gif)
