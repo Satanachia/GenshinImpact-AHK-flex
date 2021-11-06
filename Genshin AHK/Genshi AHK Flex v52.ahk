@@ -7,7 +7,7 @@ F3 - *Автоходьба
 F - Фастлут
 Z - Скип диалогов
 X - Авторыбалка (дабл клик вкл, сингл клик выкл)
-N - Таймер
+N - Таймер (дабл клик вкл, сингл клик выкл) (-popupwindow)
 Space - Банихоп
 Left - Пролистать оверлей
 Right - Пролистать оверлей
@@ -17,13 +17,13 @@ V - Macro Key
 Numpad 0 - Включить/отключить банихоп
 Numpad 1 - Стрельба на Amber по легиту но нужно быть в движении на +W
 Numpad 2 - Стрельба на Fischl по легиту но нужно быть в движении на +W
-Numpad 3 - Xiangling DragonStrike
-Numpad 4 - Fischl и Amber рейдж +W
-Numpad 5 - Venti Ganyu Yoimiya MachineGun
+Numpad 3 - Yoimiya N1RR стоять на месте(38 стрел)
+Numpad 4 - Ganyu Venti Yoimiya Amber Fischl Aloy Tartaglia *Diona *Sara
+Numpad 5 - MachineGun: Ganyu Venti Yoimiya
 Numpad 6 - Klee Сombo
-Numpad 7 - Diluc+Beidou DragonStrike
-Numpad 8 - Noelle DragonStrike
-Numpad 9 - Eula DragonStrike
+Numpad 7 - Diluc DragonStrike(Ручной)
+Numpad 8 - Hu Tao 9N2CJ
+Numpad 9 - Hu Tao 9H1CJ
 Numpad + - Klee
 
 Python
@@ -37,6 +37,8 @@ Insert - Включить/отключить ReShade
 
 Windows Shortcut
 CTRL-ALT-Numpad0 - Запустить ярлык GenshAHK.lnk
+; =======================================================================
+
 
 Не забыть что при добавлении строк конфига нужно менять в дефолте-1, запись-2, импортер-3
 
@@ -44,7 +46,88 @@ CTRL-ALT-Numpad0 - Запустить ярлык GenshAHK.lnk
 !play
 
 
+База	Крит	Среднее
+3 626	9 413	5 860 	лук амоса т1+пасивка
+2 586	7 230	5 405 	небесное крыло т1
+3 313	8 601	5 354 	хамаюми т5+пасивка
+2 438	6 328	5 153 	*Рогатка т5+пасивка
+3 137	8 143	5 069 	составной т5+пасивка
+3 069	7 966	4 959 	лук амоса т1
+2 972	7 716	4 803 	составной т1+пасивка
+2 924	7 590	4 725 	хамаюми т1+пасивка
 
+
+21 день - 1 банер
+---таблица крамбубликса
+Торт			~13 октября		2.2 Version
+Хутао + Тома	~3 ноября		2.2 Version
+Альбедо			~24 ноября		2.3 Version
+Итто + Горо		~15 декабря		2.3 Version
+Шеньхэ			~5 января		2.4 Version
+Сяо	+ Юн Чжин	~26	января		2.4 Version
+Ганью			~16 февраля		2.5 Version
+Яэ + ?			~9 марта		2.5 Version
+
+
+
+---
+А где реран козы? Через 126+ дней в 2022?
+
+
+
+Сколько гемов можно получить чтобы забрать ивент крутки, за МЕСЯЦ:
+2700 с луны
+300 с луны через конвертацию
+1800 с ежедневочек
+800 - 5 круток ивент банера с магазина паймон в обмен на пыль 75 * 5 = 375 пыли - 25(27) потратить любых круток
+1200 - бездна
+1260 - ивенты за месяц, 420 - 1 ивент, всего 3 за месяц
+----
+8060 точно за месяц прибудет - 50 круток
+5060 без луны но с бездной - 31 крутка
+3860 без луны без бездны - 24 крутки
+3060 без паймон луны бездны - 19 крутки
+
+
+Не вошло в список:
+600-900 - тех. работы в конце патча
+300 - Коды из стрима в конце патча
+
+
+
+19:08:30 респавн боса
+между ними 6 мин 10 сек
+19:14:40 респавн боса
+между ними 7 мин 20 сек
+19:22:00 респавн боса
+между ними 5 мин
+19:27:00 респавн боса
+между ними 7 мин 30 сек
+19:34:32 респавн боса
+
+
+
+
+
+
+
+Изменения: 05.11.2021
+ - Numpad 8 - Hu Tao 9N2CJ(2 нормал => отмена прыжком, 9-10 тычек, хитлаг удлиняет пиро инфузию до 10 сек)
+ - Numpad 9 - Hu Tao 9H1CJ(удержание => отмена прыжком, 9 тычек)	
+ - Оверлей с инфой стр 5 ап оружия и Тома
+ - Секретная технология создания правильных значков без "лесенок"
+
+Изменения: 02.11.2021
+ - Часики(таймер на боссов) стали лучше (дабл клик вкл, сингл клик выкл) вешает часики поверх экрана в (-popupwindow) режиме игры, тикает 4 мин и 5 и закрываются 
+
+Изменения: 28.10.2021
+ - Yoimiya N1RR на WinApi и Sendinput быстрее чем на SendPlay и AHI
+ - Numpad 7 - Diluc DragonStrike, лучше работает, терь только ручной режим(делать удар в полете самому)
+
+Изменения: 24.10.2021
+ - Yoimiya N1RR вместо сянлин драгонстрайк, Sendinput быстрее WinApi
+ - Запрос админ прав для сендплей
+ - Мелкие исправления
 
 Изменения: 15.10.2021
  - В оверлей добавлен Горо и Итто(4 стр)
@@ -192,7 +275,7 @@ CTRL-ALT-Numpad0 - Запустить ярлык GenshAHK.lnk
 
 
 ;===============================дерективы
-WinName:= "Genshi AHK Flex v5.1 by Kramar1337"
+WinName:= "Genshi AHK Flex v5.2 by Kramar1337"
 #NoEnv
 SendMode Input
 SetWorkingDir %A_ScriptDir%
@@ -211,7 +294,7 @@ if IsAdmin
 {
 
 
-if (metodVvoda == 1 or metodVvoda == 3 or metodVvoda == 4)
+if (metodVvoda == 1 or metodVvoda == 2 or metodVvoda == 3 or metodVvoda == 4)
 {
 CommandLine := DllCall("GetCommandLine", "Str")
 If !(A_IsAdmin || RegExMatch(CommandLine, " /restart(?!\S)")) {
@@ -635,9 +718,9 @@ Gui, 1: Add, CheckBox, vONregreadDir gCheckboxRegDirG x16 y64 w121 h23 Checked%O
 Gui, 1: Add, Edit, x16 y88 w92 h21 vEditDir +Disabled, %DirVarGensh%
 Gui, 1: Add, Button, ggameway x112 y88 w23 h21, ...
 if GlLanguage
-Gui, 1: Add, Text, x16 y112 w120 h23, Кастсцены CGI
+Gui, 1: Add, Text, x16 y112 w120 h23, Катсцены CGI
 Else
-Gui, 1: Add, Text, x16 y112 w120 h23, Cast scenes CGI
+Gui, 1: Add, Text, x16 y112 w120 h23, Cutscenes CGI
 
 Gui, 1: Add, Button, gOnCGI x16 y136 w43 h23, ON
 Gui, 1: Add, Button, gOffCGI x96 y136 w43 h23, OFF
@@ -673,9 +756,9 @@ Gui, 1: Add, Button, gRunButton x288 y136 w43 h23, Run
 
 ;===============================импорт-экспорт настроек
 if GlLanguage
-Gui, 1: Add, GroupBox, x344 y24 w113 h80, Импорт настроек
+Gui, 1: Add, GroupBox, x343 y24 w114 h80, Импорт настроек
 Else
-Gui, 1: Add, GroupBox, x344 y24 w113 h80, Import settings
+Gui, 1: Add, GroupBox, x343 y24 w114 h80, Import settings
 
 
 
@@ -745,28 +828,29 @@ Gui, 1: Add, Text, x16 y72 w120 h23, Step 1. Instal
 Gui, 1: Add, Text, x16 y96 w157 h23, Step 2. Run and start the game
 Gui, 1: Add, Picture, x208 y16 w252 h256 +BackgroundTrans, data\page5pcmr.png
 Gui, 1: Tab, 6 	;==============ссылки=====================================================================ссылки====Tab
+Gui, 1: Add, Picture, x5 y175 w456 h100, data\forecast.png
 if GlLanguage
-Gui, 1: Add, GroupBox, x8 y24 w147 h244, Разное
+Gui, 1: Add, GroupBox, x8 y24 w147 h146, Разное
 Else
-Gui, 1: Add, GroupBox, x8 y24 w147 h244, Other
+Gui, 1: Add, GroupBox, x8 y24 w147 h146, Other
 Gui, 1: Add, Link, x16 y48 w120 h23, <a href="https://paimon.moe/timeline/">Timeline</a>
 Gui, 1: Add, Link, x16 y72 w120 h23, <a href="https://genshin.aspirine.su/">ASPirine Калькулятор</a>
 Gui, 1: Add, Link, x16 y96 w120 h23, <a href="https://frzyc.github.io/genshin-optimizer/#/">Genshin Optimizer</a>
 Gui, 1: Add, Link, x16 y120 w120 h23, <a href="https://genshin.honeyhunterworld.com/">Honeyhunterworld.com</a>
 Gui, 1: Add, Link, x16 y144 w120 h23, <a href="https://genshin-impact.fandom.com/wiki/Genshin_Impact_Wiki">Genshin Impact Wiki</a>
 if GlLanguage
-Gui, 1: Add, GroupBox, x160 y24 w147 h244, Карты
+Gui, 1: Add, GroupBox, x160 y24 w147 h146, Карты
 Else
-Gui, 1: Add, GroupBox, x160 y24 w147 h244, Maps
+Gui, 1: Add, GroupBox, x160 y24 w147 h146, Maps
 Gui, 1: Add, Link, x168 y48 w120 h23, <a href="https://genshin-impact-map.appsample.com/">Genshin-Impact-Map</a>
 Gui, 1: Add, Link, x168 y72 w120 h23, <a href="https://webstatic-sea.mihoyo.com/app/ys-map-sea/">Mihoyo Map</a>
 Gui, 1: Add, Link, x168 y96 w120 h23, <a href="https://mapgenie.io/genshin-impact/maps/teyvat">MapGenie.io</a>
 Gui, 1: Add, Link, x168 y120 w120 h23, <a href="https://yuanshen.site/">Chinese map</a>
 Gui, 1: Add, Link, x168 y144 w120 h23, <a href="https://genshin-info.ru/interaktivnaya-karta/">Genshin-Info.ru</a>
 if GlLanguage
-Gui, 1: Add, GroupBox, x312 y24 w146 h244, Сливочники
+Gui, 1: Add, GroupBox, x312 y24 w146 h146, Сливочники
 Else
-Gui, 1: Add, GroupBox, x312 y24 w146 h244, Leaks
+Gui, 1: Add, GroupBox, x312 y24 w146 h146, Leaks
 Gui, 1: Add, Link, x320 y48 w120 h23, <a href="https://www.reddit.com/r/Genshin_Impact_Leaks/">Reddit GI Leaks</a>
 Gui, 1: Add, Link, x320 y48 w120 h23, <a href="https://www.reddit.com/r/Genshin_Impact_Leaks/">Reddit GI Leaks</a>
 Gui, 1: Add, Link, x320 y72 w120 h23, <a href="https://twitter.com/Genshin_Intel">Twitter Genshin Intel</a>
@@ -1339,7 +1423,7 @@ ToolTip
 }
 Else
 {
-Menu,Tray, Icon, data\genicon.png, ,1
+Menu,Tray, Icon, data\genicon.ico, ,1
 ToolTip, ON, 0, 0
 sleep 300
 ToolTip
@@ -1588,23 +1672,52 @@ return
 
 
 ;===============================Плавание больше нет, тут таймер на боссов
-Metkakey_autoswim:
-sleep 50
+#UseHook, On
+metka3kli1:
 IfWinActive, %gameexe1337%		;ahk_exe GenshinImpact.exe
 {
-if FIXchat
-{
-	StructSize1337 := A_PtrSize + 16
-	VarSetCapacity(InfoStruct1337, StructSize1337)
-	NumPut(StructSize1337, InfoStruct1337)
-	DllCall("GetCursorInfo", UInt, &InfoStruct1337)
-	Result1337 := NumGet(InfoStruct1337, 8)
-	if (Result1337 <> 0) 			;если размер курсора больше 0 то мы в чате и скрипт не нажимает кнопки
-		Return
+	if FIXchat
+	{
+		StructSize1337 := A_PtrSize + 16
+		VarSetCapacity(InfoStruct1337, StructSize1337)
+		NumPut(StructSize1337, InfoStruct1337)
+		DllCall("GetCursorInfo", UInt, &InfoStruct1337)
+		Result1337 := NumGet(InfoStruct1337, 8)
+		if (Result1337 <> 0) 			;если размер курсора больше 0 то мы в чате и скрипт не нажимает кнопки
+			Return
+	}
+	WinClose, %A_WorkingDir%\data\Timer.ahk ahk_class AutoHotkey,,1
+	Run, %A_ScriptDir%\data\Timer.ahk
 }
-Run, %A_ScriptDir%\data\Timer.ahk
-}
-return
+Return
+metka3kli2:
+  WinClose, %A_WorkingDir%\data\Timer.ahk ahk_class AutoHotkey,,1
+Return
+
+
+
+#UseHook, Off
+Metkakey_autoswim:
+; Metkakey_key_vi4er_sens:
+  Pause1_=300     ; настройки
+  If not Second1
+  {
+    Second1=1
+	KeyWait, %key_autoswim%
+    SetTimer, DoublePress3, -%Pause1_%
+  }
+  Else
+  {
+    Second1=0
+    SetTimer, metka3kli1, -1
+  }
+Return
+DoublePress3:
+  If not Second1
+    Return
+  Second1=0
+  SetTimer, metka3kli2, -1
+Return
 
 
 
@@ -1660,7 +1773,7 @@ jopa11:=false
 if showtooltipVvoba
 ToolTip, Fishl legit, 0, 0
 Return
-;===============================кли Charge Attack
+;===============================ёмия быстрые нормал тычки
 *~$Numpad3::
 jopa1:=false
 jopa2:=false
@@ -1674,7 +1787,7 @@ jopa9:=false
 jopa10:=false
 jopa11:=false
 if showtooltipVvoba
-ToolTip, Xiangling Dragonstrick, 0, 0
+ToolTip, Yoimiya N1RR, 0, 0
 Return
 ;===============================фишль и эмбер
 *~$Numpad4::
@@ -1740,7 +1853,7 @@ jopa11:=false
 if showtooltipVvoba
 ToolTip, Diluc+Beidou DragonStrike, 0, 0
 Return
-;===============================драгонстрайк ноэль
+;===============================Hu Tao 9N2CJ(2 нормал, отмена прыжком, 9-10тычек, хитлаг удлиняет е-шку до9сек после10сек)
 *~$Numpad8::
 jopa1:=false
 jopa2:=false
@@ -1754,9 +1867,9 @@ jopa9:=false
 jopa10:=false
 jopa11:=false
 if showtooltipVvoba
-ToolTip, Noelle DragonStrike, 0, 0
+ToolTip, Hu Tao 9N2CJ, 0, 0
 Return
-;===============================драгонстрайк эола
+;===============================Hu Tao 9H1CJ(9 ударов, удержание, джамп кансел)
 *~$Numpad9::
 jopa1:=false
 jopa2:=false
@@ -1770,7 +1883,7 @@ jopa9:=true
 jopa10:=false
 jopa11:=false
 if showtooltipVvoba
-ToolTip, Eula DragonStrike, 0, 0
+ToolTip, Hu Tao 9H1CJ, 0, 0
 Return
 ;===============================нампад плюс, кли отмена прыжком
 *~$NumpadAdd::
@@ -1926,24 +2039,65 @@ Ivar++
 }
 }
 
-if jopa3 							;сян лин драгонстрайк
+if jopa3 							;ёмия тычки обычной атаки с отменой анимации
 {
 IfWinActive, %gameexe1337%
 {
-		Click down
+
+if metodVvoda = 3 
+{
+	sleep 1
+	Loop
+	{
+		GetKeyState, 2SpaceVar2, %key_animcancel%, P
+		If 2SpaceVar2 = U
+			break
+
+	multisendinput("LButton", "", "LButton", "", "", "", "0x0002", "0x0004")
+	Sleep 400 	;400 норм но нада меньше
+
+		GetKeyState, 2SpaceVar2, %key_animcancel%, P
+		If 2SpaceVar2 = U
+			break
+
+DllCall("keybd_event", int, 0x52, int, 0xA0, int, 0, int, 0)
+sleep 1
+DllCall("keybd_event", int, 0x52, int, 0xA0, int, 2, int, 0)
+
+		Sleep 25 	;30 норм, если на 25 отвал
+DllCall("keybd_event", int, 0x52, int, 0xA0, int, 0, int, 0)
+sleep 1
+DllCall("keybd_event", int, 0x52, int, 0xA0, int, 2, int, 0)
 		Sleep 1
-		Click up
-		Sleep 175			;180 норм
-		Send {LShift down}
-		Sleep 20
-		Send {LShift up}
-		Send {Space down}
-		Sleep 1
-		Send {Space up}
-		Sleep 25
-		Click down
-		Sleep 25
-		Click up
+	}
+}
+Else
+{
+	sleep 1
+	Loop
+	{
+		GetKeyState, 2SpaceVar2, %key_animcancel%, P
+		If 2SpaceVar2 = U
+			break
+
+	multisendinput("LButton", "", "LButton", "", "", "", "0x0002", "0x0004")
+	Sleep 400 	;400 норм но нада меньше
+
+		GetKeyState, 2SpaceVar2, %key_animcancel%, P
+		If 2SpaceVar2 = U
+			break
+
+	multisendinput("R", " down", "R", " down", "0x52", "1", "", "")
+	Sleep 1
+	multisendinput("R", " up", "R", " up", "0x52", "0", "", "")
+	Sleep 25 	;30 норм, если на 25 отвал
+	multisendinput("R", " down", "R", " down", "0x52", "1", "", "")
+	Sleep 1
+	multisendinput("R", " up", "R", " up", "0x52", "0", "", "")
+	Sleep 1
+	}
+}
+
 }
 }
 
@@ -2182,63 +2336,85 @@ if jopa7 							;дилюк бейдоу драгонстрайк
 {
 IfWinActive, %gameexe1337%
 {
-		sleep 1
 		Click down
-		Sleep 11
 		Click up
-		Sleep 335
-		Send {LShift down}
-		Sleep 20
-		Send {LShift up}
-		Send {Space down}
-		Sleep 25
-		Send {Space up}
-		Sleep 25
-		Click down
-		Sleep 25
-		Click up
+		Sleep 360			;360 норм дилюк
+		SendInput {LShift down}
+		Sleep 1
+		SendInput {LShift up}
+		SendInput {Space down}
+		SendInput {Space up}
+		; Sleep 25
+		; Click				;авто
+
+
+
+
+		; sleep 1			;Старый драгонстрайк
+		; Click down
+		; Sleep 11
+		; Click up
+		; Sleep 335
+		; Send {LShift down}
+		; Sleep 20
+		; Send {LShift up}
+		; Send {Space down}
+		; Sleep 25
+		; Send {Space up}
+		; Sleep 25
+		; Click down
+		; Sleep 25
+		; Click up
 }
 }
 
-if jopa8 							;ноэль драгонстрайк
+if jopa8 							;Hu Tao 9N2CJ(2 нормал, отмена прыжком, 9-10тычек, хитлаг удлиняет е-шку до9сек после10сек)
 {
 IfWinActive, %gameexe1337%
 {
-		Click down
-		Sleep 20
-		Click up
-		Sleep 410
-		Send {LShift down}
-		Sleep 20
-		Send {LShift up}
-		Send {Space down}
-		Sleep 25
-		Send {Space up}
-		Sleep 25
-		Click down
-		Sleep 25
-		Click up
+	Loop
+	{
+	    GetKeyState, 8SpaceState, %key_animcancel%, P
+		If 8SpaceState = U
+			break
+		
+		SendInput {LButton}
+		Sleep 190 	;190
+		SendInput {LButton}
+
+	    GetKeyState, 8SpaceState, %key_animcancel%, P
+		If 8SpaceState = U
+			break
+
+		Sleep 300 	;300
+		SendInput {Space}
+		
+	    GetKeyState, 8SpaceState, %key_animcancel%, P
+		If 8SpaceState = U
+			break
+		
+		sleep 590 	;590
+	}
 }
 }
 
-if jopa9 							;эола драгонстрайк
+if jopa9 							;Hu Tao 9H1CJ(9 ударов, удержание, джамп кансел)
 {
 IfWinActive, %gameexe1337%
 {
-		Click down
-		Sleep 11
-		Click up
-		Sleep 440
-		Send {LShift down}
-		Sleep 20
-		Send {LShift up}
-		Send {Space down}
-		Sleep 25
-		Send {Space up}
-		Sleep 25
-		Click down
-		Sleep 25
-		Click up
+	Loop
+	{
+	    GetKeyState, 9SpaceState, %key_animcancel%, P
+		If 9SpaceState = U
+			break
+		
+		SendInput {LButton down}
+		Sleep 400 	;400
+		SendInput {LButton up}
+		Sleep 15
+		SendInput {Space}
+		sleep 570 	;570
+	}
 }
 }
 
@@ -3400,13 +3576,13 @@ V - Macro Key
 Numpad 0 - Включить/отключить банихоп
 Numpad 1 - Стрельба на Amber по легиту но нужно быть в движении на +W
 Numpad 2 - Стрельба на Fischl по легиту но нужно быть в движении на +W
-Numpad 3 - Xiangling DragonStrike
-Numpad 4 - Fischl и Amber рейдж +W
-Numpad 5 - Venti Ganyu Yoimiya MachineGun
+Numpad 3 - Yoimiya N1RR стоять на месте(38 стрел)
+Numpad 4 - Ganyu Venti Yoimiya Amber Fischl Aloy Tartaglia *Diona *Sara
+Numpad 5 - MachineGun: Ganyu Venti Yoimiya
 Numpad 6 - Klee Сombo
-Numpad 7 - Diluc+Beidou DragonStrike
-Numpad 8 - Noelle DragonStrike
-Numpad 9 - Eula DragonStrike
+Numpad 7 - Diluc DragonStrike(Ручной)
+Numpad 8 - Hu Tao 9N2CJ
+Numpad 9 - Hu Tao 9H1CJ
 Numpad + - Klee
 
 Python
@@ -3444,13 +3620,13 @@ V - Macro Key
 Numpad 0 - Enable / Disable Banihop
 Numpad 1 - Shoot Amber on Legit but need to be in motion + W
 Numpad 2 - Shooting Fischl on Legit but you need to be in motion + W
-Numpad 3 - Xiangling DragonStrike
-Numpad 4 - Fischl and Amber Rage + W
-Numpad 5 - Venti Ganyu Yoimiya MachineGun
-Numpad 6 - Klee Combo
-Numpad 7 - Diluc + Beidou DragonStrike
-Numpad 8 - Noelle DragonStrike
-Numpad 9 - Eula DragonStrike
+Numpad 3 - Yoimiya N1RR стоять на месте(38 стрел)
+Numpad 4 - Ganyu Venti Yoimiya Amber Fischl Aloy Tartaglia *Diona *Sara
+Numpad 5 - MachineGun: Ganyu Venti Yoimiya
+Numpad 6 - Klee Сombo
+Numpad 7 - Diluc DragonStrike(Ручной)
+Numpad 8 - Hu Tao 9N2CJ
+Numpad 9 - Hu Tao 9H1CJ
 Numpad + - Klee
 
 Python
