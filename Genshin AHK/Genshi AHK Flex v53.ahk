@@ -145,7 +145,9 @@ CTRL-ALT-Numpad0 - Запустить ярлык GenshAHK.lnk
 
 
 
-
+Изменения: 21.12.2021
+ - Добавлены Горо и Итто в 6 стр оверлея +пушки
+ - Подкручен бинд на карту, отключена максимизация окна(вернуть если будут проблемы)
 
 
 Изменения: 10.12.2021
@@ -1629,7 +1631,7 @@ if (toggle1)
 IfWinExist, ahk_group GroupNameMap1337 ;если найдено окно с катрой то..
 	{
 
-WinMaximize ahk_group GroupNameMap1337 ;максимизировать
+; WinMaximize ahk_group GroupNameMap1337 ;максимизировать
 WinActivate ahk_group GroupNameMap1337 ;сделать активным
 
 	if MonitorFound1
@@ -1652,7 +1654,7 @@ IfWinExist, ahk_group GroupNameMap1337 ;ожидание окна карты
 {
 sleep 1
 
-WinMaximize ahk_group GroupNameMap1337 ;максимизировать окно
+; WinMaximize ahk_group GroupNameMap1337 ;максимизировать окно
 WinActivate ahk_group GroupNameMap1337 ;сделать активным
 
 break
@@ -1669,7 +1671,7 @@ MouseMove, ScreenWidthMap2mon228, ScreenHeightMap2mon228
 }
 ; проблемная строчка
 
-WinMaximize %gameexe1337%
+; WinMaximize %gameexe1337%
 WinActivate %gameexe1337%
 
 
@@ -2498,7 +2500,7 @@ Loop
 	break
 
 		Send {vk52 down} 	;R vk52
-		sleep 20
+		sleep 40
 		Send {vk52 up} 	;R vk52
 		sleep 40
 		
@@ -2523,7 +2525,7 @@ Loop
 		DllCall("mouse_event", uint, 1, int, FishMouseMoveX, int, FishMouseMoveY, uint, 0, int, 0) 	;двигаю мышку чтобы выровнять спрей
 		
 		DllCall("keybd_event", int, 0x52, int, 0xA0, int, 0, int, 0)
-		sleep 20
+		sleep 40
 		DllCall("keybd_event", int, 0x52, int, 0xA0, int, 2, int, 0)
 		sleep 40
 		Sleep 40
