@@ -22,14 +22,16 @@ Numpad 4 - Ganyu Venti Yoimiya Amber Fischl Aloy Tartaglia *Diona *Sara
 Numpad 5 - MachineGun: Ganyu Venti Yoimiya
 Numpad 6 - Legit лучники если кикает с сервера, 10.12.21 не кикает
 Numpad 7 - Diluc DragonStrike(Ручной)
-Numpad 8 - Hu Tao 9N2CJ
-Numpad 9 - Hu Tao 9H1CJ
+Numpad 8 - Hu Tao N2CJ
+Numpad 9 - Hu Tao H1CJ
 Alt + Numpad 1 - Klee N1CJ
 Alt + Numpad 2 - Klee N2H1
 Alt + Numpad 3 - Klee AutoAttack(Удерживать WASD + Macro Key)
 Alt + Numpad 4 - AutoAttack
 Alt + Numpad 5 - Xiao SpamPlunge
 Alt + Numpad 6 - Xiao N1SpamPlunge
+Alt + Numpad 7 - Ganyu Hold (Test 1)
+Alt + Numpad 8 - Ganyu Hold (Test 2)
 
 Python
 Tab + ~(тильт или Ё) - Обновить список мелодий
@@ -85,10 +87,31 @@ CTRL-ALT-Numpad0 - Запустить ярлык GenshAHK.lnk
 
 
 
+250*4 + 500 = 1460 экспы в день с ежедневочек
+160/2 = 800 экспы с смолы в день
+------
+1460 + 800 = 2260 в день ежедневки + смола
+------
+15 820 в неделю
+6600 задания легенд (встречи)
+5500+- задания легенд
 
 
 
 
+
+
+
+
+
+Изменения: 26.01.2022
+ - Обратный фикс чат для скипа диалогов
+ - Переработан манипулятор реестра: +Фильтры, -кнопки и тд
+ - Alt + Numpad 7 - Ganyu Hold
+ - Alt + Numpad 8 - Ganyu Hold
+
+Изменения: 22.01.2022
+ - Переделана логика работы бинда интерактивной карты
 
 Изменения: 14.01.2022
  - Исправление масштабирования оверлея и удаление надстройки
@@ -296,7 +319,7 @@ CTRL-ALT-Numpad0 - Запустить ярлык GenshAHK.lnk
 
 
 ;===============================дерективы
-WinName:= "Genshi AHK Flex v5.4 by Kramar1337"
+WinName:= "Genshi AHK Flex v5.41 by Kramar1337"
 #NoEnv
 SendMode Input
 SetWorkingDir %A_ScriptDir%
@@ -631,15 +654,6 @@ if Checkbox1bhop = 1
 Hotkey, *~%key_bhop%, Metkakey_bhop, on
 ;не забыть что звездочка перед кнопкой разрешает несколько клавиш, тоесть W + Shift + Bhop, бхоп не тупит
 
-if RegeditCheckBox1 = 1
-Hotkey, F9, Metkakey_regeditstart1, on
-if RegeditCheckBox2 = 1
-Hotkey, F10, Metkakey_regeditstart2, on
-if RegeditCheckBox3 = 1
-Hotkey, F11, Metkakey_regeditstart3, on
-if RegeditCheckBox4 = 1
-Hotkey, F12, Metkakey_regeditstart4, on
-
 
 ;====================Настройки трея
 Menu,Tray,NoStandard
@@ -851,10 +865,10 @@ Gui, 1: Add, GroupBox, x8 y24 w226 h176, Работа с реестром
 Else
 Gui, 1: Add, GroupBox, x8 y24 w226 h176, Working with the registry
 Gui, 1: Add, Button, gpickregedit x16 y168 w210 h21, Open Regedit
-Gui, 1: Add, Edit, x48 y40 w45 h21 +Disabled, F9
-Gui, 1: Add, Edit, x48 y72 w45 h21 +Disabled, F10
-Gui, 1: Add, Edit, x48 y104 w45 h21 +Disabled, F11
-Gui, 1: Add, Edit, x48 y136 w45 h21 +Disabled, F12
+; Gui, 1: Add, Edit, x48 y40 w45 h21 +Disabled, F9
+; Gui, 1: Add, Edit, x48 y72 w45 h21 +Disabled, F10
+; Gui, 1: Add, Edit, x48 y104 w45 h21 +Disabled, F11
+; Gui, 1: Add, Edit, x48 y136 w45 h21 +Disabled, F12
 Gui, 1: Add, Edit, x104 y40 w83 h21 vVarRegeditExport1 +Disabled, %RegeditExport1%
 Gui, 1: Add, Edit, x104 y72 w83 h21 vVarRegeditExport2 +Disabled, %RegeditExport2%
 Gui, 1: Add, Edit, x104 y104 w83 h21 vVarRegeditExport3 +Disabled, %RegeditExport3%
@@ -867,6 +881,14 @@ Gui, 1: Add, CheckBox, vCheckboxRegeditCheckBox1 x24 y40 w21 h22 Checked%Regedit
 Gui, 1: Add, CheckBox, vCheckboxRegeditCheckBox2 x24 y72 w21 h22 Checked%RegeditCheckBox2%
 Gui, 1: Add, CheckBox, vCheckboxRegeditCheckBox3 x24 y104 w21 h22 Checked%RegeditCheckBox3%
 Gui, 1: Add, CheckBox, vCheckboxRegeditCheckBox4 x24 y136 w21 h22 Checked%RegeditCheckBox4%
+
+
+Gui, 1: Add, Button, gMetkakey_regeditstart1 x48 y40 w45 h23, Write
+Gui, 1: Add, Button, gMetkakey_regeditstart2 x48 y72 w45 h23, Write
+Gui, 1: Add, Button, gMetkakey_regeditstart3 x48 y104 w45 h23, Write
+Gui, 1: Add, Button, gMetkakey_regeditstart4 x48 y136 w45 h23, Write
+
+
 Gui, 1: Tab, 5 	;===============Решейд=====================================================================Решейд====Tab
 if GlLanguage
 Gui, 1: Add, GroupBox, x8 y24 w186 h103, Решейд
@@ -952,9 +974,26 @@ xSkip:=round(A_ScreenWidth*.7328)
 ySkip:=round(A_ScreenHeight*.7256)
 ; 7465 старые значения ySkip
 var0ov:=1 ;оверлей обозначить переменную
+
+
 ;===============================Выбор карты
 if (Map2toggle == 1)
 {
+run_param:="https://webstatic-sea.mihoyo.com/app/ys-map-sea/"
+}
+if (Map2toggle == 2)
+{
+run_param:="https://genshin-impact-map.appsample.com/"
+}
+if (Map2toggle == 3)
+{
+run_param:="https://mapgenie.io/genshin-impact/maps/teyvat"
+}
+if (Map2toggle == 4)
+{
+run_param:="https://yuanshen.site/"
+}
+;=========1 карта
 GroupAdd, GroupNameMap1337, Teyvat Interactive Map
 GroupAdd, GroupNameMap1337, Интерактивная карта Тейвата
 GroupAdd, GroupNameMap1337, Teyvat Interactive Map
@@ -969,28 +1008,28 @@ GroupAdd, GroupNameMap1337, Goldapfelarchipel
 GroupAdd, GroupNameMap1337, 金苹果群岛
 GroupAdd, GroupNameMap1337, 金蘋果群島
 GroupAdd, GroupNameMap1337, Archipel de la pomme dorée
-; run_param:="https://webstatic-sea.mihoyo.com/app/ys-map-sea/" 	;старые параметры запуска
-run_param:="https://webstatic-sea.mihoyo.com/app/ys-map-sea/"
-}
-if (Map2toggle == 2)
-{
+
+GroupAdd, GroupNameMap1337, Энканомия -
+GroupAdd, GroupNameMap1337, Enkanomiya -
+GroupAdd, GroupNameMap1337, 淵下宮
+GroupAdd, GroupNameMap1337, 渊下宫
+;========2 карта
 GroupAdd, GroupNameMap1337, Genshin Impact Interactive World Map
 GroupAdd, GroupNameMap1337, Интерактивная карта мира Genshin Impact
-run_param:="https://genshin-impact-map.appsample.com/"
-}
-if (Map2toggle == 3)
-{
+
+GroupAdd, GroupNameMap1337, Enkanomiya Map - Genshin Impact Interactive Map
+GroupAdd, GroupNameMap1337, Карта Энканомия - интерактивная карта Genshin Impac
+;========3 карта
 GroupAdd, GroupNameMap1337, Genshin Impact Interactive Map | Map Genie
 GroupAdd, GroupNameMap1337, Интерактивная карта воздействия Геншина | Карта Genie
-run_param:="https://mapgenie.io/genshin-impact/maps/teyvat"
-}
-if (Map2toggle == 4)
-{
+;========4 карта
 GroupAdd, GroupNameMap1337, Original God Map
 GroupAdd, GroupNameMap1337, Оригинальная карта бога
 GroupAdd, GroupNameMap1337, 原神地图
-run_param:="https://yuanshen.site/"
-}
+GroupAdd, GroupNameMap1337, Genshin Map
+
+
+
 
 ;===============================Оверлей создание
 HpBarW:=ScreenWidthRe1
@@ -1359,6 +1398,11 @@ return
 
 
 1pickreg1:
+IfWinExist, %gameexe1337%
+{
+MsgBox,,, Нельзя мучать реестр пока открыта игра!, 2
+Return
+}
 InputBox, RegeditExport1,, Задать имя сохраненой ветки реестра,, 200, 150,,,,,%RegeditExport1%
 	if ErrorLevel
 		Return
@@ -1374,6 +1418,11 @@ InputBox, RegeditExport1,, Задать имя сохраненой ветки �
 return
 
 2pickreg2:
+IfWinExist, %gameexe1337%
+{
+MsgBox,,, Нельзя мучать реестр пока открыта игра!, 2
+Return
+}
 InputBox, RegeditExport2,, Задать имя сохраненой ветки реестра,, 200, 150,,,,,%RegeditExport2%
 	if ErrorLevel
 		Return
@@ -1389,6 +1438,11 @@ InputBox, RegeditExport2,, Задать имя сохраненой ветки �
 return
 
 3pickreg3:
+IfWinExist, %gameexe1337%
+{
+MsgBox,,, Нельзя мучать реестр пока открыта игра!, 2
+Return
+}
 InputBox, RegeditExport3,, Задать имя сохраненой ветки реестра,, 200, 150,,,,,%RegeditExport3%
 	if ErrorLevel
 		Return
@@ -1404,6 +1458,11 @@ InputBox, RegeditExport3,, Задать имя сохраненой ветки �
 return
 
 4pickreg4:
+IfWinExist, %gameexe1337%
+{
+MsgBox,,, Нельзя мучать реестр пока открыта игра!, 2
+Return
+}
 InputBox, RegeditExport4,, Задать имя сохраненой ветки реестра,, 200, 150,,,,,%RegeditExport4%
 	if ErrorLevel
 		Return
@@ -1420,31 +1479,85 @@ return
 
 
 Metkakey_regeditstart1:
-MsgBox,,, Через 5 сек применится пресет №1`nPresets = %RegeditExport1%, 5
+Gui, 1: Submit, NoHide
+if !(CheckboxRegeditCheckBox1 = 1)
+Return
+IfWinExist, %gameexe1337%
+{
+MsgBox,,, Нельзя мучать реестр пока открыта игра!, 2
+Return
+}
+MsgBox 0x1, , Загрузить копию реестра "%RegeditExport1%"
+IfMsgBox OK, {
 RunWait, cmd /k reg DELETE "HKEY_CURRENT_USER\Software\miHoYo" /f & exit
 RunWait, cmd /k reg import %A_ScriptDir%\data\reg\%RegeditExport1%.reg & exit
 SoundBeep
+} Else IfMsgBox Cancel, {
+Return
+}
 return
 
 Metkakey_regeditstart2:
-MsgBox,,, Через 5 сек применится пресет №2`nPresets = %RegeditExport2%, 5
+Gui, 1: Submit, NoHide
+if !(CheckboxRegeditCheckBox2 = 1)
+Return
+IfWinExist, %gameexe1337%
+{
+MsgBox,,, Нельзя мучать реестр пока открыта игра!, 2
+Return
+}
+
+MsgBox 0x1, , Загрузить копию реестра "%RegeditExport2%"
+IfMsgBox OK, {
 RunWait, cmd /k reg DELETE "HKEY_CURRENT_USER\Software\miHoYo" /f & exit
 RunWait, cmd /k reg import %A_ScriptDir%\data\reg\%RegeditExport2%.reg & exit
 SoundBeep
+} Else IfMsgBox Cancel, {
+Return
+}
+
 return
 
 Metkakey_regeditstart3:
-MsgBox,,, Через 5 сек применится пресет №3`nPresets = %RegeditExport3%, 5
+Gui, 1: Submit, NoHide
+if !(CheckboxRegeditCheckBox3 = 1)
+Return
+IfWinExist, %gameexe1337%
+{
+MsgBox,,, Нельзя мучать реестр пока открыта игра!, 2
+Return
+}
+
+MsgBox 0x1, , Загрузить копию реестра "%RegeditExport3%"
+IfMsgBox OK, {
 RunWait, cmd /k reg DELETE "HKEY_CURRENT_USER\Software\miHoYo" /f & exit
 RunWait, cmd /k reg import %A_ScriptDir%\data\reg\%RegeditExport3%.reg & exit
 SoundBeep
+} Else IfMsgBox Cancel, {
+Return
+}
+
 return
 
 Metkakey_regeditstart4:
-MsgBox,,, Через 5 сек применится пресет №4`nPresets = %RegeditExport4%, 5
+Gui, 1: Submit, NoHide
+if !(CheckboxRegeditCheckBox4 = 1)
+Return
+IfWinExist, %gameexe1337%
+{
+MsgBox,,, Нельзя мучать реестр пока открыта игра!, 2
+Return
+}
+
+MsgBox 0x1, , Загрузить копию реестра "%RegeditExport4%"
+IfMsgBox OK, {
 RunWait, cmd /k reg DELETE "HKEY_CURRENT_USER\Software\miHoYo" /f & exit
 RunWait, cmd /k reg import %A_ScriptDir%\data\reg\%RegeditExport4%.reg & exit
 SoundBeep
+} Else IfMsgBox Cancel, {
+Return
+}
+
 return
 
 
@@ -1692,6 +1805,17 @@ return
 Metkakey_skipNPS:
 IfWinActive, %gameexe1337%
 {
+	if FIXchat
+	{
+		StructSize1337 := A_PtrSize + 16
+		VarSetCapacity(InfoStruct1337, StructSize1337)
+		NumPut(StructSize1337, InfoStruct1337)
+		DllCall("GetCursorInfo", UInt, &InfoStruct1337)
+		Result1337 := NumGet(InfoStruct1337, 8)
+		; MsgBox %Result1337%
+		if (Result1337 = 0) 			;если размер курсора 0 то скрипт не нажимает кнопки
+			Return
+	}
 Sleep 270
 Loop
 	{
@@ -2156,6 +2280,65 @@ jopa20:=false
 if showtooltipVvoba
 ToolTip, Xiao N1SpamPlunge, 0, 0
 Return
+;===============================Ганьюйка холды
+*~$!Numpad7::
+jopa1:=false
+jopa2:=false
+jopa3:=false
+jopa4:=false
+jopa5:=false
+jopa6:=false
+jopa7:=false
+jopa8:=false
+jopa9:=false
+jopa10:=false
+jopa11:=false
+jopa12:=false
+jopa13:=false
+jopa14:=false
+jopa15:=false
+jopa16:=false
+jopa17:=true
+jopa18:=false
+jopa19:=false
+jopa20:=false
+if showtooltipVvoba
+ToolTip, Ganyu Hold (Test 1), 0, 0
+Return
+;===============================Ганьюйка холды v2
+*~$!Numpad8::
+jopa1:=false
+jopa2:=false
+jopa3:=false
+jopa4:=false
+jopa5:=false
+jopa6:=false
+jopa7:=false
+jopa8:=false
+jopa9:=false
+jopa10:=false
+jopa11:=false
+jopa12:=false
+jopa13:=false
+jopa14:=false
+jopa15:=false
+jopa16:=false
+jopa17:=false
+jopa18:=true
+jopa19:=false
+jopa20:=false
+if showtooltipVvoba
+ToolTip, Ganyu Hold (Test 2), 0, 0
+Return
+
+
+
+
+
+
+
+
+
 
 
 AntiVACHashChanger:="fghfh3534gjdgdfgfj6867jhmbdsq4123asddfgdfgaszxxcasdf423dfght7657ghnbnghrtwer32esdfgr65475dgdgdf6867ghjkhji7456wsdfsf34sdfsdf324sdfgdfg453453453456345gdgdgdfsf"
@@ -2332,7 +2515,7 @@ Loop
 		sleep 23 	;Sleep 23
 }
 }
-if metodVvoda = 2 	;===========================================================протестил винапи режим на ембер все ок, не какает
+if metodVvoda = 2 	;===========================================================протестил винапи режим на ембер все ок, не кикает
 {
 Loop
 {
@@ -2516,7 +2699,7 @@ Loop
 		sleep 40 	;Sleep 23
 }
 }
-if metodVvoda = 2 	;===========================================================протестил винапи режим на ембер все ок, не какает
+if metodVvoda = 2 	;===========================================================протестил винапи режим на ембер все ок, не кикает
 {
 Loop
 {
@@ -2760,6 +2943,82 @@ IfWinActive, %gameexe1337%
 }
 
 
+if jopa17 							;ганьюй холд м1
+{
+IfWinActive, %gameexe1337%
+{
+	SendInput {vk52}
+	Loop
+	{
+		GetKeyState, SSpaceStateAA, %key_animcancel%, P
+		If SSpaceStateAA = U
+			break
+		loop 46 ; Sleep 2300
+		{
+		Sleep 50
+		GetKeyState, SSpaceStateAA, %key_animcancel%, P
+		If SSpaceStateAA = U
+			break
+		}
+		SendInput, {Blind}{vk1}
+	}
+	SendInput {vk52}
+}
+}
+
+if jopa18 							;ганьюй холд м2
+{
+IfWinActive, %gameexe1337%
+{
+
+
+	Loop
+	{
+		if metodVvoda = 2
+		{
+		if MousemoveBow
+		DllCall("mouse_event", uint, 1, int, 27, int, 0, uint, 0, int, 0)
+		}
+		if metodVvoda = 3
+		{
+		if MousemoveBow
+		AHI.SendMouseMoveRelative(mouseid, "27", "0") 	;движение
+		}
+			GetKeyState, SpaceStateAA, %key_animcancel%, P
+			If SpaceStateAA = U
+			break
+		SendInput {vk52}
+			loop 32 ; Sleep
+			{
+			Sleep 50
+			GetKeyState, SpaceStateAA, %key_animcancel%, P
+			If SpaceStateAA = U
+			break
+			}
+		SendInput, {Blind}{vk1}
+
+			loop 3 ; Sleep
+			{
+			Sleep 50
+			GetKeyState, SpaceStateAA, %key_animcancel%, P
+			If SpaceStateAA = U
+			break
+			}
+
+		SendInput {vk52}
+			loop 11 ; Sleep
+			{
+			Sleep 50
+			GetKeyState, SpaceStateAA, %key_animcancel%, P
+			If SpaceStateAA = U
+			break
+			}
+	}
+	SendInput {vk52}
+
+
+}
+}
 return
 
 
