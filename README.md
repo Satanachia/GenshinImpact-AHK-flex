@@ -1,4 +1,4 @@
-# Genshi AHK Flex v5.41
+# Genshi AHK Flex v5.42
 
 AHK скрипт для Genshin Impact.
 
@@ -134,6 +134,7 @@ Numpad 6 - Legit лучники если кикает с сервера
 Numpad 7 - Diluc DragonStrike(Ручной)
 Numpad 8 - Hu Tao N2CJ
 Numpad 9 - Hu Tao H1CJ
+Alt + Numpad 0 - Hu Tao N2CJ (min)
 Alt + Numpad 1 - Klee N1CJ
 Alt + Numpad 2 - Klee N2H1
 Alt + Numpad 3 - Klee AutoAttack(Удерживать WASD + Macro Key)
