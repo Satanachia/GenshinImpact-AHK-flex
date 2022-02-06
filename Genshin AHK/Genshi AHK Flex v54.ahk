@@ -103,6 +103,14 @@ CTRL-ALT-Numpad0 - Запустить ярлык GenshAHK.lnk
 
 
 
+Изменения: 06.02.2022
+ - Фикс таймера
+ - Изменения в вкладке "Реестр"
+ - Numpad 8 - Hu Tao N2CJ - изменения
+ - Alt + Numpad 0 - Hu Tao N2CJ(min) - минимальные тайминги
+
+Изменения: 31.01.2022
+ - Исправлен отключатель катсцен
 
 Изменения: 26.01.2022
  - Обратный фикс чат для скипа диалогов
@@ -724,7 +732,7 @@ Gui, 1: Add, Text, v1Textautoswim x104 y160 w66 h23, Timer
 Gui, 1: Add, CheckBox, vCheckbox0autoswim x16 y160 w13 h18 Checked%Checkbox1autoswim%
 Gui, 1: Add, Edit, x40 y184 w61 h21 vkey_vi4er_sens, %key_vi4er_sens%
 if GlLanguage
-Gui, 1: Add, Text, v1Textvi4er_sens x104 y184 w90 h23, Рыбал'очка
+Gui, 1: Add, Text, v1Textvi4er_sens x104 y184 w90 h23, Рыбалочка
 Else
 Gui, 1: Add, Text, v1Textvi4er_sens x104 y184 w90 h23, Fishing
 
@@ -749,7 +757,7 @@ Gui, 1: Add, Edit, vCheckbox1bhopDelayMs x160 y232 w28 h17 Number Limit4, %Check
 
 Gui, 1: Add, Text, v1TextaMs x192 y232 w14 h20, ms
 Gui, 1: Add, CheckBox, vCheckbox0bhopDelay x136 y232 w23 h18 Checked%Checkbox1bhopDelay%, >
-Random, RandomFishlPic1, 0,6
+Random, RandomFishlPic1, 0,20
 if (RandomFishlPic1 > 3)
 Gui, 1: Add, Picture, x208 y16 w252 h256 +BackgroundTrans, data\1page1fish.png
 else
@@ -864,7 +872,8 @@ if GlLanguage
 Gui, 1: Add, GroupBox, x8 y24 w226 h176, Работа с реестром
 Else
 Gui, 1: Add, GroupBox, x8 y24 w226 h176, Working with the registry
-Gui, 1: Add, Button, gpickregedit x16 y168 w210 h21, Open Regedit
+Gui, 1: Add, Button, gpickregedit x141 y170 w85 h21, Open Regedit
+Gui, 1: Add, Button, gclearregedit x17 y170 w85 h21, Clean Registry
 ; Gui, 1: Add, Edit, x48 y40 w45 h21 +Disabled, F9
 ; Gui, 1: Add, Edit, x48 y72 w45 h21 +Disabled, F10
 ; Gui, 1: Add, Edit, x48 y104 w45 h21 +Disabled, F11
@@ -1371,7 +1380,8 @@ ToolTip, Отладка: Перезапись dxgi.dll, 0, 0
 }
 ToolTip, Отладка: Меняем имя dxgi.dll, 0, 0
 FileMove, %EditDir%\Genshin Impact Game\dxgi.dll, %EditDir%\Genshin Impact Game\dxgi.dll.temp, 1
-SoundBeep
+SoundPlay, %A_ScriptDir%\data\zplop.wav
+; SoundBeep
 sleep 500
 ToolTip
 return
@@ -1491,7 +1501,7 @@ MsgBox 0x1, , Загрузить копию реестра "%RegeditExport1%"
 IfMsgBox OK, {
 RunWait, cmd /k reg DELETE "HKEY_CURRENT_USER\Software\miHoYo" /f & exit
 RunWait, cmd /k reg import %A_ScriptDir%\data\reg\%RegeditExport1%.reg & exit
-SoundBeep
+SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
 } Else IfMsgBox Cancel, {
 Return
 }
@@ -1511,7 +1521,7 @@ MsgBox 0x1, , Загрузить копию реестра "%RegeditExport2%"
 IfMsgBox OK, {
 RunWait, cmd /k reg DELETE "HKEY_CURRENT_USER\Software\miHoYo" /f & exit
 RunWait, cmd /k reg import %A_ScriptDir%\data\reg\%RegeditExport2%.reg & exit
-SoundBeep
+SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
 } Else IfMsgBox Cancel, {
 Return
 }
@@ -1532,7 +1542,7 @@ MsgBox 0x1, , Загрузить копию реестра "%RegeditExport3%"
 IfMsgBox OK, {
 RunWait, cmd /k reg DELETE "HKEY_CURRENT_USER\Software\miHoYo" /f & exit
 RunWait, cmd /k reg import %A_ScriptDir%\data\reg\%RegeditExport3%.reg & exit
-SoundBeep
+SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
 } Else IfMsgBox Cancel, {
 Return
 }
@@ -1553,7 +1563,7 @@ MsgBox 0x1, , Загрузить копию реестра "%RegeditExport4%"
 IfMsgBox OK, {
 RunWait, cmd /k reg DELETE "HKEY_CURRENT_USER\Software\miHoYo" /f & exit
 RunWait, cmd /k reg import %A_ScriptDir%\data\reg\%RegeditExport4%.reg & exit
-SoundBeep
+SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
 } Else IfMsgBox Cancel, {
 Return
 }
@@ -1851,7 +1861,7 @@ IfWinActive, %gameexe1337%		;ahk_exe GenshinImpact.exe
 			Return
 	}
 	WinClose, %A_WorkingDir%\data\Timer.ahk ahk_class AutoHotkey,,1
-	Run, %A_ScriptDir%\data\Timer.ahk
+	Run, %A_WorkingDir%\data\Timer.ahk
 }
 Return
 metka3kli2:
@@ -2103,7 +2113,7 @@ jopa18:=false
 jopa19:=false
 jopa20:=false
 if showtooltipVvoba
-ToolTip, Hu Tao 9N2CJ, 0, 0
+ToolTip, Hu Tao N2CJ, 0, 0
 Return
 ;===============================Hu Tao 9H1CJ(9 ударов, удержание, джамп кансел)
 *~$Numpad9::
@@ -2128,7 +2138,32 @@ jopa18:=false
 jopa19:=false
 jopa20:=false
 if showtooltipVvoba
-ToolTip, Hu Tao 9H1CJ, 0, 0
+ToolTip, Hu Tao H1CJ, 0, 0
+Return
+;===============================Hu Tao H1CJ 2
+*~$Numpad0::
+jopa1:=false
+jopa2:=false
+jopa3:=false
+jopa4:=false
+jopa5:=false
+jopa6:=false
+jopa7:=false
+jopa8:=false
+jopa9:=false
+jopa10:=true
+jopa11:=false
+jopa12:=false
+jopa13:=false
+jopa14:=false
+jopa15:=false
+jopa16:=false
+jopa17:=false
+jopa18:=false
+jopa19:=false
+jopa20:=false
+if showtooltipVvoba
+ToolTip, Hu Tao N2CJ, 0, 0
 Return
 ;===============================нампад плюс, кли отмена прыжком Klee N1CJ
 *~$!Numpad1::
@@ -2806,22 +2841,25 @@ IfWinActive, %gameexe1337%
 		If 8SpaceState = U
 			break
 		
-		SendInput {vk1} 	;LButton vk1
-		Sleep 190 	;190
-		SendInput {vk1} 	;LButton vk1
+		SendInput {vk1}
+		Sleep 200
+		SendInput {vk1}
 
 	    GetKeyState, 8SpaceState, %key_animcancel%, P
 		If 8SpaceState = U
 			break
 
-		Sleep 300 	;300
-		SendInput {vk20} 	;LButton vk20
+		Sleep 150
+		SendInput {vk1 down}
+		Sleep 530
 		
 	    GetKeyState, 8SpaceState, %key_animcancel%, P
 		If 8SpaceState = U
 			break
 		
-		sleep 590 	;590
+		SendInput {vk1 up}
+		SendInput {vk20}
+		sleep 570
 	}
 }
 }
@@ -2845,6 +2883,41 @@ IfWinActive, %gameexe1337%
 	}
 }
 }
+
+
+if jopa10 							;________________________Hu Tao 9N2CJ
+{
+IfWinActive, %gameexe1337%
+{
+	Loop
+	{
+	    GetKeyState, 8SpaceState, %key_animcancel%, P
+		If 8SpaceState = U
+			break
+		
+		SendInput {vk1}
+		Sleep 200
+		SendInput {vk1}
+
+	    GetKeyState, 8SpaceState, %key_animcancel%, P
+		If 8SpaceState = U
+			break
+
+		Sleep 150
+		SendInput {vk1 down}
+		Sleep 315
+		
+	    GetKeyState, 8SpaceState, %key_animcancel%, P
+		If 8SpaceState = U
+			break
+		
+		SendInput {vk1 up}
+		SendInput {vk20}
+		sleep 555
+	}
+}
+}
+
 
 if jopa11 							;_________________________кли джамп кансел
 {
@@ -3059,25 +3132,25 @@ FileMove, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\Video
 FileRemoveDir, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAssets, 1
 }
 }
-IfExist, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication 	;проверить прилетела ли обнова, если да то соединить файлы
-{
-IfExist, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication
-{
-FileMove, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication\*.*, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication\, 1
-    Loop, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication\*, 2 ; 2 означает "возвращать только папки".
-    {
-        FileMoveDir, %A_LoopFileFullPath%, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication, 1
-        ErrorCount += ErrorLevel
-        if ErrorLevel ; Сообщать о каждой проблемной папке.
-			MsgBox,,, Не удалось переместить %A_LoopFileFullPath%, 5
-    }
-FileRemoveDir, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication, 1
-}
-}
+; IfExist, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication 	;проверить прилетела ли обнова, если да то соединить файлы
+; {
+; IfExist, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication
+; {
+; FileMove, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication\*.*, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication\, 1
+    ; Loop, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication\*, 2 ; 2 означает "возвращать только папки".
+    ; {
+        ; FileMoveDir, %A_LoopFileFullPath%, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication, 1
+        ; ErrorCount += ErrorLevel
+        ; if ErrorLevel ; Сообщать о каждой проблемной папке.
+			; MsgBox,,, Не удалось переместить %A_LoopFileFullPath%, 5
+    ; }
+; FileRemoveDir, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication, 1
+; }
+; }
 
 
 FileMoveDir, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAssets, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAssets, 1
-FileMoveDir, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication, 1
+; FileMoveDir, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication, 1
 if (ErrorLevel == 1)
 msgbox ,,, ErrorLevel - %ErrorLevel%,1
 if (ErrorLevel == 0)
@@ -3100,21 +3173,21 @@ FileMove, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\Video
 FileRemoveDir, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAssets, 1
 }
 
-IfExist, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication
-{
-FileMove, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication\*.*, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication\, 1
-    Loop, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication\*, 2 ; 2 означает "возвращать только папки".
-    {
-        FileMoveDir, %A_LoopFileFullPath%, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication, 1
-        ErrorCount += ErrorLevel
-        if ErrorLevel ; Сообщать о каждой проблемной папке.
-			MsgBox,,, Не удалось переместить %A_LoopFileFullPath%, 5
-    }
-FileRemoveDir, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication, 1
-}
+; IfExist, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication
+; {
+; FileMove, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication\*.*, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication\, 1
+    ; Loop, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication\*, 2 ; 2 означает "возвращать только папки".
+    ; {
+        ; FileMoveDir, %A_LoopFileFullPath%, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication, 1
+        ; ErrorCount += ErrorLevel
+        ; if ErrorLevel ; Сообщать о каждой проблемной папке.
+			; MsgBox,,, Не удалось переместить %A_LoopFileFullPath%, 5
+    ; }
+; FileRemoveDir, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication, 1
+; }
 
 FileMoveDir, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAssets, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAssets, 1
-FileMoveDir, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication, 1
+; FileMoveDir, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\VideoAuthentication, %EditDir%\Genshin Impact Game\GenshinImpact_Data\StreamingAssets\1VideoAuthentication, 1
 if (ErrorLevel == 1)
 msgbox ,,, ErrorLevel - %ErrorLevel%,1
 if (ErrorLevel == 0)
@@ -4118,6 +4191,24 @@ Return
 
 pickregedit:
 Run, cmd /k @echo Off & reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Applets\Regedit /v LastKey /t REG_SZ /d "HKEY_CURRENT_USER\Software\miHoYo\Genshin Impact" /f & start "title" /b regedit.exe & exit
+Return
+
+clearregedit:
+IfWinExist, %gameexe1337%
+{
+MsgBox,,, Нельзя мучать реестр пока открыта игра!, 2
+Return
+}
+MsgBox 0x1, , Очистить реестр по пути:`nHKEY_CURRENT_USER\Software\miHoYo\Genshin Impact
+IfMsgBox OK, {
+RegDelete, HKEY_CURRENT_USER, Software\miHoYo\Genshin Impact
+SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
+} Else IfMsgBox Cancel, {
+Return
+}
+Return
+
+
 Return
 
 MetkaMenu0:
