@@ -22,8 +22,9 @@ Numpad 4 - Ganyu Venti Yoimiya Amber Fischl Aloy Tartaglia *Diona *Sara
 Numpad 5 - MachineGun: Ganyu Venti Yoimiya
 Numpad 6 - Legit лучники если кикает с сервера, 10.12.21 не кикает
 Numpad 7 - Diluc DragonStrike(Ручной)
-Numpad 8 - Hu Tao N2CJ
+Numpad 8 - Hu Tao N2CJ (slow)
 Numpad 9 - Hu Tao H1CJ
+Alt + Numpad 0 - Hu Tao N2CJ (fast)
 Alt + Numpad 1 - Klee N1CJ
 Alt + Numpad 2 - Klee N2H1
 Alt + Numpad 3 - Klee AutoAttack(Удерживать WASD + Macro Key)
@@ -32,6 +33,7 @@ Alt + Numpad 5 - Xiao SpamPlunge
 Alt + Numpad 6 - Xiao N1SpamPlunge
 Alt + Numpad 7 - Ganyu Hold (Test 1)
 Alt + Numpad 8 - Ganyu Hold (Test 2)
+Alt + Numpad 9 - Ningguang
 
 Python
 Tab + ~(тильт или Ё) - Обновить список мелодий
@@ -97,11 +99,16 @@ CTRL-ALT-Numpad0 - Запустить ярлык GenshAHK.lnk
 5500+- задания легенд
 
 
+Запланировано:
+смена и подкрутка иконок
+рандомизатор на все
+переписать некоторые пикчи
 
 
 
 
-
+Изменения: 08.02.2022
+ - Alt + Numpad 9 -  Ningguang
 
 Изменения: 06.02.2022
  - Фикс таймера
@@ -327,7 +334,7 @@ CTRL-ALT-Numpad0 - Запустить ярлык GenshAHK.lnk
 
 
 ;===============================дерективы
-WinName:= "Genshi AHK Flex v5.41 by Kramar1337"
+WinName:= "Genshi AHK Flex v5.42 by Kramar1337"
 #NoEnv
 SendMode Input
 SetWorkingDir %A_ScriptDir%
@@ -2090,7 +2097,7 @@ jopa20:=false
 if showtooltipVvoba
 ToolTip, Diluc+Beidou DragonStrike, 0, 0
 Return
-;===============================Hu Tao 9N2CJ(2 нормал, отмена прыжком, 9-10тычек, хитлаг удлиняет е-шку до9сек после10сек)
+;===============================Hu Tao N2CJ (slow)(2 нормал, отмена прыжком, 9-10тычек, хитлаг удлиняет е-шку до9сек после10сек)
 *~$Numpad8::
 jopa1:=false
 jopa2:=false
@@ -2113,9 +2120,9 @@ jopa18:=false
 jopa19:=false
 jopa20:=false
 if showtooltipVvoba
-ToolTip, Hu Tao N2CJ, 0, 0
+ToolTip, Hu Tao N2CJ (slow), 0, 0
 Return
-;===============================Hu Tao 9H1CJ(9 ударов, удержание, джамп кансел)
+;===============================Hu Tao H1CJ(9 ударов, удержание, джамп кансел)
 *~$Numpad9::
 jopa1:=false
 jopa2:=false
@@ -2140,7 +2147,7 @@ jopa20:=false
 if showtooltipVvoba
 ToolTip, Hu Tao H1CJ, 0, 0
 Return
-;===============================Hu Tao H1CJ 2
+;===============================Hu Tao N2CJ (fast)
 *~$Numpad0::
 jopa1:=false
 jopa2:=false
@@ -2163,7 +2170,7 @@ jopa18:=false
 jopa19:=false
 jopa20:=false
 if showtooltipVvoba
-ToolTip, Hu Tao N2CJ, 0, 0
+ToolTip, Hu Tao N2CJ (fast), 0, 0
 Return
 ;===============================нампад плюс, кли отмена прыжком Klee N1CJ
 *~$!Numpad1::
@@ -2364,6 +2371,31 @@ jopa19:=false
 jopa20:=false
 if showtooltipVvoba
 ToolTip, Ganyu Hold (Test 2), 0, 0
+Return
+;===============================Ningguang 3 тычки и холда
+*~$!Numpad9::
+jopa1:=false
+jopa2:=false
+jopa3:=false
+jopa4:=false
+jopa5:=false
+jopa6:=false
+jopa7:=false
+jopa8:=false
+jopa9:=false
+jopa10:=false
+jopa11:=false
+jopa12:=false
+jopa13:=false
+jopa14:=false
+jopa15:=false
+jopa16:=false
+jopa17:=false
+jopa18:=false
+jopa19:=true
+jopa20:=false
+if showtooltipVvoba
+ToolTip, Ningguang, 0, 0
 Return
 
 
@@ -3092,6 +3124,63 @@ IfWinActive, %gameexe1337%
 
 }
 }
+
+
+
+
+
+
+
+
+if jopa19 							;Alt + Numpad 9 - Ningguang
+{
+IfWinActive, %gameexe1337%
+{
+SendInput {vk57 Down} 	;кнопка W
+Sleep 1
+	Loop
+	{
+				GetKeyState, SpaceState, %key_animcancel%, P
+				If SpaceState = U
+					{
+					SendInput {vk57 Up}
+					break
+					}
+		SendInput {vk57 Down} 	;кнопка W
+		Sleep 1
+		SendInput {vk1}
+		Sleep 750
+				GetKeyState, SpaceState, %key_animcancel%, P
+				If SpaceState = U
+					{
+					SendInput {vk57 Up}
+					break
+					}
+		SendInput {vk1}
+		Sleep 750
+		SendInput {vk1}
+				GetKeyState, SpaceState, %key_animcancel%, P
+				If SpaceState = U
+					{
+					SendInput {vk57 Up}
+					break
+					}
+		Sleep 350
+		SendInput {vk1 Down}
+		Sleep 300
+				GetKeyState, SpaceState, %key_animcancel%, P
+				If SpaceState = U
+					{
+					SendInput {vk57 Up}
+					break
+					}
+		SendInput {vk1 Up}
+		sleep 1010
+	}
+}
+}
+
+
 return
 
 
