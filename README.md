@@ -33,6 +33,7 @@ __Что по функционалу:__
   + Xiao SpamPlunge
   + Xiao N1SpamPlunge
   + Ganyu Hold
+  + Ningguang
 
 __Возможности:__
 
@@ -132,9 +133,9 @@ Numpad 4 - Ganyu Venti Yoimiya Gorou Amber Fischl Aloy Tartaglia *Diona *Sara
 Numpad 5 - MachineGun: Ganyu Venti Yoimiya Gorou
 Numpad 6 - Legit лучники если кикает с сервера
 Numpad 7 - Diluc DragonStrike(Ручной)
-Numpad 8 - Hu Tao N2CJ
+Numpad 8 - Hu Tao N2CJ (slow)
 Numpad 9 - Hu Tao H1CJ
-Alt + Numpad 0 - Hu Tao N2CJ (min)
+Alt + Numpad 0 - Hu Tao N2CJ (fast)
 Alt + Numpad 1 - Klee N1CJ
 Alt + Numpad 2 - Klee N2H1
 Alt + Numpad 3 - Klee AutoAttack(Удерживать WASD + Macro Key)
@@ -143,6 +144,7 @@ Alt + Numpad 5 - Xiao SpamPlunge
 Alt + Numpad 6 - Xiao N1SpamPlunge
 Alt + Numpad 7 - Ganyu Hold (Test 1)
 Alt + Numpad 8 - Ganyu Hold (Test 2)
+Alt + Numpad 9 - Ningguang
 
 Python
 Tab + ~(тильт или Ё) - Обновить список мелодий
@@ -161,8 +163,11 @@ CTRL-ALT-Numpad0 - Запустить ярлык GenshAHK.lnk
 <details>
 <summary>==Список изменений==</summary>
 
-Изменения: 06.02.2022
+Изменения: 08.02.2022
 
+ - Alt + Numpad 9 -  Ningguang
+
+Изменения: 06.02.2022
  - Фикс таймера
  - Изменения в вкладке "Реестр"
  - Numpad 8 - Hu Tao N2CJ - изменения
