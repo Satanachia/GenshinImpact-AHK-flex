@@ -114,7 +114,7 @@ Insert - Включить/отключить ReShade
 Запланировано:
 бкапер настроек фристалеровских решейд фильтров для нвидии
 оверлей с выбором макросов
-автообновлятор
+
 
 
 
@@ -139,6 +139,7 @@ Insert - Включить/отключить ReShade
  - Предупреждение перед некоторыми действиями
  - Проверка пути
  - Установка портированых решейдовских фристалеровских фильтров для нвидии
+ - Aвтообновлятор
 
 Изменения: 08.02.2022
  - Alt + Numpad 9 -  Ningguang
@@ -1267,7 +1268,7 @@ Else
 	; MsgBox Проверить обнову
 	IniWrite, %A_MDAY%, data\inputversion.ini, Info, CheckMDAY
 	FileCreateDir, update
-	URLDownloadToFile, https://raw.githubusercontent.com/Kramar1337/TestAHK/main/inputversion.ini, update\inputversion.ini
+	URLDownloadToFile, https://raw.githubusercontent.com/Kramar1337/GenshinImpact-AHK-flex/main/Genshin`%20AHK/data/inputversion.ini, update\inputversion.ini
 	if(ErrorLevel)
 	{
 	FileRemoveDir, update, 1
@@ -2336,7 +2337,7 @@ Loop
 		GetKeyState, SpaceVar2, %key_skipNPS%, P
 		If SpaceVar2 = U
 			break 
-		Sleep 15
+		Sleep 25
 		if ScRandomT
 		{
 		Random, RandomVarSc, 15, 40
@@ -6031,11 +6032,419 @@ Return
 
 
 UpdateButton:
-MsgBox,,, UpdateButton, 1
+; MsgBox,,, UpdateButton, 1
+; MsgBox Проверить обнову
+	FileCreateDir, update
+	URLDownloadToFile, https://raw.githubusercontent.com/Kramar1337/GenshinImpact-AHK-flex/main/Genshin`%20AHK/data/inputversion.ini, update\inputversion.ini
+	if(ErrorLevel)
+		{
+		FileRemoveDir, update, 1
+		GuiControl,1:, GitUpPic, data\Github-yel.png
+		IniWrite, 0, data\inputversion.ini, Info, LastStatusCheck
+		MsgBox,,, ErrorLevel - %ErrorLevel%`nОшибка загрузки, 1
+		; MsgBox Ошибка загрузки
+		Return
+		}
+	IniRead, TimeupNew, update\inputversion.ini, Info, Timeup
+	if (TimeupNew = "ERROR")
+		{
+		FileRemoveDir, update, 1
+		GuiControl,1:, GitUpPic, data\Github-yel.png
+		IniWrite, 0, data\inputversion.ini, Info, LastStatusCheck
+		MsgBox,,, ErrorLevel - %ErrorLevel%`nОшибка сервера, 1
+		; MsgBox Ошибка сервера
+		Return
+		}
+	IniRead, TimeupOld, data\inputversion.ini, Info, Timeup
+	if (TimeupOld = "ERROR")
+		{
+		FileRemoveDir, update, 1
+		GuiControl,1:, GitUpPic, data\Github-yel.png
+		IniWrite, 0, data\inputversion.ini, Info, LastStatusCheck
+		MsgBox,,, ErrorLevel - %ErrorLevel%`nОшибка файлов, 1
+		; MsgBox Ошибка файлов
+		Return
+		}
+	If (TimeupNew > TimeupOld)
+		{
+		GuiControl,1:, GitUpPic, data\Github-red.png
+		IniWrite, 2, data\inputversion.ini, Info, LastStatusCheck
+		; MsgBox Обнаружена новая версия
+			ForceUpdateButton:
+			MsgBox 0x1, ,Download and instal update?
+			IfMsgBox OK, {
+			;==================================Блок с обновой
+			IniRead, FinalSizeZip, update\inputversion.ini, Info, FinalSizeZip
+			if (FinalSizeZip = "ERROR")
+				{
+				FileCreateDir, update
+				FinalSizeZip = 87793879
+				}
+			Global FinalSize, FinalSizeZip
+			DownloadFile("https://github.com/Kramar1337/GenshinImpact-AHK-flex/archive/main.zip", "update\main.zip")
+			
+			if !FileExist("update\main.zip")
+				{
+				MsgBox,,, Error`nФайл не скачался "update\main.zip", 1
+				Return
+				}
+	
+	ArcPath = %A_ScriptDir%\update\main.zip
+	OutPath = %A_ScriptDir%\update
+	Shell := ComObjCreate("Shell.Application")
+	Items := Shell.NameSpace(ArcPath).Items
+	Items.Filter(73952, "*")
+	Shell.NameSpace(OutPath).CopyHere(Items, 16)
+
+
+
+FileCopy, %A_ScriptDir%\data\reg\*.reg, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data\reg\, 1 	;копируем рег файлы из папки со скриптом в новую
+FileCopy, %A_ScriptDir%\data\soundall\*.mid, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data\soundall\, 1 	;копируем миди файлы из папки со скриптом в новую
+FileCopy, %A_ScriptDir%\data\midi_config.json, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data\midi_config.json, 1 	;копируем миди конфиг из папки со скриптом в новую
+
+FileVarImport=data\genConfig.ini
+
+	IniRead, KeyboardVID, %FileVarImport%, Extra, KeyboardVID
+	if !(KeyboardVID = "ERROR")
+IniWrite, %KeyboardVID%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, KeyboardVID
+	IniRead, KeyboardPID, %FileVarImport%, Extra, KeyboardPID
+	if !(KeyboardPID = "ERROR")
+IniWrite, %KeyboardPID%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, KeyboardPID
+	IniRead, MouseVID, %FileVarImport%, Extra, MouseVID
+	if !(MouseVID = "ERROR")
+IniWrite, %MouseVID%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, MouseVID
+	IniRead, MousePID, %FileVarImport%, Extra, MousePID
+	if !(MousePID = "ERROR")
+IniWrite, %MousePID%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, MousePID
+	IniRead, InterceptionFishMouseMoveX, %FileVarImport%, Extra, InterceptionFishMouseMoveX
+	if !(InterceptionFishMouseMoveX = "ERROR")
+IniWrite, %InterceptionFishMouseMoveX%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, InterceptionFishMouseMoveX
+	IniRead, InterceptionFishMouseMoveY, %FileVarImport%, Extra, InterceptionFishMouseMoveY
+	if !(InterceptionFishMouseMoveY = "ERROR")
+IniWrite, %InterceptionFishMouseMoveY%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, InterceptionFishMouseMoveY
+	IniRead, InterceptionVentiMouseMoveX, %FileVarImport%, Extra, InterceptionVentiMouseMoveX
+	if !(InterceptionVentiMouseMoveX = "ERROR")
+IniWrite, %InterceptionVentiMouseMoveX%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, InterceptionVentiMouseMoveX
+	IniRead, InterceptionVentiMouseMoveY, %FileVarImport%, Extra, InterceptionVentiMouseMoveY
+	if !(InterceptionVentiMouseMoveY = "ERROR")
+IniWrite, %InterceptionVentiMouseMoveY%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, InterceptionVentiMouseMoveY
+	IniRead, Prozra4nostiFis, %FileVarImport%, Fish, Prozra4nostiFis
+	if !(Prozra4nostiFis = "ERROR")
+IniWrite, %Prozra4nostiFis%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Fish, Prozra4nostiFis
+	IniRead, OttenokFis, %FileVarImport%, Fish, OttenokFis
+	if !(OttenokFis = "ERROR")
+IniWrite, %OttenokFis%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Fish, OttenokFis
+	IniRead, OptimizationFis, %FileVarImport%, Fish, OptimizationFis
+	if !(OptimizationFis = "ERROR")
+IniWrite, %OptimizationFis%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Fish, OptimizationFis
+	IniRead, Highperformancemode, %FileVarImport%, Setings, Highperformancemode
+	if !(Highperformancemode = "ERROR")
+IniWrite, %Highperformancemode%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, Highperformancemode
+	IniRead, ScWinrenamer, %FileVarImport%, Setings, ScWinrenamer ; проверка Winrenamer
+	if !(ScWinrenamer = "ERROR")
+IniWrite, %ScWinrenamer%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, ScWinrenamer ; проверка Winrenamer
+	IniRead, ScRenamer, %FileVarImport%, Setings, ScRenamer ; проверка Renamera
+	if !(ScRenamer = "ERROR")
+IniWrite, %ScRenamer%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, ScRenamer ; проверка Renamera
+	IniRead, ScHachCh, %FileVarImport%, Setings, ScHachCh ; проверка ScHachCh
+	if !(ScHachCh = "ERROR")
+IniWrite, %ScHachCh%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, ScHachCh ; проверка ScHachCh
+	IniRead, ScRandomT, %FileVarImport%, Setings, ScRandomT ; проверка рандом таймер
+	if !(ScRandomT = "ERROR")
+IniWrite, %ScRandomT%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, ScRandomT ; проверка рандом таймер
+	IniRead, ScOverlay, %FileVarImport%, Setings, ScOverlay ; проверка uid overlay
+	if !(ScOverlay = "ERROR")
+IniWrite, %ScOverlay%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, ScOverlay ; проверка uid overlay
+	IniRead, DefaultJopaTrue, %FileVarImport%, Extra, DefaultJopaTrue
+	if !(DefaultJopaTrue = "ERROR")
+IniWrite, %DefaultJopaTrue%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, DefaultJopaTrue
+	IniRead, key_animcancel, %FileVarImport%, Binds, key_animcancel
+	if !(key_animcancel = "ERROR")
+IniWrite, %key_animcancel%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Binds, key_animcancel
+	IniRead, key_map, %FileVarImport%, Binds, key_map
+	if !(key_map = "ERROR")
+IniWrite, %key_map%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Binds, key_map
+	IniRead, key_autowalk, %FileVarImport%, Binds, key_autowalk
+	if !(key_autowalk = "ERROR")
+IniWrite, %key_autowalk%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Binds, key_autowalk
+	IniRead, key_overlay, %FileVarImport%, Binds, key_overlay
+	if !(key_overlay = "ERROR")
+IniWrite, %key_overlay%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Binds, key_overlay
+	IniRead, key_fastlyt, %FileVarImport%, Binds, key_fastlyt
+	if !(key_fastlyt = "ERROR")
+IniWrite, %key_fastlyt%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Binds, key_fastlyt
+	IniRead, key_skipNPS, %FileVarImport%, Binds, key_skipNPS
+	if !(key_skipNPS = "ERROR")
+IniWrite, %key_skipNPS%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Binds, key_skipNPS
+	IniRead, key_bhop, %FileVarImport%, Binds, key_bhop
+	if !(key_bhop = "ERROR")
+IniWrite, %key_bhop%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Binds, key_bhop
+	IniRead, key_autoswim, %FileVarImport%, Binds, key_autoswim
+	if !(key_autoswim = "ERROR")
+IniWrite, %key_autoswim%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Binds, key_autoswim
+	IniRead, key_vi4er_sens, %FileVarImport%, Binds, key_vi4er_sens
+	if !(key_vi4er_sens = "ERROR")
+IniWrite, %key_vi4er_sens%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Binds, key_vi4er_sens
+	IniRead, FIXchat, %FileVarImport%, Setings, FIXchat
+	if !(FIXchat = "ERROR")
+IniWrite, %FIXchat%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, FIXchat
+
+	IniRead, CheckUpdatePic, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, CheckUpdatePic
+	if !(CheckUpdatePic = "ERROR")
+IniWrite, %CheckUpdatePic%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, CheckUpdatePic
+	IniRead, AutoExitAHK, %FileVarImport%, Setings, AutoExitAHK
+	if !(AutoExitAHK = "ERROR")
+IniWrite, %AutoExitAHK%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, AutoExitAHK
+	IniRead, IsAdmin, %FileVarImport%, Setings, IsAdmin
+	if !(IsAdmin = "ERROR")
+IniWrite, %IsAdmin%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, IsAdmin
+	IniRead, MousemoveBow, %FileVarImport%, Extra, MousemoveBow 	;двигать мышку вправо когда идет стрельба с макроса на винапи
+	if !(MousemoveBow = "ERROR")
+IniWrite, %MousemoveBow%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, MousemoveBow 	;двигать мышку вправо когда идет стрельба с макроса на винапи
+	IniRead, FishMouseMoveX, %FileVarImport%, Extra, FishMouseMoveX 	;сколько двигать для фишль по X = 43 на дефолтных настройках
+	if !(FishMouseMoveX = "ERROR")
+IniWrite, %FishMouseMoveX%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, FishMouseMoveX 	;сколько двигать для фишль по X = 43 на дефолтных настройках
+	IniRead, FishMouseMoveY, %FileVarImport%, Extra, FishMouseMoveY 	;сколько двигать для фишль по Y = 0
+	if !(FishMouseMoveY = "ERROR")
+IniWrite, %FishMouseMoveY%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, FishMouseMoveY 	;сколько двигать для фишль по Y = 0
+	IniRead, VentiMouseMoveX, %FileVarImport%, Extra, VentiMouseMoveX 	;двигать для венти по X = 43 на дефолтных настройках
+	if !(VentiMouseMoveX = "ERROR")
+IniWrite, %VentiMouseMoveX%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, VentiMouseMoveX 	;двигать для венти по X = 43 на дефолтных настройках
+	IniRead, VentiMouseMoveY, %FileVarImport%, Extra, VentiMouseMoveY 	;двигать для венти по X = 0
+	if !(VentiMouseMoveY = "ERROR")
+IniWrite, %VentiMouseMoveY%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Extra, VentiMouseMoveY 	;двигать для венти по X = 0
+	IniRead, BrauzerCheck, %FileVarImport%, Setings, BrauzerCheck ; проверка браузера
+	if !(BrauzerCheck = "ERROR")
+IniWrite, %BrauzerCheck%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, BrauzerCheck ; проверка браузера
+	IniRead, BrauzerPick, %FileVarImport%, Setings, BrauzerPick ; выбор браузера
+	if !(BrauzerPick = "ERROR")
+IniWrite, %BrauzerPick%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, BrauzerPick ; выбор браузера
+	IniRead, Map2toggle, %FileVarImport%, Setings, Map2toggle
+	if !(Map2toggle = "ERROR")
+IniWrite, %Map2toggle%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, Map2toggle
+	IniRead, gameexe1337, %FileVarImport%, Setings, GameExe	; исполняемый файл игры
+	if !(gameexe1337 = "ERROR")
+IniWrite, %gameexe1337%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, GameExe	; исполняемый файл игры
+	IniRead, ONregreadDir, %FileVarImport%, Setings, ONregreadDir ; поиск папки в реестре для откл кастсцен
+	if !(ONregreadDir = "ERROR")
+IniWrite, %ONregreadDir%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, ONregreadDir ; поиск папки в реестре для откл кастсцен
+	IniRead, DirGame, %FileVarImport%, Setings, DirGame
+	if !(DirGame = "ERROR")
+IniWrite, %DirGame%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, DirGame
+	IniRead, metodVvoda, %FileVarImport%, Setings, metodVvoda
+	if !(metodVvoda = "ERROR")
+IniWrite, %metodVvoda%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, metodVvoda
+	IniRead, showtooltipVvoba, %FileVarImport%, Setings, showtooltipVvoba
+	if !(showtooltipVvoba = "ERROR")
+IniWrite, %showtooltipVvoba%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, showtooltipVvoba
+	IniRead, showmegui, %FileVarImport%, Setings, showmegui
+	if !(showmegui = "ERROR")
+IniWrite, %showmegui%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, showmegui
+	IniRead, Checkbox1map, %FileVarImport%, Setings, Checkbox1map
+	if !(Checkbox1map = "ERROR")
+IniWrite, %Checkbox1map%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, Checkbox1map
+	IniRead, Checkbox1overlay, %FileVarImport%, Setings, Checkbox1overlay
+	if !(Checkbox1overlay = "ERROR")
+IniWrite, %Checkbox1overlay%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, Checkbox1overlay
+	IniRead, Checkbox1autowalk, %FileVarImport%, Setings, Checkbox1autowalk
+	if !(Checkbox1autowalk = "ERROR")
+IniWrite, %Checkbox1autowalk%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, Checkbox1autowalk
+	IniRead, Checkbox1fastlyt, %FileVarImport%, Setings, Checkbox1fastlyt
+	if !(Checkbox1fastlyt = "ERROR")
+IniWrite, %Checkbox1fastlyt%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, Checkbox1fastlyt
+	IniRead, Checkbox1skipNPS, %FileVarImport%, Setings, Checkbox1skipNPS
+	if !(Checkbox1skipNPS = "ERROR")
+IniWrite, %Checkbox1skipNPS%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, Checkbox1skipNPS
+	IniRead, Checkbox1autoswim, %FileVarImport%, Setings, Checkbox1autoswim
+	if !(Checkbox1autoswim = "ERROR")
+IniWrite, %Checkbox1autoswim%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, Checkbox1autoswim
+	IniRead, Checkbox1vi4ersens, %FileVarImport%, Setings, Checkbox1vi4ersens
+	if !(Checkbox1vi4ersens = "ERROR")
+IniWrite, %Checkbox1vi4ersens%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, Checkbox1vi4ersens
+	IniRead, Checkbox1animcancel, %FileVarImport%, Setings, Checkbox1animcancel
+	if !(Checkbox1animcancel = "ERROR")
+IniWrite, %Checkbox1animcancel%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, Checkbox1animcancel
+	IniRead, Checkbox1bhop, %FileVarImport%, Setings, Checkbox1bhop
+	if !(Checkbox1bhop = "ERROR")
+IniWrite, %Checkbox1bhop%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, Checkbox1bhop
+	IniRead, Checkbox1bhopDelay, %FileVarImport%, Setings, Checkbox1bhopDelay
+	if !(Checkbox1bhopDelay = "ERROR")
+IniWrite, %Checkbox1bhopDelay%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, Checkbox1bhopDelay
+	IniRead, Checkbox1bhopDelayMs, %FileVarImport%, Setings, Checkbox1bhopDelayMs
+	if !(Checkbox1bhopDelayMs = "ERROR")
+IniWrite, %Checkbox1bhopDelayMs%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, Checkbox1bhopDelayMs
+	IniRead, RegeditExport1, %FileVarImport%, Setings, RegeditExport1
+	if !(RegeditExport1 = "ERROR")
+IniWrite, %RegeditExport1%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, RegeditExport1
+	IniRead, RegeditExport2, %FileVarImport%, Setings, RegeditExport2
+	if !(RegeditExport2 = "ERROR")
+IniWrite, %RegeditExport2%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, RegeditExport2
+	IniRead, RegeditExport3, %FileVarImport%, Setings, RegeditExport3
+	if !(RegeditExport3 = "ERROR")
+IniWrite, %RegeditExport3%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, RegeditExport3
+	IniRead, RegeditExport4, %FileVarImport%, Setings, RegeditExport4
+	if !(RegeditExport4 = "ERROR")
+IniWrite, %RegeditExport4%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, RegeditExport4
+	IniRead, RegeditExport5, %FileVarImport%, Setings, RegeditExport5
+	if !(RegeditExport5 = "ERROR")
+IniWrite, %RegeditExport5%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, RegeditExport5
+	IniRead, GlLanguage, %FileVarImport%, Setings, GlLanguage
+	if !(GlLanguage = "ERROR")
+IniWrite, %GlLanguage%, update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini, Setings, GlLanguage
+
+	IniRead, key_LabelNumpad0, %FileVarImport%, Binds, key_LabelNumpad0
+	if !(key_LabelNumpad0 = "ERROR")
+IniWrite, %key_LabelNumpad0%, data\genConfig.ini, Binds, key_LabelNumpad0
+	IniRead, key_LabelNumpad1, %FileVarImport%, Binds, key_LabelNumpad1
+	if !(key_LabelNumpad1 = "ERROR")
+IniWrite, %key_LabelNumpad1%, data\genConfig.ini, Binds, key_LabelNumpad1
+	IniRead, key_LabelNumpad2, %FileVarImport%, Binds, key_LabelNumpad2
+	if !(key_LabelNumpad2 = "ERROR")
+IniWrite, %key_LabelNumpad2%, data\genConfig.ini, Binds, key_LabelNumpad2
+	IniRead, key_LabelNumpad3, %FileVarImport%, Binds, key_LabelNumpad3
+	if !(key_LabelNumpad3 = "ERROR")
+IniWrite, %key_LabelNumpad3%, data\genConfig.ini, Binds, key_LabelNumpad3
+	IniRead, key_LabelNumpad4, %FileVarImport%, Binds, key_LabelNumpad4
+	if !(key_LabelNumpad4 = "ERROR")
+IniWrite, %key_LabelNumpad4%, data\genConfig.ini, Binds, key_LabelNumpad4
+	IniRead, key_LabelNumpad5, %FileVarImport%, Binds, key_LabelNumpad5
+	if !(key_LabelNumpad5 = "ERROR")
+IniWrite, %key_LabelNumpad5%, data\genConfig.ini, Binds, key_LabelNumpad5
+	IniRead, key_LabelNumpad6, %FileVarImport%, Binds, key_LabelNumpad6
+	if !(key_LabelNumpad6 = "ERROR")
+IniWrite, %key_LabelNumpad6%, data\genConfig.ini, Binds, key_LabelNumpad6
+	IniRead, key_LabelNumpad7, %FileVarImport%, Binds, key_LabelNumpad7
+	if !(key_LabelNumpad7 = "ERROR")
+IniWrite, %key_LabelNumpad7%, data\genConfig.ini, Binds, key_LabelNumpad7
+	IniRead, key_LabelNumpad8, %FileVarImport%, Binds, key_LabelNumpad8
+	if !(key_LabelNumpad8 = "ERROR")
+IniWrite, %key_LabelNumpad8%, data\genConfig.ini, Binds, key_LabelNumpad8
+	IniRead, key_LabelNumpad9, %FileVarImport%, Binds, key_LabelNumpad9
+	if !(key_LabelNumpad9 = "ERROR")
+IniWrite, %key_LabelNumpad9%, data\genConfig.ini, Binds, key_LabelNumpad9
+
+	IniRead, key_LabelANumpad0, %FileVarImport%, Binds, key_LabelANumpad0
+	if !(key_LabelANumpad0 = "ERROR")
+IniWrite, %key_LabelANumpad0%, data\genConfig.ini, Binds, key_LabelANumpad0
+	IniRead, key_LabelANumpad1, %FileVarImport%, Binds, key_LabelANumpad1
+	if !(key_LabelANumpad1 = "ERROR")
+IniWrite, %key_LabelANumpad1%, data\genConfig.ini, Binds, key_LabelANumpad1
+	IniRead, key_LabelANumpad2, %FileVarImport%, Binds, key_LabelANumpad2
+	if !(key_LabelANumpad2 = "ERROR")
+IniWrite, %key_LabelANumpad2%, data\genConfig.ini, Binds, key_LabelANumpad2
+	IniRead, key_LabelANumpad3, %FileVarImport%, Binds, key_LabelANumpad3
+	if !(key_LabelANumpad3 = "ERROR")
+IniWrite, %key_LabelANumpad3%, data\genConfig.ini, Binds, key_LabelANumpad3
+	IniRead, key_LabelANumpad4, %FileVarImport%, Binds, key_LabelANumpad4
+	if !(key_LabelANumpad4 = "ERROR")
+IniWrite, %key_LabelANumpad4%, data\genConfig.ini, Binds, key_LabelANumpad4
+	IniRead, key_LabelANumpad5, %FileVarImport%, Binds, key_LabelANumpad5
+	if !(key_LabelANumpad5 = "ERROR")
+IniWrite, %key_LabelANumpad5%, data\genConfig.ini, Binds, key_LabelANumpad5
+	IniRead, key_LabelANumpad6, %FileVarImport%, Binds, key_LabelANumpad6
+	if !(key_LabelANumpad6 = "ERROR")
+IniWrite, %key_LabelANumpad6%, data\genConfig.ini, Binds, key_LabelANumpad6
+	IniRead, key_LabelANumpad7, %FileVarImport%, Binds, key_LabelANumpad7
+	if !(key_LabelANumpad7 = "ERROR")
+IniWrite, %key_LabelANumpad7%, data\genConfig.ini, Binds, key_LabelANumpad7
+	IniRead, key_LabelANumpad8, %FileVarImport%, Binds, key_LabelANumpad8
+	if !(key_LabelANumpad8 = "ERROR")
+IniWrite, %key_LabelANumpad8%, data\genConfig.ini, Binds, key_LabelANumpad8
+	IniRead, key_LabelANumpad9, %FileVarImport%, Binds, key_LabelANumpad9
+	if !(key_LabelANumpad9 = "ERROR")
+IniWrite, %key_LabelANumpad9%, data\genConfig.ini, Binds, key_LabelANumpad9
+	IniRead, key_LabelNumpadAdd, %FileVarImport%, Binds, key_LabelNumpadAdd
+	if !(key_LabelNumpadAdd = "ERROR")
+IniWrite, %key_LabelNumpadAdd%, data\genConfig.ini, Binds, key_LabelNumpadAdd
+
+
+FileMoveDir, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data, %A_ScriptDir%, 1
+; FileMove, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\*.*, %A_ScriptDir%, 1
+Loop update\GenshinImpact-AHK-flex-main\Genshin AHK\*.ahk
+{
+}
+FileDelete, %A_ScriptFullPath%
+
+
+If ScRenamer
+{
+SplitPath, savereloadvar,,,,z3z3ext
+SplitPath, savereloadvar,,,z2z2ext
+FileMove, update\GenshinImpact-AHK-flex-main\Genshin AHK\%A_LoopFileName%, %A_ScriptDir%\%z3z3ext%.%z2z2ext%, 1
+}
+Else
+{
+SplitPath, A_ScriptFullPath,,,,z3z3ext
+SplitPath, A_ScriptName,,,z2z2ext
+FileMove, update\GenshinImpact-AHK-flex-main\Genshin AHK\%A_LoopFileName%, %A_ScriptDir%\%z3z3ext%.%z2z2ext%, 1
+}
+
+
+; SplitPath, A_ScriptFullPath,,,,z2z2ext
+; SplitPath, A_ScriptName,,,z3z3ext
+; FileMove, update\GenshinImpact-AHK-flex-main\Genshin AHK\%A_LoopFileName%, %A_ScriptDir%\%z3z3ext%.%z2z2ext%, 1
+FileRemoveDir, update, 1
+MsgBox,,, Ok, 1
+ExitApp
+			
+			
+			;==================================Конец блока с обновой
+			} Else IfMsgBox Cancel, {
+			FileRemoveDir, update, 1
+			Return
+			}
+		}
+	Else
+		{
+		FileRemoveDir, update, 1
+		GuiControl,1:, GitUpPic, data\Github-gre.png
+		IniWrite, 1, data\inputversion.ini, Info, LastStatusCheck
+		MsgBox,,, Актуальная версия, 1
+		Return
+		}
 Return
-ForceUpdateButton:
-MsgBox,,, ForceUpdateButton, 1
-Return
+
+
+
+
+
+
+
+DownloadFile(UrlToFile = "", SaveFileAs = "", Overwrite := False, UseProgressBar := True) {
+	  If (UrlToFile = "" && SaveFileAs != "") {
+			If FileExist(SaveFileAs)
+				Return "Downloaded"
+			Else
+				Return "No"
+		}
+      If (!Overwrite && FileExist(SaveFileAs))
+          Return
+      If (UseProgressBar) {
+            WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+            WebRequest.Open("HEAD", UrlToFile)
+            WebRequest.Send()
+            FinalSize := FinalSizeZip
+            Progress, A M Y0 H80, , Downloading..., %UrlToFile%
+            SetTimer, __UpdateProgressBar, 100
+      }
+      UrlDownloadToFile, %UrlToFile%, %SaveFileAs%
+      If (UseProgressBar) {
+          Progress, Off
+          SetTimer, __UpdateProgressBar, Off
+      }
+    Return
+
+      __UpdateProgressBar:
+            CurrentSize := FileOpen(SaveFileAs, "r").Length 
+            CurrentSizeTick := A_TickCount
+            Speed := Round((CurrentSize/1024-LastSize/1024)/((CurrentSizeTick-LastSizeTick)/1000)) . " Kb/s"
+            LastSizeTick := CurrentSizeTick
+            LastSize := FileOpen(SaveFileAs, "r").Length
+            PercentDone := Round(CurrentSize/FinalSize*100)
+            Progress, %PercentDone%, %PercentDone%`% Done, Downloading...  (%Speed%), Downloading %SaveFileAs% (%PercentDone%`%)
+      Return
+}
+
 
 MetkaMenu0:
 sleep 100
