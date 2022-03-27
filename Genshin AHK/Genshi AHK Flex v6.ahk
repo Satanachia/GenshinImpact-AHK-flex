@@ -6920,8 +6920,12 @@ UpdateButton:
 	Items := Shell.NameSpace(ArcPath).Items
 	Items.Filter(73952, "*")
 	Shell.NameSpace(OutPath).CopyHere(Items, 16)
-
-
+			IfNotExist, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK
+				{
+				FileRemoveDir, update, 1
+				MsgBox,,, Error`nФайл не скачался`nПереподай еще, 2
+				Return
+				}
 
 FileCopy, %A_ScriptDir%\data\reg\*.reg, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data\reg\, 1 	;копируем рег файлы из папки со скриптом в новую
 FileCopy, %A_ScriptDir%\data\soundall\*.mid, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data\soundall\, 1 	;копируем миди файлы из папки со скриптом в новую
