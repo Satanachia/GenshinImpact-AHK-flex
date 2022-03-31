@@ -115,12 +115,13 @@ Insert - Включить/отключить ReShade
 
 
 Запланировано:
-поправить описание фулскрин - оконный
 
 
 
 
 
+Изменения: 31.03.2022
+ - Оверлей Куки + Елан
 
 Изменения: 27.03.2022
  - Микро исправления
@@ -1198,9 +1199,9 @@ GroupAdd, GroupNameMap1337, Genshin Map
 ;===============заглушка для работы оверлея
 var0ov := 1
 ;===============колво страниц
-GenOverlayList := 10
+GenOverlayList := 11
 ;===============где гифки
-CheckVarKey1PaimonGifList := "7"
+CheckVarKey1PaimonGifList := "7,8"
 ; CheckVarKey1PaimonGifList := "5,6"
 
 HpBarW:=ScreenWidthRe1
