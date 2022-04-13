@@ -25,7 +25,7 @@ Numpad 7 - Diluc DragonStrike(Ручной)
 Numpad 8 - Hu Tao N2CJ (slow)
 Numpad 9 - Hu Tao H1CJ
 NumpadAdd - Expeditions
-NumpadSub - Kaeya seafarer
+NumpadSub - Kaeya seafarer (дабл клик вкл, сингл клик выкл)
 Alt + Numpad 0 - Hu Tao N2CJ (fast)
 Alt + Numpad 1 - Klee N1CJ
 Alt + Numpad 2 - Klee N2H1
@@ -35,7 +35,7 @@ Alt + Numpad 5 - Xiao SpamPlunge
 Alt + Numpad 6 - Xiao N1SpamPlunge
 Alt + Numpad 7 - Ganyu Hold (Test 1)
 Alt + Numpad 8 - Ganyu Hold (Test 2)
-Alt + Numpad 9 - Swimming
+Alt + Numpad 9 - Swimming (дабл клик вкл, сингл клик выкл)
 Alt + NumpadAdd - Mona infinite swimming (дабл клик вкл, сингл клик выкл)
 Alt + NumpadSub - Auto coсking (дабл клик вкл, сингл клик выкл)
 
@@ -102,21 +102,29 @@ Insert - Включить/отключить ReShade
 
 
 
-21.02.2022 не кикает за макросный лук
-??.02.2022 хз
-25.02.2022 не кикает + обнова 7гб
-26.02.2022 не кикает
-27.02.2022 не кикает
-28.02.2022 не кикает
-29.02.2022 не кикает
-01.02.2022 не кикает
-02.02.2022 не кикает
+21.02.2022 - 10.04.2022 не кикает за макросный лук
+11.04.2022 кикает
+
+
+
+
+https://www.youtube.com/channel/UCcugQ37kzYL881PFmpIizGg/videos
+
+https://www.youtube.com/channel/UC6knkn0zDrC4pcooEG6NmnQ/videos
+
+
 
 
 
 Запланировано:
 
 
+
+
+
+Изменения: 12.04.2022
+ - Alt + Numpad 9 - Swimming (дабл клик вкл, сингл клик выкл)
+ - Микро исправления
 
 Изменения: 03.04.2022
  - Отключен уидхайд в Gui
@@ -792,9 +800,9 @@ Hotkey, *~%key_bhop%, Metkakey_bhop, on
 ;====================Настройки трея
 Menu,Tray,NoStandard
 Menu,Tray,DeleteAll
-Menu,Tray, add, Setings, MetkaMenu1
-Menu,Tray, Icon, Setings, imageres.dll,110, 16
-Menu,Tray, Default , Setings
+Menu,Tray, add, Settings, MetkaMenu1
+Menu,Tray, Icon, Settings, imageres.dll,110, 16
+Menu,Tray, Default, Settings
 Menu,Tray, add
 Menu,Tray, add, Сreate AHK shortcut, Metkashortcut1
 Menu,Tray, Icon, Сreate AHK shortcut, shell32.dll,264, 16
@@ -1259,7 +1267,7 @@ Gui, 99: Add, Text, % "vLabTextMyEdit15" " gLabelANumpad5" " x" round(A_ScreenWi
 Gui, 99: Add, Text, % "vLabTextMyEdit16" " gLabelANumpad6" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1050 / 1440)) " +BackgroundTrans", Alt + Numpad 6 - Xiao N1SpamPlunge
 Gui, 99: Add, Text, % "vLabTextMyEdit17" " gLabelANumpad7" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1100 / 1440)) " +BackgroundTrans", Alt + Numpad 7 - Ganyu Hold T1
 Gui, 99: Add, Text, % "vLabTextMyEdit18" " gLabelANumpad8" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1150 / 1440)) " +BackgroundTrans", Alt + Numpad 8 - Ganyu Hold T2
-Gui, 99: Add, Text, % "vLabTextMyEdit19" " gLabelANumpad9" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1200 / 1440)) " +BackgroundTrans", Alt + Numpad 9 - Swimming
+Gui, 99: Add, Text, % "vLabTextMyEdit19" " gLabelANumpad9" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1200 / 1440)) " +BackgroundTrans", Alt + Numpad 9 - Swimming (x1 - off, x2 - on)
 Gui, 99: Add, Text, % "vLabTextMyEdit20" " gLabelANumpadAdd" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1250 / 1440)) " +BackgroundTrans", Alt + NumpadAdd - Mona infinite swimming (x1 - off, x2 - on)
 Gui, 99: Add, Text, % "vLabTextMyEdit44" " gLabelANumpadSub" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1300 / 1440)) " +BackgroundTrans", Alt + NumpadSub - Auto coсking (x1 - off, x2 - on)
 
@@ -1295,6 +1303,10 @@ Gui, 99: Show, Hide w%HpBarW% h%HpBarH% x%HpBarX% y%HpBarY%, %WinName%
 hwndGuihamdlewindow := WinExist()
 Gui, 99: Cancel
 
+
+
+if AutoExitAHK
+SetTimer, ExitOnGameClose, 3000
 
 
 ;====================================================================проверить обнову и покрасить значек
@@ -1364,9 +1376,6 @@ FileRemoveDir, update, 1
 
 
 
-
-if AutoExitAHK
-SetTimer, ExitOnGameClose, 3000
 
 
 
@@ -2293,7 +2302,7 @@ return
 
 
 
-;===============================Банихоп бхоп
+;===============================Банихоп бхоп bhop bunnyhop
 Metkakey_bhop:
 sleep 1
 IfWinActive, %gameexe1337%		;ahk_exe GenshinImpact.exe
@@ -2316,6 +2325,9 @@ Loop
 	; SendInput {sc39 Down}
 	; Sleep 15
 	; SendInput {sc39 up}
+	; SendInput {vk20 Down}
+	; Sleep 15
+	; SendInput {vk20 up}
 	multisendinput("vk20", "", "vk20", "", "0x20", "0", "", "") 	;Space vk20
 	if ScRandomT
 	Random, SuperGlobalVarRan,1,15
@@ -2451,6 +2463,8 @@ Pereklu4atelFis1337:=0
 ;=остановить Кею
 ffPereklu4atelFis1337:=0
 ;=остановить Остановить готовку
+svffPereklu4atelFis1337:=0
+;=остановить Остановить авто плавание
 Pereklu4atelcocking555:=0
 ;=остановить экспедиции
 expeditionVar:=0
@@ -3285,7 +3299,7 @@ jopa24:=false
 jopa25:=false
 if showtooltipVvoba
 {
-ToolTip, Swimming, 0, 0
+ToolTip, Auto swimming, 0, 0
 sleep 500
 ToolTip
 }
@@ -3319,7 +3333,7 @@ jopa24:=false
 jopa25:=false
 if showtooltipVvoba
 {
-ToolTip, Collection of expedition, 0, 0
+ToolTip, Expeditions, 0, 0
 sleep 500
 ToolTip
 }
@@ -4525,7 +4539,7 @@ IfWinActive, %gameexe1337%
 
 
 
-if jopa19 							;Alt + Numpad 9 - Плавание
+if jopa19 							;Alt + Numpad 9 - Плавание (дабл клик вкл, сингл клик выкл)
 {
 if FIXchat
 {
@@ -4539,22 +4553,14 @@ if FIXchat
 }
 IfWinActive, %gameexe1337%
 {
-	sleep 15
-	SendInput {vkA0 down}
-	Loop
-	{
-		GetKeyState, 2SpaceVar2, %key_animcancel%, P
-		If 2SpaceVar2 = U
-			break
-	
-	SendInput {vk57}
+Goto, svffMyLabel228keya
+}
+}
 
-	Random, RandomVarSw, 500, 520
-	sleep %RandomVarSw%
-	}
-	SendInput {vkA0 Up}
-}
-}
+
+
+
+
 
 if jopa20 							;Collection of expedition
 {
@@ -5595,6 +5601,74 @@ Goto, Metkakeycocking228
 
 return
 
+
+
+
+
+
+
+
+
+;================================================Плавание Auto swimming
+#UseHook, On
+svffmetkammkli1:
+  SetTimer, svffmetkammstart, off
+  svffPereklu4atelFis1337 = 0
+  sleep 200
+  Tooltip,,0,0,2
+Return
+svffmetkammkli2:
+  SetTimer, svffmetkammstart, on
+  Tooltip Auto swimming: ON,round(A_ScreenWidth * .5 - 50),0,2
+Return
+#UseHook, Off
+svffMyLabel228keya:
+  svffP1ause_=300     ; настройки
+  If not svffSecond1
+  {
+    svffSecond1=1
+    SetTimer, svffFle1DoublePress, -%svffP1ause_%
+  }
+  Else
+  {
+    svffSecond1=0
+    SetTimer, svffmetkammkli2, -1
+  }
+Return
+svffFle1DoublePress:
+  If not svffSecond1
+    Return
+  svffSecond1=0
+  SetTimer, svffmetkammkli1, -1
+Return
+
+svffmetkammstart:
+svffPereklu4atelFis1337 = 1
+SendInput {vkA0 down}
+while svffPereklu4atelFis1337
+{
+if ScRandomT
+Random, SuperGlobalVarRan,1,15
+SendInput {vk57}
+sleep 600 + %SuperGlobalVarRan%
+		IfWinNotActive, %gameexe1337%
+		{
+		svffPereklu4atelFis1337 = 0
+		}
+		if !(svffPereklu4atelFis1337)
+		{
+		  SetTimer, svffmetkammstart, off
+		  svffPereklu4atelFis1337 = 0
+		  sleep 200
+		  Tooltip,,0,0,2
+		SendInput {vkA0 Up}
+		}
+}
+Return
+
+
+
+
 ;================================================Auto coсking автоготовка
 #UseHook, On
 metka555kli1:
@@ -5814,11 +5888,11 @@ while Pereklu4atelFis1337
 SendInput {vk57 down}
 	if ScRandomT
 	Random, SuperGlobalVarRan,1,15
-Sleep 115 + SuperGlobalVarRan
+Sleep 135 + SuperGlobalVarRan 	;115
 SendInput {vk57 Up}
 	if ScRandomT
 	Random, SuperGlobalVarRan,1,15
-sleep 20 + SuperGlobalVarRan
+sleep 17 + SuperGlobalVarRan 	;20
 
 IfWinNotActive, %gameexe1337%
 {
