@@ -14,6 +14,8 @@
 
 </details>
 
+[Boosty](https://boosty.to/kramar1337)
+
 [Подробное описание](https://github.com/Kramar1337/GenshinImpact-AHK-flex/wiki)
 
 ![hippo](https://media.giphy.com/media/xWd1kU8h7JkmtQpQjB/giphy.gif)
