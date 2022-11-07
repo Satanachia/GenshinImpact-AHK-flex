@@ -1253,7 +1253,7 @@ return
 ImportSettLabel1:
 ; FileVarImport=data\genConfig.ini
 ; FileVarImport2=update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini
-FileRead, GroupNameMap1337Var228, %A_ScriptDir%\data\tofuConfig.ini 	;Прочитать старый конфиг
+FileRead, GroupNameMap1337Var228, %A_ScriptDir%\data\genConfig.ini 	;Прочитать старый конфиг
 Loop, parse, GroupNameMap1337Var228, `n, `r
 {
 	VarLoopFieldEdit1 := A_LoopField
