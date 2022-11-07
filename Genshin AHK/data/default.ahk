@@ -6,7 +6,9 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 def_config_go= 	;подготовить переменную
 (
-[Binds]
+[Settings]
+key_EndExitapp=End
+key_PauseSuspend=PgDn
 key_animcancel=V
 key_map=F1
 key_overlay=F2
@@ -40,12 +42,11 @@ key_LabelANumpad8=!Numpad8
 key_LabelANumpad9=!Numpad9
 key_LabelANumpadAdd=!NumpadAdd
 key_LabelANumpadSub=!NumpadSub
-[Fish]
+
 Prozra4nostiFis=TransBlack
-;OttenokFis 5 по дефолту
 OttenokFis=5
 OptimizationFis=1
-[Extra]
+
 KeyboardVID=0
 KeyboardPID=0
 MouseVID=0
@@ -66,7 +67,7 @@ FishMouseMoveX=43
 FishMouseMoveY=0
 VentiMouseMoveX=61
 VentiMouseMoveY=0
-[Expedition]
+
 ExManualMode=0
 ExMondK1=0
 ExMondK2=0
@@ -86,7 +87,13 @@ ExInaK3=0
 ExInaK4=0
 ExInaK5=0
 ExInaK6=0
-[Setings]
+ExSumK1=0
+ExSumK2=0
+ExSumK3=0
+ExSumK4=0
+ExSumK5=0
+ExSumK6=0
+
 
 ; Удаленные макросы, выбор "Alt + Numpad4"
 ; Переключить: стрелки Up - Down
@@ -121,9 +128,6 @@ Fastpickcfg=0
 
 ; Отдельный таймер
 TTimerahk1=5
-
-; Проверять обновление
-CheckUpdatePic=1
 
 ; Автоматически закрывать скрипт через 3 сек если нет окна игры или лаунчера
 AutoExitAHK=0

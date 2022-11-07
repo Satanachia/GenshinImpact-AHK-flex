@@ -30,11 +30,11 @@ Alt + Numpad 0 - Hu Tao N2CJ (fast)
 Alt + Numpad 1 - Klee N1CJ
 Alt + Numpad 2 - Klee N2H1
 Alt + Numpad 3 - Klee AutoAttack(Удерживать WASD + Macro Key)
-Alt + Numpad 4 - Xiao SpamPlunge(14 прыжков)
+Alt + Numpad 4 - Other macros (genConfig.ini)
 Alt + Numpad 5 - Xiao SpamPlunge(13 прыжков)
 Alt + Numpad 6 - Xiao N1SpamPlunge(11 прыжков)
 Alt + Numpad 7 - Ganyu Hold (Test 1)
-Alt + Numpad 8 - Ganyu Hold (Test 2)
+Alt + Numpad 8 - Hu Tao (Test)
 Alt + Numpad 9 - Swimming (дабл клик вкл, сингл клик выкл)
 Alt + NumpadAdd - Mona-Ayaka infinite swimming (дабл клик вкл, сингл клик выкл)
 Alt + NumpadSub - Auto coсking (дабл клик вкл, сингл клик выкл)
@@ -159,13 +159,24 @@ https://pastebin.com/1frUjpa3
 
 
 
-
 Запланировано:
+shield strike
+https://www.youtube.com/watch?v=54G-7vVmwjs
+https://keqingmains.com/noelle/
 
+ - Жду пачку пресетов решейда от чела в некст году
 
-
-
-
+Изменения: 04.11.2022
+ - Убрать чек обновы
+ - Кривой импортер настроек, импорт только новых версий
+ - Оверлей
+ - Оверлей2
+ - key_EndExitapp=End
+ - key_PauseSuspend=PgDn
+ - Фикс решейда
+ - Сумерский авто сбор экспедиций
+ - Отладочные инструменты в папке data\debug\*.ahk
+ - Alt + Numpad 8 - Hu Tao (Test) Хутава от чела
 
 Изменения: 14.07.2022
  - Сохранение номера вкладки
@@ -197,7 +208,7 @@ https://pastebin.com/1frUjpa3
 
 
 ;===============================дерективы
-WinName:= "Genshi AHK Flex v6.2 by Kramar1337"
+WinName:= "Genshi AHK Flex v6.3 by Kramar1337"
 #NoEnv
 SendMode Input
 SetWorkingDir %A_ScriptDir%
@@ -205,12 +216,13 @@ SetWorkingDir %A_ScriptDir%
 DetectHiddenWindows, On
 DetectHiddenText, On
 CoordMode Mouse, Screen
+SetTitleMatchMode, 2
 Global SuperGlobalVarRan:=0
 
 
 ;========================================================запускать самого себя от имени администратора
-IniRead, metodVvoda, data\genConfig.ini, Setings, metodVvoda
-IniRead, IsAdmin, data\genConfig.ini, Setings, IsAdmin
+IniRead, metodVvoda, data\genConfig.ini, Settings, metodVvoda
+IniRead, IsAdmin, data\genConfig.ini, Settings, IsAdmin
 if IsAdmin
 {
 	CommandLine := DllCall("GetCommandLine", "Str")
@@ -230,84 +242,84 @@ if IsAdmin
 ;========================================================подключаем библиотеки для работы драйвера интерсепшн
 if (metodVvoda == 3)
 {
-#include %A_ScriptDir%\data\Lib\AutoHotInterception.ahk
-#include %A_ScriptDir%\data\Lib\CLR.ahk
+	#include %A_ScriptDir%\data\Lib\AutoHotInterception.ahk
+	#include %A_ScriptDir%\data\Lib\CLR.ahk
 
-IniRead, KeyboardVID, %A_ScriptDir%\data\genConfig.ini, Extra, KeyboardVID
-IniRead, KeyboardPID, %A_ScriptDir%\data\genConfig.ini, Extra, KeyboardPID
-IniRead, MouseVID, %A_ScriptDir%\data\genConfig.ini, Extra, MouseVID
-IniRead, MousePID, %A_ScriptDir%\data\genConfig.ini, Extra, MousePID
+	IniRead, KeyboardVID, %A_ScriptDir%\data\genConfig.ini, Settings, KeyboardVID
+	IniRead, KeyboardPID, %A_ScriptDir%\data\genConfig.ini, Settings, KeyboardPID
+	IniRead, MouseVID, %A_ScriptDir%\data\genConfig.ini, Settings, MouseVID
+	IniRead, MousePID, %A_ScriptDir%\data\genConfig.ini, Settings, MousePID
 
-IniRead, InterceptionFishMouseMoveX, %A_ScriptDir%\data\genConfig.ini, Extra, InterceptionFishMouseMoveX
-IniRead, InterceptionFishMouseMoveY, %A_ScriptDir%\data\genConfig.ini, Extra, InterceptionFishMouseMoveY
-IniRead, InterceptionVentiMouseMoveX, %A_ScriptDir%\data\genConfig.ini, Extra, InterceptionVentiMouseMoveX
-IniRead, InterceptionVentiMouseMoveY, %A_ScriptDir%\data\genConfig.ini, Extra, InterceptionVentiMouseMoveY
+	IniRead, InterceptionFishMouseMoveX, %A_ScriptDir%\data\genConfig.ini, Settings, InterceptionFishMouseMoveX
+	IniRead, InterceptionFishMouseMoveY, %A_ScriptDir%\data\genConfig.ini, Settings, InterceptionFishMouseMoveY
+	IniRead, InterceptionVentiMouseMoveX, %A_ScriptDir%\data\genConfig.ini, Settings, InterceptionVentiMouseMoveX
+	IniRead, InterceptionVentiMouseMoveY, %A_ScriptDir%\data\genConfig.ini, Settings, InterceptionVentiMouseMoveY
 
-;=============================конвертируем айдишники из десятичной в хекс
-SetFormat, IntegerFast, hex
-KeyboardVID += 0
-KeyboardPID += 0
-MouseVID += 0
-MousePID += 0
-SetFormat, IntegerFast, d
+	;=============================конвертируем айдишники из десятичной в хекс
+	SetFormat, IntegerFast, hex
+	KeyboardVID += 0
+	KeyboardPID += 0
+	MouseVID += 0
+	MousePID += 0
+	SetFormat, IntegerFast, d
 
-Global AHI := new AutoHotInterception()
-Global mouseid := AHI.GetMouseId(MouseVID, MousePID)
-Global keyboardid := AHI.GetKeyboardId(KeyboardVID, KeyboardPID)
+	Global AHI := new AutoHotInterception()
+	Global mouseid := AHI.GetMouseId(MouseVID, MousePID)
+	Global keyboardid := AHI.GetKeyboardId(KeyboardVID, KeyboardPID)
 }
 
 ;========================конфиг под авторыбалку
 CoordMode Mouse, Screen 	;двигать мышку от окна
 CoordMode Pixel, Screen 	;искать пиксели от окна
 ; Prozra4nostiFis = TransBlack 	;прозрачность если PNG (TransWhite, TransBlack, TransFFFFAA хромокей)
-IniRead, Prozra4nostiFis, data\genConfig.ini, Fish, Prozra4nostiFis
+IniRead, Prozra4nostiFis, data\genConfig.ini, Settings, Prozra4nostiFis
 ; OttenokFis = 11 				;диапазон(0-256), 11 норм находит.
-IniRead, OttenokFis, data\genConfig.ini, Fish, OttenokFis
+IniRead, OttenokFis, data\genConfig.ini, Settings, OttenokFis
 X1Fis := round(A_ScreenWidth * .37109)
 Y1Fis := round(A_ScreenHeight * .0625)
 X2Fis := round(A_ScreenWidth * .63281)
 Y2Fis := round(A_ScreenHeight * .16805)
 ; OptimizationFis = 1 			;оптимизация рыбалки
-IniRead, OptimizationFis, data\genConfig.ini, Fish, OptimizationFis
+IniRead, OptimizationFis, data\genConfig.ini, Settings, OptimizationFis
 
 ;===============================дерективы из конфига для работы на слабых ПК
-IniRead, Highperformancemode, data\genConfig.ini, Setings, Highperformancemode
+IniRead, Highperformancemode, data\genConfig.ini, Settings, Highperformancemode
 if Highperformancemode
 {
-Process, Priority,, High
-Setbatchlines,-1
-SetKeyDelay,-1, -1
-SetControlDelay, -1
-SetMouseDelay, -1
-SetWinDelay,-1
+	Process, Priority,, High
+	Setbatchlines,-1
+	SetKeyDelay,-1, -1
+	SetControlDelay, -1
+	SetMouseDelay, -1
+	SetWinDelay,-1
 }
 
 
 ;=====================================безопасность
-IniRead, ScWinrenamer, data\genConfig.ini, Setings, ScWinrenamer ; проверка Winrenamer
-IniRead, ScRenamer, data\genConfig.ini, Setings, ScRenamer ; проверка Renamera
-IniRead, ScHachCh, data\genConfig.ini, Setings, ScHachCh ; проверка ScHachCh
-IniRead, ScRandomT, data\genConfig.ini, Setings, ScRandomT ; проверка рандом таймер
+IniRead, ScWinrenamer, data\genConfig.ini, Settings, ScWinrenamer ; проверка Winrenamer
+IniRead, ScRenamer, data\genConfig.ini, Settings, ScRenamer ; проверка Renamera
+IniRead, ScHachCh, data\genConfig.ini, Settings, ScHachCh ; проверка ScHachCh
+IniRead, ScRandomT, data\genConfig.ini, Settings, ScRandomT ; проверка рандом таймер
 
 If ScHachCh
 {
-FileRead, FileReadOutputVar1, %A_ScriptFullPath%
-Random, rand1488, 20, 30
-password := gen_password(rand1488)
-1RepFile1 = AntiVACHashChanger:="\w*"
-2RepFile2 = AntiVACHashChanger:="%password%%password%%password%%password%"
-RegExRepFile1 := RegExReplace(FileReadOutputVar1, 1RepFile1, 2RepFile2)
-FileEncoding UTF-8
-FileDelete, %A_ScriptFullPath%
-FileAppend, %RegExRepFile1%, %A_ScriptFullPath%
+	FileRead, FileReadOutputVar1, %A_ScriptFullPath%
+	Random, rand1488, 20, 30
+	password := gen_password(rand1488)
+	1RepFile1 = AntiVACHashChanger:="\w*"
+	2RepFile2 = AntiVACHashChanger:="%password%%password%%password%%password%"
+	RegExRepFile1 := RegExReplace(FileReadOutputVar1, 1RepFile1, 2RepFile2)
+	FileEncoding UTF-8
+	FileDelete, %A_ScriptFullPath%
+	FileAppend, %RegExRepFile1%, %A_ScriptFullPath%
 }
 If ScRenamer
 {
-Random, rand1488, 10, 14
-password := gen_password(rand1488)										;вызов функции в переменную (длина)
-SplitPath, A_ScriptFullPath,,, 2z2ext,, 	;извлечь из строки расширение
-FileMove, %A_ScriptFullPath%, %A_ScriptDir%\%password%.%2z2ext%
-savereloadvar = %A_ScriptDir%\%password%.%2z2ext%
+	Random, rand1488, 10, 14
+	password := gen_password(rand1488)										;вызов функции в переменную (длина)
+	SplitPath, A_ScriptFullPath,,, 2z2ext,, 	;извлечь из строки расширение
+	FileMove, %A_ScriptFullPath%, %A_ScriptDir%\%password%.%2z2ext%
+	savereloadvar = %A_ScriptDir%\%password%.%2z2ext%
 }
 
 
@@ -354,168 +366,181 @@ jopa25:=false
 
 
 ;=====================дефолтная вкладка гуи
-IniRead, VarTab3Choose, data\genConfig.ini, Setings, VarTab3Choose
+IniRead, VarTab3Choose, data\genConfig.ini, Settings, VarTab3Choose
 if (VarTab3Choose < 1) or (VarTab3Choose > 6)
 VarTab3Choose = 1
 
 ;=====================дефолтный макрос
-IniRead, DefaultJopaTrue, data\genConfig.ini, Extra, DefaultJopaTrue
+IniRead, DefaultJopaTrue, data\genConfig.ini, Settings, DefaultJopaTrue
 jopa%DefaultJopaTrue%:=true
 
 ;====================Подгрузка конфига: бинды
-IniRead, key_animcancel, data\genConfig.ini, Binds, key_animcancel
-IniRead, key_map, data\genConfig.ini, Binds, key_map
-IniRead, key_autowalk, data\genConfig.ini, Binds, key_autowalk
-IniRead, key_overlay, data\genConfig.ini, Binds, key_overlay
-IniRead, key_fastlyt, data\genConfig.ini, Binds, key_fastlyt
-IniRead, key_skipNPS, data\genConfig.ini, Binds, key_skipNPS
-IniRead, key_bhop, data\genConfig.ini, Binds, key_bhop
-IniRead, key_autoswim, data\genConfig.ini, Binds, key_autoswim
-IniRead, key_vi4er_sens, data\genConfig.ini, Binds, key_vi4er_sens
+IniRead, key_PauseSuspend, data\genConfig.ini, Settings, key_PauseSuspend
+Hotkey, *~$%key_PauseSuspend%, Metkakey_PauseSuspend, on 	;Приостановить-возобновить
+IniRead, key_EndExitapp, data\genConfig.ini, Settings, key_EndExitapp
+Hotkey, *~$%key_EndExitapp%, Metkakey_EndExitapp, on 	;Выход
+
+IniRead, key_animcancel, data\genConfig.ini, Settings, key_animcancel
+IniRead, key_map, data\genConfig.ini, Settings, key_map
+IniRead, key_autowalk, data\genConfig.ini, Settings, key_autowalk
+IniRead, key_overlay, data\genConfig.ini, Settings, key_overlay
+IniRead, key_fastlyt, data\genConfig.ini, Settings, key_fastlyt
+IniRead, key_skipNPS, data\genConfig.ini, Settings, key_skipNPS
+IniRead, key_bhop, data\genConfig.ini, Settings, key_bhop
+IniRead, key_autoswim, data\genConfig.ini, Settings, key_autoswim
+IniRead, key_vi4er_sens, data\genConfig.ini, Settings, key_vi4er_sens
 ;====================Подгрузка конфига: дополнительные
-IniRead, CheckUpdatePic, data\genConfig.ini, Setings, CheckUpdatePic
-IniRead, FIXchat, data\genConfig.ini, Setings, FIXchat
-IniRead, IsAdmin, data\genConfig.ini, Setings, IsAdmin
-IniRead, AutoExitAHK, data\genConfig.ini, Setings, AutoExitAHK
-IniRead, MousemoveBow, data\genConfig.ini, Extra, MousemoveBow 	;двигать мышку вправо когда идет стрельба с макроса на винапи
-IniRead, FishMouseMoveX, data\genConfig.ini, Extra, FishMouseMoveX 	;сколько двигать для фишль по X = 43 на дефолтных настройках
-IniRead, FishMouseMoveY, data\genConfig.ini, Extra, FishMouseMoveY 	;сколько двигать для фишль по Y = 0
-IniRead, VentiMouseMoveX, data\genConfig.ini, Extra, VentiMouseMoveX 	;двигать для венти по X = 43 на дефолтных настройках
-IniRead, VentiMouseMoveY, data\genConfig.ini, Extra, VentiMouseMoveY 	;двигать для венти по X = 0
+; IniRead, CheckUpdatePic, data\genConfig.ini, Settings, CheckUpdatePic
+IniRead, FIXchat, data\genConfig.ini, Settings, FIXchat
+IniRead, IsAdmin, data\genConfig.ini, Settings, IsAdmin
+IniRead, AutoExitAHK, data\genConfig.ini, Settings, AutoExitAHK
+IniRead, MousemoveBow, data\genConfig.ini, Settings, MousemoveBow 	;двигать мышку вправо когда идет стрельба с макроса на винапи
+IniRead, FishMouseMoveX, data\genConfig.ini, Settings, FishMouseMoveX 	;сколько двигать для фишль по X = 43 на дефолтных настройках
+IniRead, FishMouseMoveY, data\genConfig.ini, Settings, FishMouseMoveY 	;сколько двигать для фишль по Y = 0
+IniRead, VentiMouseMoveX, data\genConfig.ini, Settings, VentiMouseMoveX 	;двигать для венти по X = 43 на дефолтных настройках
+IniRead, VentiMouseMoveY, data\genConfig.ini, Settings, VentiMouseMoveY 	;двигать для венти по X = 0
 ;====================Подгрузка конфига: основные
-IniRead, BrauzerCheck, data\genConfig.ini, Setings, BrauzerCheck ; проверка браузера
-IniRead, BrauzerPick, data\genConfig.ini, Setings, BrauzerPick ; выбор браузера
-IniRead, Map2toggle, data\genConfig.ini, Setings, Map2toggle
-IniRead, gameexe1337, data\genConfig.ini, Setings, GameExe	; исполняемый файл игры
-IniRead, ONregreadDir, data\genConfig.ini, Setings, ONregreadDir ; поиск папки в реестре для откл кастсцен
-IniRead, DirGame, data\genConfig.ini, Setings, DirGame
-IniRead, metodVvoda, data\genConfig.ini, Setings, metodVvoda
-IniRead, showtooltipVvoba, data\genConfig.ini, Setings, showtooltipVvoba
-IniRead, showmegui, data\genConfig.ini, Setings, showmegui
+IniRead, BrauzerCheck, data\genConfig.ini, Settings, BrauzerCheck ; проверка браузера
+IniRead, BrauzerPick, data\genConfig.ini, Settings, BrauzerPick ; выбор браузера
+IniRead, Map2toggle, data\genConfig.ini, Settings, Map2toggle
+IniRead, gameexe1337, data\genConfig.ini, Settings, GameExe	; исполняемый файл игры
+IniRead, ONregreadDir, data\genConfig.ini, Settings, ONregreadDir ; поиск папки в реестре для откл кастсцен
+IniRead, DirGame, data\genConfig.ini, Settings, DirGame
+IniRead, metodVvoda, data\genConfig.ini, Settings, metodVvoda
+IniRead, showtooltipVvoba, data\genConfig.ini, Settings, showtooltipVvoba
+IniRead, showmegui, data\genConfig.ini, Settings, showmegui
 
-IniRead, Checkbox1map, data\genConfig.ini, Setings, Checkbox1map
-IniRead, Checkbox1overlay, data\genConfig.ini, Setings, Checkbox1overlay
-IniRead, Checkbox1autowalk, data\genConfig.ini, Setings, Checkbox1autowalk
-IniRead, Checkbox1fastlyt, data\genConfig.ini, Setings, Checkbox1fastlyt
-IniRead, Checkbox1skipNPS, data\genConfig.ini, Setings, Checkbox1skipNPS
-IniRead, Checkbox1locknpc, data\genConfig.ini, Setings, Checkbox1locknpc
-IniRead, Checkbox1autoswim, data\genConfig.ini, Setings, Checkbox1autoswim
-IniRead, Checkbox1vi4ersens, data\genConfig.ini, Setings, Checkbox1vi4ersens
-IniRead, Checkbox1animcancel, data\genConfig.ini, Setings, Checkbox1animcancel
-IniRead, Checkbox1bhop, data\genConfig.ini, Setings, Checkbox1bhop
-IniRead, Checkbox1bhopDelay, data\genConfig.ini, Setings, Checkbox1bhopDelay
-IniRead, Checkbox1bhopDelayMs, data\genConfig.ini, Setings, Checkbox1bhopDelayMs
+IniRead, Checkbox1map, data\genConfig.ini, Settings, Checkbox1map
+IniRead, Checkbox1overlay, data\genConfig.ini, Settings, Checkbox1overlay
+IniRead, Checkbox1autowalk, data\genConfig.ini, Settings, Checkbox1autowalk
+IniRead, Checkbox1fastlyt, data\genConfig.ini, Settings, Checkbox1fastlyt
+IniRead, Checkbox1skipNPS, data\genConfig.ini, Settings, Checkbox1skipNPS
+IniRead, Checkbox1locknpc, data\genConfig.ini, Settings, Checkbox1locknpc
+IniRead, Checkbox1autoswim, data\genConfig.ini, Settings, Checkbox1autoswim
+IniRead, Checkbox1vi4ersens, data\genConfig.ini, Settings, Checkbox1vi4ersens
+IniRead, Checkbox1animcancel, data\genConfig.ini, Settings, Checkbox1animcancel
+IniRead, Checkbox1bhop, data\genConfig.ini, Settings, Checkbox1bhop
+IniRead, Checkbox1bhopDelay, data\genConfig.ini, Settings, Checkbox1bhopDelay
+IniRead, Checkbox1bhopDelayMs, data\genConfig.ini, Settings, Checkbox1bhopDelayMs
 
-IniRead, RegeditExport1, data\genConfig.ini, Setings, RegeditExport1
-IniRead, RegeditExport2, data\genConfig.ini, Setings, RegeditExport2
-IniRead, RegeditExport3, data\genConfig.ini, Setings, RegeditExport3
-IniRead, RegeditExport4, data\genConfig.ini, Setings, RegeditExport4
-IniRead, RegeditExport5, data\genConfig.ini, Setings, RegeditExport5
+IniRead, RegeditExport1, data\genConfig.ini, Settings, RegeditExport1
+IniRead, RegeditExport2, data\genConfig.ini, Settings, RegeditExport2
+IniRead, RegeditExport3, data\genConfig.ini, Settings, RegeditExport3
+IniRead, RegeditExport4, data\genConfig.ini, Settings, RegeditExport4
+IniRead, RegeditExport5, data\genConfig.ini, Settings, RegeditExport5
 
-IniRead, GlLanguage, data\genConfig.ini, Setings, GlLanguage
+IniRead, GlLanguage, data\genConfig.ini, Settings, GlLanguage
 
 ;====================Подгрузка конфига: [Binds]
-IniRead, key_LabelNumpad0, data\genConfig.ini, Binds, key_LabelNumpad0
+IniRead, key_LabelNumpad0, data\genConfig.ini, Settings, key_LabelNumpad0
 Hotkey, *~$%key_LabelNumpad0%, LabelNumpad0, on
-IniRead, key_LabelNumpad1, data\genConfig.ini, Binds, key_LabelNumpad1
+IniRead, key_LabelNumpad1, data\genConfig.ini, Settings, key_LabelNumpad1
 Hotkey, *~$%key_LabelNumpad1%, LabelNumpad1, on
-IniRead, key_LabelNumpad2, data\genConfig.ini, Binds, key_LabelNumpad2
+IniRead, key_LabelNumpad2, data\genConfig.ini, Settings, key_LabelNumpad2
 Hotkey, *~$%key_LabelNumpad2%, LabelNumpad2, on
-IniRead, key_LabelNumpad3, data\genConfig.ini, Binds, key_LabelNumpad3
+IniRead, key_LabelNumpad3, data\genConfig.ini, Settings, key_LabelNumpad3
 Hotkey, *~$%key_LabelNumpad3%, LabelNumpad3, on
-IniRead, key_LabelNumpad4, data\genConfig.ini, Binds, key_LabelNumpad4
+IniRead, key_LabelNumpad4, data\genConfig.ini, Settings, key_LabelNumpad4
 Hotkey, *~$%key_LabelNumpad4%, LabelNumpad4, on
-IniRead, key_LabelNumpad5, data\genConfig.ini, Binds, key_LabelNumpad5
+IniRead, key_LabelNumpad5, data\genConfig.ini, Settings, key_LabelNumpad5
 Hotkey, *~$%key_LabelNumpad5%, LabelNumpad5, on
-IniRead, key_LabelNumpad6, data\genConfig.ini, Binds, key_LabelNumpad6
+IniRead, key_LabelNumpad6, data\genConfig.ini, Settings, key_LabelNumpad6
 Hotkey, *~$%key_LabelNumpad6%, LabelNumpad6, on
-IniRead, key_LabelNumpad7, data\genConfig.ini, Binds, key_LabelNumpad7
+IniRead, key_LabelNumpad7, data\genConfig.ini, Settings, key_LabelNumpad7
 Hotkey, *~$%key_LabelNumpad7%, LabelNumpad7, on
-IniRead, key_LabelNumpad8, data\genConfig.ini, Binds, key_LabelNumpad8
+IniRead, key_LabelNumpad8, data\genConfig.ini, Settings, key_LabelNumpad8
 Hotkey, *~$%key_LabelNumpad8%, LabelNumpad8, on
-IniRead, key_LabelNumpad9, data\genConfig.ini, Binds, key_LabelNumpad9
+IniRead, key_LabelNumpad9, data\genConfig.ini, Settings, key_LabelNumpad9
 Hotkey, *~$%key_LabelNumpad9%, LabelNumpad9, on
 
-IniRead, key_LabelANumpad0, data\genConfig.ini, Binds, key_LabelANumpad0
+IniRead, key_LabelANumpad0, data\genConfig.ini, Settings, key_LabelANumpad0
 Hotkey, *~$%key_LabelANumpad0%, LabelANumpad0, on
-IniRead, key_LabelANumpad1, data\genConfig.ini, Binds, key_LabelANumpad1
+IniRead, key_LabelANumpad1, data\genConfig.ini, Settings, key_LabelANumpad1
 Hotkey, *~$%key_LabelANumpad1%, LabelANumpad1, on
-IniRead, key_LabelANumpad2, data\genConfig.ini, Binds, key_LabelANumpad2
+IniRead, key_LabelANumpad2, data\genConfig.ini, Settings, key_LabelANumpad2
 Hotkey, *~$%key_LabelANumpad2%, LabelANumpad2, on
-IniRead, key_LabelANumpad3, data\genConfig.ini, Binds, key_LabelANumpad3
+IniRead, key_LabelANumpad3, data\genConfig.ini, Settings, key_LabelANumpad3
 Hotkey, *~$%key_LabelANumpad3%, LabelANumpad3, on
-IniRead, key_LabelANumpad4, data\genConfig.ini, Binds, key_LabelANumpad4
+IniRead, key_LabelANumpad4, data\genConfig.ini, Settings, key_LabelANumpad4
 Hotkey, *~$%key_LabelANumpad4%, LabelANumpad4, on
-IniRead, key_LabelANumpad5, data\genConfig.ini, Binds, key_LabelANumpad5
+IniRead, key_LabelANumpad5, data\genConfig.ini, Settings, key_LabelANumpad5
 Hotkey, *~$%key_LabelANumpad5%, LabelANumpad5, on
-IniRead, key_LabelANumpad6, data\genConfig.ini, Binds, key_LabelANumpad6
+IniRead, key_LabelANumpad6, data\genConfig.ini, Settings, key_LabelANumpad6
 Hotkey, *~$%key_LabelANumpad6%, LabelANumpad6, on
-IniRead, key_LabelANumpad7, data\genConfig.ini, Binds, key_LabelANumpad7
+IniRead, key_LabelANumpad7, data\genConfig.ini, Settings, key_LabelANumpad7
 Hotkey, *~$%key_LabelANumpad7%, LabelANumpad7, on
-IniRead, key_LabelANumpad8, data\genConfig.ini, Binds, key_LabelANumpad8
+IniRead, key_LabelANumpad8, data\genConfig.ini, Settings, key_LabelANumpad8
 Hotkey, *~$%key_LabelANumpad8%, LabelANumpad8, on
-IniRead, key_LabelANumpad9, data\genConfig.ini, Binds, key_LabelANumpad9
+IniRead, key_LabelANumpad9, data\genConfig.ini, Settings, key_LabelANumpad9
 Hotkey, *~$%key_LabelANumpad9%, LabelANumpad9, on
 
-IniRead, key_LabelNumpadAdd, data\genConfig.ini, Binds, key_LabelNumpadAdd
+IniRead, key_LabelNumpadAdd, data\genConfig.ini, Settings, key_LabelNumpadAdd
 Hotkey, *~$%key_LabelNumpadAdd%, LabelNumpadAdd, on
-IniRead, key_LabelANumpadAdd, data\genConfig.ini, Binds, key_LabelANumpadAdd
+IniRead, key_LabelANumpadAdd, data\genConfig.ini, Settings, key_LabelANumpadAdd
 Hotkey, *~$%key_LabelANumpadAdd%, LabelANumpadAdd, on
-IniRead, key_LabelNumpadSub, data\genConfig.ini, Binds, key_LabelNumpadSub
+IniRead, key_LabelNumpadSub, data\genConfig.ini, Settings, key_LabelNumpadSub
 Hotkey, *~$%key_LabelNumpadSub%, LabelNumpadSub, on
-IniRead, key_LabelANumpadSub, data\genConfig.ini, Binds, key_LabelANumpadSub
+IniRead, key_LabelANumpadSub, data\genConfig.ini, Settings, key_LabelANumpadSub
 Hotkey, *~$%key_LabelANumpadSub%, LabelANumpadSub, on
 ;==================================================экспедиции [Expedition]
-IniRead, ExManualMode, data\genConfig.ini, Expedition, ExManualMode
+IniRead, ExManualMode, data\genConfig.ini, Settings, ExManualMode
 
-IniRead, ExMondK1, data\genConfig.ini, Expedition, ExMondK1
-IniRead, ExMondK2, data\genConfig.ini, Expedition, ExMondK2
-IniRead, ExMondK3, data\genConfig.ini, Expedition, ExMondK3
-IniRead, ExMondK4, data\genConfig.ini, Expedition, ExMondK4
-IniRead, ExMondK5, data\genConfig.ini, Expedition, ExMondK5
-IniRead, ExMondK6, data\genConfig.ini, Expedition, ExMondK6
+IniRead, ExMondK1, data\genConfig.ini, Settings, ExMondK1
+IniRead, ExMondK2, data\genConfig.ini, Settings, ExMondK2
+IniRead, ExMondK3, data\genConfig.ini, Settings, ExMondK3
+IniRead, ExMondK4, data\genConfig.ini, Settings, ExMondK4
+IniRead, ExMondK5, data\genConfig.ini, Settings, ExMondK5
+IniRead, ExMondK6, data\genConfig.ini, Settings, ExMondK6
 
-IniRead, ExLiyK1, data\genConfig.ini, Expedition, ExLiyK1
-IniRead, ExLiyK2, data\genConfig.ini, Expedition, ExLiyK2
-IniRead, ExLiyK3, data\genConfig.ini, Expedition, ExLiyK3
-IniRead, ExLiyK4, data\genConfig.ini, Expedition, ExLiyK4
-IniRead, ExLiyK5, data\genConfig.ini, Expedition, ExLiyK5
-IniRead, ExLiyK6, data\genConfig.ini, Expedition, ExLiyK6
+IniRead, ExLiyK1, data\genConfig.ini, Settings, ExLiyK1
+IniRead, ExLiyK2, data\genConfig.ini, Settings, ExLiyK2
+IniRead, ExLiyK3, data\genConfig.ini, Settings, ExLiyK3
+IniRead, ExLiyK4, data\genConfig.ini, Settings, ExLiyK4
+IniRead, ExLiyK5, data\genConfig.ini, Settings, ExLiyK5
+IniRead, ExLiyK6, data\genConfig.ini, Settings, ExLiyK6
 
-IniRead, ExInaK1, data\genConfig.ini, Expedition, ExInaK1
-IniRead, ExInaK2, data\genConfig.ini, Expedition, ExInaK2
-IniRead, ExInaK3, data\genConfig.ini, Expedition, ExInaK3
-IniRead, ExInaK4, data\genConfig.ini, Expedition, ExInaK4
-IniRead, ExInaK5, data\genConfig.ini, Expedition, ExInaK5
-IniRead, ExInaK6, data\genConfig.ini, Expedition, ExInaK6
+IniRead, ExInaK1, data\genConfig.ini, Settings, ExInaK1
+IniRead, ExInaK2, data\genConfig.ini, Settings, ExInaK2
+IniRead, ExInaK3, data\genConfig.ini, Settings, ExInaK3
+IniRead, ExInaK4, data\genConfig.ini, Settings, ExInaK4
+IniRead, ExInaK5, data\genConfig.ini, Settings, ExInaK5
+IniRead, ExInaK6, data\genConfig.ini, Settings, ExInaK6
 
-IniRead, Fastpickcfg, data\genConfig.ini, Setings, Fastpickcfg
+IniRead, ExSumK1, data\genConfig.ini, Settings, ExSumK1
+IniRead, ExSumK2, data\genConfig.ini, Settings, ExSumK2
+IniRead, ExSumK3, data\genConfig.ini, Settings, ExSumK3
+IniRead, ExSumK4, data\genConfig.ini, Settings, ExSumK4
+IniRead, ExSumK5, data\genConfig.ini, Settings, ExSumK5
+IniRead, ExSumK6, data\genConfig.ini, Settings, ExSumK6
+
+
+IniRead, Fastpickcfg, data\genConfig.ini, Settings, Fastpickcfg
 if Fastpickcfg
 {
-Hotkey, *~1, Metkakey_fastpick1, on
-Hotkey, *~2, Metkakey_fastpick2, on
-Hotkey, *~3, Metkakey_fastpick3, on
-Hotkey, *~4, Metkakey_fastpick4, on
+	Hotkey, *~1, Metkakey_fastpick1, on
+	Hotkey, *~2, Metkakey_fastpick2, on
+	Hotkey, *~3, Metkakey_fastpick3, on
+	Hotkey, *~4, Metkakey_fastpick4, on
 }
 
-IniRead, OldMacroBackVar, data\genConfig.ini, Setings, OldMacroBackVar
+IniRead, OldMacroBackVar, data\genConfig.ini, Settings, OldMacroBackVar
 if OldMacroBackVar > 0
 {
-Hotkey, *~Up, Metkakey_UpMacroOld, on
-Hotkey, *~Down, Metkakey_DownMacroOld, on
+	Hotkey, *~Up, Metkakey_UpMacroOld, on
+	Hotkey, *~Down, Metkakey_DownMacroOld, on
 }
 
 
 
 If (ONregreadDir == 1) ; Если в конфиге путь к игре реестр вкл, то:
 {
-;=====================Реестр расположение папки с игрой
-RegRead, DirVarGensh, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Genshin Impact, UninstallString
-SplitPath, DirVarGensh,,DirVarGensh
+	;=====================Реестр расположение папки с игрой
+	RegRead, DirVarGensh, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Genshin Impact, UninstallString
+	SplitPath, DirVarGensh,,DirVarGensh
 }
 If (ONregreadDir == 0)
 {
-DirVarGensh = %DirGame%
+	DirVarGensh = %DirGame%
 }
 ;====================Положить хоткей в конфиг и проверить включен в чекбоксе в гуи или нет
 if Checkbox1map = 1
@@ -699,18 +724,18 @@ Gui, 1: Add, Button, gExploreMidiButton x160 y136 w34 h23, Exp
 Gui, 1: Add, Button, gParsButton x200 y136 w34 h23, Pars
 Gui, 1: Add, Button, gRunButton x296 y136 w34 h23, Run
 ;===============================импорт-экспорт настроек и автообновлятор
-if CheckUpdatePic 	;если CheckUpdatePic = 1 то проверять обнову и вставить кнопки
-{
-Gui, 1: Add, GroupBox, x344 y24 w114 h143, Update
-Gui, 1: Add, Button, gUpdateButton x352 y104 w97 h23, Update
-Gui, 1: Add, Button, gForceUpdateButton x352 y136 w97 h23, Force Update
-}
-else
-{
+; if CheckUpdatePic 	;если CheckUpdatePic = 1 то проверять обнову и вставить кнопки
+; {
+; Gui, 1: Add, GroupBox, x344 y24 w114 h143, Update
+; Gui, 1: Add, Button, gUpdateButton x352 y104 w97 h23, Update
+Gui, 1: Add, Button, gForceUpdateButton x352 y72 w97 h23, Force Update
+; }
+; else
+; {
 Gui, 1: Add, GroupBox, x344 y24 w114 h79, Update
-}
-Gui, 1: Add, CheckBox, vCheckboxImportAll x352 y40 w100 h23 +Checked, Reg + Midi files
-Gui, 1: Add, Button, gImportSettButton x352 y72 w97 h23, Import
+; }
+; Gui, 1: Add, CheckBox, vCheckboxImportAll x352 y40 w100 h23 +Checked, Reg + Midi files
+Gui, 1: Add, Button, gImportSettButton x352 y40 w97 h23, Import
 
 Gui, 1: Tab, 3 	;===============безопасность=====================================================================безопасность====Tab
 Gui, 1: Add, Picture, x200 y10 w252 h256 +BackgroundTrans, data\page2noell.png
@@ -768,8 +793,9 @@ Gui, 1: Add, Button, g1pickDelreg5 x56 y168 w36 h23, Del
 Gui, 1: Tab, 5 	;===============Решейд=====================================================================Решейд====Tab
 Gui, 1: Add, GroupBox, x8 y24 w186 h50, ReShade
 Gui, 1: Add, Button, g1ReshadeInstal x16 y40 w39 h23, Instal
-Gui, 1: Add, Button, g1ReshadeRemove x72 y40 w55 h23, Remove
-Gui, 1: Add, Button, g1ReshadeRun x144 y40 w39 h23, Run
+Gui, 1: Add, Button, g1ReshadeRemove x64 y40 w55 h23, Remove
+; Gui, 1: Add, Button, g1ReshadeRun x144 y40 w39 h23, Run
+Gui, 1: Add, Button, g1ReshadeReName x128 y40 w55 h23, ReName
 
 Gui, 1: Add, Picture, x208 y16 w252 h256 +BackgroundTrans, data\page5pcmr.png
 Gui, 1: Add, GroupBox, x8 y80 w186 h89, Nvidia Freestyle up
@@ -833,7 +859,7 @@ Gui, 1: Add, Button, gGetListVars1337 x408 y232 w43 h23, Dbg
 
 Gui, 1: Tab
 
-Gui, 1: Add, Picture, vGitUpPic x8 y283 w36 h36 +BackgroundTrans, data\Github-wh.png
+
 Gui, 1: Add, Picture, x8 y282 w36 h36 +BackgroundTrans gPicgogit, data\Github.png
 Gui, 1: Add, Picture, x60 y282 w36 h36 +BackgroundTrans gPicgoyt, data\Yt.png
 Gui, 1: Add, Picture, x114 y282 w30 h36 +BackgroundTrans gPicgoBoo, data\Boo.png
@@ -844,31 +870,30 @@ Gui, 1: Add, Button, gquitgui x400 y288 w43 h23, Quit
 ;========================Если включен ренеймер то сменить имя окна на рандомное
 if (ScWinrenamer = 1)
 {
-Random, rand1488, 33, 35
-password := gen_password(rand1488)	
-Gui, 1: Show, Hide w465 h325, %password%
-if showmegui
-Gui, 1: Show
+	Random, rand1488, 33, 35
+	password := gen_password(rand1488)	
+	Gui, 1: Show, Hide w465 h325, %password%
+	if showmegui
+	Gui, 1: Show
 }
 Else
 {
-;========================Какой выбран режим ввода?
-if metodVvoda = 1
-winsayvar:= "Input"
-if metodVvoda = 2
-winsayvar:= "WinApi"
-if metodVvoda = 3
-winsayvar:= "AHI"
-;=====================Скрипт запущен от админа?
-if A_IsAdmin
-winsayvar2:= "Admin"
-Else
-winsayvar2:= "NoAdmin"
-;=====================Пустить окно
-Gui, 1: Show, Hide w465 h325, %WinName% (%winsayvar%+%winsayvar2%)
-if showmegui
-Gui, 1: Show
-
+	;========================Какой выбран режим ввода?
+	if metodVvoda = 1
+	winsayvar:= "Input"
+	if metodVvoda = 2
+	winsayvar:= "WinApi"
+	if metodVvoda = 3
+	winsayvar:= "AHI"
+	;=====================Скрипт запущен от админа?
+	if A_IsAdmin
+	winsayvar2:= "Admin"
+	Else
+	winsayvar2:= "NoAdmin"
+	;=====================Пустить окно
+	Gui, 1: Show, Hide w465 h325, %WinName% (%winsayvar%+%winsayvar2%)
+	if showmegui
+	Gui, 1: Show
 }
 ;===============================Переменные
 xSkip:=round(A_ScreenWidth*.7328)
@@ -889,13 +914,17 @@ Loop, parse, GroupNameMap1337Var, `n, `r
 	VarLoopFieldEdit1:=A_LoopField
 	VarLoopFieldEdit1 := RegExReplace(VarLoopFieldEdit1, "mi);.*", "")
 	if (VarLoopFieldEdit1 != "")
+	{
+	; MsgBox %VarLoopFieldEdit1%
 	GroupAdd, GroupNameMap1337, %VarLoopFieldEdit1%
+	}
 } 
+
 
 ;===============================Оверлей создание
 var0ov := 1 	;заглушка для работы оверлея
 GenOverlayList := 11 	;кол-во страниц
-CheckVarKey1PaimonGifList := "7,8" 	;где гифки "5,6"
+CheckVarKey1PaimonGifList := "9" 	;где гифки "5,6"
 ScreenWidthRe1:=A_ScreenWidth
 ScreenHeightRe1:=A_ScreenHeight
 HpBarW:=ScreenWidthRe1
@@ -960,7 +989,7 @@ Gui, 99: Add, Text, % "vLabTextMyEdit14" " gLabelANumpad4" " x" round(A_ScreenWi
 Gui, 99: Add, Text, % "vLabTextMyEdit15" " gLabelANumpad5" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1000 / 1440)) " +BackgroundTrans", Alt + Numpad 5 - Xiao SpamPlunge(13)
 Gui, 99: Add, Text, % "vLabTextMyEdit16" " gLabelANumpad6" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1050 / 1440)) " +BackgroundTrans", Alt + Numpad 6 - Xiao N1SpamPlunge
 Gui, 99: Add, Text, % "vLabTextMyEdit17" " gLabelANumpad7" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1100 / 1440)) " +BackgroundTrans", Alt + Numpad 7 - Ganyu Hold T1
-Gui, 99: Add, Text, % "vLabTextMyEdit18" " gLabelANumpad8" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1150 / 1440)) " +BackgroundTrans", Alt + Numpad 8 - Ganyu Hold T2
+Gui, 99: Add, Text, % "vLabTextMyEdit18" " gLabelANumpad8" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1150 / 1440)) " +BackgroundTrans", Alt + Numpad 8 - Hu Tao (Test)
 Gui, 99: Add, Text, % "vLabTextMyEdit19" " gLabelANumpad9" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1200 / 1440)) " +BackgroundTrans", Alt + Numpad 9 - Swimming (x1 - off, x2 - on)
 Gui, 99: Add, Text, % "vLabTextMyEdit20" " gLabelANumpadAdd" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1250 / 1440)) " +BackgroundTrans", Alt + NumpadAdd - Mona-Ayaka infinite swimming (x1 - off, x2 - on)
 Gui, 99: Add, Text, % "vLabTextMyEdit44" " gLabelANumpadSub" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (1300 / 1440)) " +BackgroundTrans", Alt + NumpadSub - Auto coсking (x1 - off, x2 - on)
@@ -1007,75 +1036,7 @@ Else
 Gui, 99: Show, Hide w%HpBarW% h%HpBarH% x%HpBarX% y%HpBarY%, %WinName%
 hwndGuihamdlewindow := WinExist()
 Gui, 99: Cancel
-;====================================================================Проверить обнову и покрасить значек
-if CheckUpdatePic
-{
-IniRead, LastStatusCheck, data\inputversion.ini, Info, LastStatusCheck
-IniRead, CheckMDAY, data\inputversion.ini, Info, CheckMDAY
-if  (CheckMDAY = A_MDAY)
-	{
-	if (LastStatusCheck = 2)
-	GuiControl,1:, GitUpPic, data\Github-red.png
-	if (LastStatusCheck = 1)
-	GuiControl,1:, GitUpPic, data\Github-gre.png
-	if (LastStatusCheck = 0)
-	GuiControl,1:, GitUpPic, data\Github-yel.png
-	; MsgBox Не чекать обнову, обнова уже сегодня чекалась
-	Goto LabelSkip1
-	Return
-	}
-Else
-	{
-	; MsgBox Проверить обнову
-	IniWrite, %A_MDAY%, data\inputversion.ini, Info, CheckMDAY
-	FileCreateDir, update
-	URLDownloadToFile, https://raw.githubusercontent.com/Kramar1337/GenshinImpact-AHK-flex/main/Genshin`%20AHK/data/inputversion.ini, update\inputversion.ini
-	if(ErrorLevel)
-	{
-	FileRemoveDir, update, 1
-	GuiControl,1:, GitUpPic, data\Github-yel.png
-	IniWrite, 0, data\inputversion.ini, Info, LastStatusCheck
-	; MsgBox Ошибка загрузки
-	Goto LabelSkip1
-	Return
-	}
-	IniRead, TimeupNew, update\inputversion.ini, Info, Timeup
-	if (TimeupNew = "ERROR")
-		{
-		FileRemoveDir, update, 1
-		GuiControl,1:, GitUpPic, data\Github-yel.png
-		IniWrite, 0, data\inputversion.ini, Info, LastStatusCheck
-		; MsgBox Ошибка сервера
-		Goto LabelSkip1
-		Return
-		}
-	IniRead, TimeupOld, data\inputversion.ini, Info, Timeup
-	if (TimeupOld = "ERROR")
-		{
-		FileRemoveDir, update, 1
-		GuiControl,1:, GitUpPic, data\Github-yel.png
-		IniWrite, 0, data\inputversion.ini, Info, LastStatusCheck
-		; MsgBox Ошибка файлов
-		Goto LabelSkip1
-		Return
-		}
-	If (TimeupNew > TimeupOld)
-		{
-		GuiControl,1:, GitUpPic, data\Github-red.png
-		IniWrite, 2, data\inputversion.ini, Info, LastStatusCheck
-		; MsgBox Обнаружена новая версия
-		}
-	Else
-		{
-		FileRemoveDir, update, 1
-		GuiControl,1:, GitUpPic, data\Github-gre.png
-		IniWrite, 1, data\inputversion.ini, Info, LastStatusCheck
-		; MsgBox Актуальная версия
-		}
-	}
-FileRemoveDir, update, 1
-}
-LabelSkip1:
+
 if AutoExitAHK
 SetTimer, ExitOnGameClose, 3000 	;Автовыход через 3 секунды если нет окна игры или лаунчера
 return
@@ -1270,12 +1231,12 @@ if !(FileVarImport = "")
 	if (x2name == "genConfig.ini")
 	{
 		MsgBox Импорт настроек из:`n`n%FileVarImport%`n`nПосле нажатия ОК конфиг будет обновлен и скрипт перезагрузится
-			if CheckboxImportAll 	;если мы копируем все то мы берем: реестр, песни, кфг песен
-			{
+			; if CheckboxImportAll 	;если мы копируем все то мы берем: реестр, песни, кфг песен
+			; {
 				FileCopy, %x2dir%\reg\*.reg, %A_ScriptDir%\data\reg\, 1 	;копируем рег файлы из папки со скриптом в новую
 				FileCopy, %x2dir%\soundall\*.mid, %A_ScriptDir%\data\soundall\, 1 	;копируем миди файлы из папки со скриптом в новую
 				FileCopy, %x2dir%\midi_config.json, %A_ScriptDir%\data\midi_config.json, 1 	;копируем миди конфиг из папки со скриптом в новую
-			}
+			; }
 		FileVarImport2=data\genConfig.ini
 		Gosub ImportSettLabel1
 		Reload
@@ -1284,336 +1245,33 @@ if !(FileVarImport = "")
 	}
 return
 
+
+
+
+
 ;==========================================метка с импортом настроек, %FileVarImport% откуда читать, %FileVarImport2% куда писать
 ImportSettLabel1:
-	IniRead, OldMacroBackVar, %FileVarImport%, Setings, OldMacroBackVar
-	if !(OldMacroBackVar = "ERROR")
-IniWrite, %OldMacroBackVar%, %FileVarImport2%, Setings, OldMacroBackVar
-	IniRead, VarTabSel, %FileVarImport%, Setings, VarTab3Choose
-	if !(VarTabSel = "ERROR")
-IniWrite, %VarTabSel%, %FileVarImport2%, Setings, VarTab3Choose
-	IniRead, KeyboardVID, %FileVarImport%, Extra, KeyboardVID
-	if !(KeyboardVID = "ERROR")
-IniWrite, %KeyboardVID%, %FileVarImport2%, Extra, KeyboardVID
-	IniRead, KeyboardPID, %FileVarImport%, Extra, KeyboardPID
-	if !(KeyboardPID = "ERROR")
-IniWrite, %KeyboardPID%, %FileVarImport2%, Extra, KeyboardPID
-	IniRead, MouseVID, %FileVarImport%, Extra, MouseVID
-	if !(MouseVID = "ERROR")
-IniWrite, %MouseVID%, %FileVarImport2%, Extra, MouseVID
-	IniRead, MousePID, %FileVarImport%, Extra, MousePID
-	if !(MousePID = "ERROR")
-IniWrite, %MousePID%, %FileVarImport2%, Extra, MousePID
-	IniRead, InterceptionFishMouseMoveX, %FileVarImport%, Extra, InterceptionFishMouseMoveX
-	if !(InterceptionFishMouseMoveX = "ERROR")
-IniWrite, %InterceptionFishMouseMoveX%, %FileVarImport2%, Extra, InterceptionFishMouseMoveX
-	IniRead, InterceptionFishMouseMoveY, %FileVarImport%, Extra, InterceptionFishMouseMoveY
-	if !(InterceptionFishMouseMoveY = "ERROR")
-IniWrite, %InterceptionFishMouseMoveY%, %FileVarImport2%, Extra, InterceptionFishMouseMoveY
-	IniRead, InterceptionVentiMouseMoveX, %FileVarImport%, Extra, InterceptionVentiMouseMoveX
-	if !(InterceptionVentiMouseMoveX = "ERROR")
-IniWrite, %InterceptionVentiMouseMoveX%, %FileVarImport2%, Extra, InterceptionVentiMouseMoveX
-	IniRead, InterceptionVentiMouseMoveY, %FileVarImport%, Extra, InterceptionVentiMouseMoveY
-	if !(InterceptionVentiMouseMoveY = "ERROR")
-IniWrite, %InterceptionVentiMouseMoveY%, %FileVarImport2%, Extra, InterceptionVentiMouseMoveY
-	IniRead, Prozra4nostiFis, %FileVarImport%, Fish, Prozra4nostiFis
-	if !(Prozra4nostiFis = "ERROR")
-IniWrite, %Prozra4nostiFis%, %FileVarImport2%, Fish, Prozra4nostiFis
-	IniRead, OttenokFis, %FileVarImport%, Fish, OttenokFis
-	if !(OttenokFis = "ERROR")
-IniWrite, %OttenokFis%, %FileVarImport2%, Fish, OttenokFis
-	IniRead, OptimizationFis, %FileVarImport%, Fish, OptimizationFis
-	if !(OptimizationFis = "ERROR")
-IniWrite, %OptimizationFis%, %FileVarImport2%, Fish, OptimizationFis
-	IniRead, Highperformancemode, %FileVarImport%, Setings, Highperformancemode
-	if !(Highperformancemode = "ERROR")
-IniWrite, %Highperformancemode%, %FileVarImport2%, Setings, Highperformancemode
-	IniRead, ScWinrenamer, %FileVarImport%, Setings, ScWinrenamer ; проверка Winrenamer
-	if !(ScWinrenamer = "ERROR")
-IniWrite, %ScWinrenamer%, %FileVarImport2%, Setings, ScWinrenamer ; проверка Winrenamer
-	IniRead, ScRenamer, %FileVarImport%, Setings, ScRenamer ; проверка Renamera
-	if !(ScRenamer = "ERROR")
-IniWrite, %ScRenamer%, %FileVarImport2%, Setings, ScRenamer ; проверка Renamera
-	IniRead, ScHachCh, %FileVarImport%, Setings, ScHachCh ; проверка ScHachCh
-	if !(ScHachCh = "ERROR")
-IniWrite, %ScHachCh%, %FileVarImport2%, Setings, ScHachCh ; проверка ScHachCh
-	IniRead, ScRandomT, %FileVarImport%, Setings, ScRandomT ; проверка рандом таймер
-	if !(ScRandomT = "ERROR")
-IniWrite, %ScRandomT%, %FileVarImport2%, Setings, ScRandomT ; проверка рандом таймер
-	IniRead, Fastpickcfg, %FileVarImport%, Setings, Fastpickcfg
-	if !(Fastpickcfg = "ERROR")
-IniWrite, %Fastpickcfg%, %FileVarImport2%, Setings, Fastpickcfg
-	IniRead, DefaultJopaTrue, %FileVarImport%, Extra, DefaultJopaTrue
-	if !(DefaultJopaTrue = "ERROR")
-IniWrite, %DefaultJopaTrue%, %FileVarImport2%, Extra, DefaultJopaTrue
-	IniRead, key_animcancel, %FileVarImport%, Binds, key_animcancel
-	if !(key_animcancel = "ERROR")
-IniWrite, %key_animcancel%, %FileVarImport2%, Binds, key_animcancel
-	IniRead, key_map, %FileVarImport%, Binds, key_map
-	if !(key_map = "ERROR")
-IniWrite, %key_map%, %FileVarImport2%, Binds, key_map
-	IniRead, key_autowalk, %FileVarImport%, Binds, key_autowalk
-	if !(key_autowalk = "ERROR")
-IniWrite, %key_autowalk%, %FileVarImport2%, Binds, key_autowalk
-	IniRead, key_overlay, %FileVarImport%, Binds, key_overlay
-	if !(key_overlay = "ERROR")
-IniWrite, %key_overlay%, %FileVarImport2%, Binds, key_overlay
-	IniRead, key_fastlyt, %FileVarImport%, Binds, key_fastlyt
-	if !(key_fastlyt = "ERROR")
-IniWrite, %key_fastlyt%, %FileVarImport2%, Binds, key_fastlyt
-	IniRead, key_skipNPS, %FileVarImport%, Binds, key_skipNPS
-	if !(key_skipNPS = "ERROR")
-IniWrite, %key_skipNPS%, %FileVarImport2%, Binds, key_skipNPS
-	IniRead, key_bhop, %FileVarImport%, Binds, key_bhop
-	if !(key_bhop = "ERROR")
-IniWrite, %key_bhop%, %FileVarImport2%, Binds, key_bhop
-	IniRead, key_autoswim, %FileVarImport%, Binds, key_autoswim
-	if !(key_autoswim = "ERROR")
-IniWrite, %key_autoswim%, %FileVarImport2%, Binds, key_autoswim
-	IniRead, key_vi4er_sens, %FileVarImport%, Binds, key_vi4er_sens
-	if !(key_vi4er_sens = "ERROR")
-IniWrite, %key_vi4er_sens%, %FileVarImport2%, Binds, key_vi4er_sens
-	IniRead, FIXchat, %FileVarImport%, Setings, FIXchat
-	if !(FIXchat = "ERROR")
-IniWrite, %FIXchat%, %FileVarImport2%, Setings, FIXchat
-	IniRead, CheckUpdatePic, %FileVarImport%, Setings, CheckUpdatePic
-	if !(CheckUpdatePic = "ERROR")
-IniWrite, %CheckUpdatePic%, %FileVarImport2%, Setings, CheckUpdatePic
-	IniRead, AutoExitAHK, %FileVarImport%, Setings, AutoExitAHK
-	if !(AutoExitAHK = "ERROR")
-IniWrite, %AutoExitAHK%, %FileVarImport2%, Setings, AutoExitAHK
-	IniRead, IsAdmin, %FileVarImport%, Setings, IsAdmin
-	if !(IsAdmin = "ERROR")
-IniWrite, %IsAdmin%, %FileVarImport2%, Setings, IsAdmin
-	IniRead, MousemoveBow, %FileVarImport%, Extra, MousemoveBow 	;двигать мышку вправо когда идет стрельба с макроса на винапи
-	if !(MousemoveBow = "ERROR")
-IniWrite, %MousemoveBow%, %FileVarImport2%, Extra, MousemoveBow 	;двигать мышку вправо когда идет стрельба с макроса на винапи
-	IniRead, FishMouseMoveX, %FileVarImport%, Extra, FishMouseMoveX 	;сколько двигать для фишль по X = 43 на дефолтных настройках
-	if !(FishMouseMoveX = "ERROR")
-IniWrite, %FishMouseMoveX%, %FileVarImport2%, Extra, FishMouseMoveX 	;сколько двигать для фишль по X = 43 на дефолтных настройках
-	IniRead, FishMouseMoveY, %FileVarImport%, Extra, FishMouseMoveY 	;сколько двигать для фишль по Y = 0
-	if !(FishMouseMoveY = "ERROR")
-IniWrite, %FishMouseMoveY%, %FileVarImport2%, Extra, FishMouseMoveY 	;сколько двигать для фишль по Y = 0
-	IniRead, VentiMouseMoveX, %FileVarImport%, Extra, VentiMouseMoveX 	;двигать для венти по X = 43 на дефолтных настройках
-	if !(VentiMouseMoveX = "ERROR")
-IniWrite, %VentiMouseMoveX%, %FileVarImport2%, Extra, VentiMouseMoveX 	;двигать для венти по X = 43 на дефолтных настройках
-	IniRead, VentiMouseMoveY, %FileVarImport%, Extra, VentiMouseMoveY 	;двигать для венти по X = 0
-	if !(VentiMouseMoveY = "ERROR")
-IniWrite, %VentiMouseMoveY%, %FileVarImport2%, Extra, VentiMouseMoveY 	;двигать для венти по X = 0
-	IniRead, BrauzerCheck, %FileVarImport%, Setings, BrauzerCheck ; проверка браузера
-	if !(BrauzerCheck = "ERROR")
-IniWrite, %BrauzerCheck%, %FileVarImport2%, Setings, BrauzerCheck ; проверка браузера
-	IniRead, BrauzerPick, %FileVarImport%, Setings, BrauzerPick ; выбор браузера
-	if !(BrauzerPick = "ERROR")
-IniWrite, %BrauzerPick%, %FileVarImport2%, Setings, BrauzerPick ; выбор браузера
-	IniRead, Map2toggle, %FileVarImport%, Setings, Map2toggle
-	if !(Map2toggle = "ERROR")
-IniWrite, %Map2toggle%, %FileVarImport2%, Setings, Map2toggle
-	IniRead, gameexe1337, %FileVarImport%, Setings, GameExe	; исполняемый файл игры
-	if !(gameexe1337 = "ERROR")
-IniWrite, %gameexe1337%, %FileVarImport2%, Setings, GameExe	; исполняемый файл игры
-	IniRead, ONregreadDir, %FileVarImport%, Setings, ONregreadDir ; поиск папки в реестре для откл кастсцен
-	if !(ONregreadDir = "ERROR")
-IniWrite, %ONregreadDir%, %FileVarImport2%, Setings, ONregreadDir ; поиск папки в реестре для откл кастсцен
-	IniRead, DirGame, %FileVarImport%, Setings, DirGame
-	if !(DirGame = "ERROR")
-IniWrite, %DirGame%, %FileVarImport2%, Setings, DirGame
-	IniRead, metodVvoda, %FileVarImport%, Setings, metodVvoda
-	if !(metodVvoda = "ERROR")
-IniWrite, %metodVvoda%, %FileVarImport2%, Setings, metodVvoda
-	IniRead, showtooltipVvoba, %FileVarImport%, Setings, showtooltipVvoba
-	if !(showtooltipVvoba = "ERROR")
-IniWrite, %showtooltipVvoba%, %FileVarImport2%, Setings, showtooltipVvoba
-	IniRead, showmegui, %FileVarImport%, Setings, showmegui
-	if !(showmegui = "ERROR")
-IniWrite, %showmegui%, %FileVarImport2%, Setings, showmegui
-	IniRead, Checkbox1map, %FileVarImport%, Setings, Checkbox1map
-	if !(Checkbox1map = "ERROR")
-IniWrite, %Checkbox1map%, %FileVarImport2%, Setings, Checkbox1map
-	IniRead, Checkbox1overlay, %FileVarImport%, Setings, Checkbox1overlay
-	if !(Checkbox1overlay = "ERROR")
-IniWrite, %Checkbox1overlay%, %FileVarImport2%, Setings, Checkbox1overlay
-	IniRead, Checkbox1autowalk, %FileVarImport%, Setings, Checkbox1autowalk
-	if !(Checkbox1autowalk = "ERROR")
-IniWrite, %Checkbox1autowalk%, %FileVarImport2%, Setings, Checkbox1autowalk
-	IniRead, Checkbox1fastlyt, %FileVarImport%, Setings, Checkbox1fastlyt
-	if !(Checkbox1fastlyt = "ERROR")
-IniWrite, %Checkbox1fastlyt%, %FileVarImport2%, Setings, Checkbox1fastlyt
-	IniRead, Checkbox1skipNPS, %FileVarImport%, Setings, Checkbox1skipNPS
-	if !(Checkbox1skipNPS = "ERROR")
-IniWrite, %Checkbox1skipNPS%, %FileVarImport2%, Setings, Checkbox1skipNPS
-	IniRead, Checkbox1locknpc, %FileVarImport%, Setings, Checkbox1locknpc
-	if !(Checkbox1locknpc = "ERROR")
-IniWrite, %Checkbox1locknpc%, %FileVarImport2%, Setings, Checkbox1locknpc
-	IniRead, Checkbox1autoswim, %FileVarImport%, Setings, Checkbox1autoswim
-	if !(Checkbox1autoswim = "ERROR")
-IniWrite, %Checkbox1autoswim%, %FileVarImport2%, Setings, Checkbox1autoswim
-	IniRead, Checkbox1vi4ersens, %FileVarImport%, Setings, Checkbox1vi4ersens
-	if !(Checkbox1vi4ersens = "ERROR")
-IniWrite, %Checkbox1vi4ersens%, %FileVarImport2%, Setings, Checkbox1vi4ersens
-	IniRead, Checkbox1animcancel, %FileVarImport%, Setings, Checkbox1animcancel
-	if !(Checkbox1animcancel = "ERROR")
-IniWrite, %Checkbox1animcancel%, %FileVarImport2%, Setings, Checkbox1animcancel
-	IniRead, Checkbox1bhop, %FileVarImport%, Setings, Checkbox1bhop
-	if !(Checkbox1bhop = "ERROR")
-IniWrite, %Checkbox1bhop%, %FileVarImport2%, Setings, Checkbox1bhop
-	IniRead, Checkbox1bhopDelay, %FileVarImport%, Setings, Checkbox1bhopDelay
-	if !(Checkbox1bhopDelay = "ERROR")
-IniWrite, %Checkbox1bhopDelay%, %FileVarImport2%, Setings, Checkbox1bhopDelay
-	IniRead, Checkbox1bhopDelayMs, %FileVarImport%, Setings, Checkbox1bhopDelayMs
-	if !(Checkbox1bhopDelayMs = "ERROR")
-IniWrite, %Checkbox1bhopDelayMs%, %FileVarImport2%, Setings, Checkbox1bhopDelayMs
-	IniRead, RegeditExport1, %FileVarImport%, Setings, RegeditExport1
-	if !(RegeditExport1 = "ERROR")
-IniWrite, %RegeditExport1%, %FileVarImport2%, Setings, RegeditExport1
-	IniRead, RegeditExport2, %FileVarImport%, Setings, RegeditExport2
-	if !(RegeditExport2 = "ERROR")
-IniWrite, %RegeditExport2%, %FileVarImport2%, Setings, RegeditExport2
-	IniRead, RegeditExport3, %FileVarImport%, Setings, RegeditExport3
-	if !(RegeditExport3 = "ERROR")
-IniWrite, %RegeditExport3%, %FileVarImport2%, Setings, RegeditExport3
-	IniRead, RegeditExport4, %FileVarImport%, Setings, RegeditExport4
-	if !(RegeditExport4 = "ERROR")
-IniWrite, %RegeditExport4%, %FileVarImport2%, Setings, RegeditExport4
-	IniRead, RegeditExport5, %FileVarImport%, Setings, RegeditExport5
-	if !(RegeditExport5 = "ERROR")
-IniWrite, %RegeditExport5%, %FileVarImport2%, Setings, RegeditExport5
-	IniRead, GlLanguage, %FileVarImport%, Setings, GlLanguage
-	if !(GlLanguage = "ERROR")
-IniWrite, %GlLanguage%, %FileVarImport2%, Setings, GlLanguage
-	IniRead, key_LabelNumpad0, %FileVarImport%, Binds, key_LabelNumpad0
-	if !(key_LabelNumpad0 = "ERROR")
-IniWrite, %key_LabelNumpad0%, %FileVarImport2%, Binds, key_LabelNumpad0
-	IniRead, key_LabelNumpad1, %FileVarImport%, Binds, key_LabelNumpad1
-	if !(key_LabelNumpad1 = "ERROR")
-IniWrite, %key_LabelNumpad1%, %FileVarImport2%, Binds, key_LabelNumpad1
-	IniRead, key_LabelNumpad2, %FileVarImport%, Binds, key_LabelNumpad2
-	if !(key_LabelNumpad2 = "ERROR")
-IniWrite, %key_LabelNumpad2%, %FileVarImport2%, Binds, key_LabelNumpad2
-	IniRead, key_LabelNumpad3, %FileVarImport%, Binds, key_LabelNumpad3
-	if !(key_LabelNumpad3 = "ERROR")
-IniWrite, %key_LabelNumpad3%, %FileVarImport2%, Binds, key_LabelNumpad3
-	IniRead, key_LabelNumpad4, %FileVarImport%, Binds, key_LabelNumpad4
-	if !(key_LabelNumpad4 = "ERROR")
-IniWrite, %key_LabelNumpad4%, %FileVarImport2%, Binds, key_LabelNumpad4
-	IniRead, key_LabelNumpad5, %FileVarImport%, Binds, key_LabelNumpad5
-	if !(key_LabelNumpad5 = "ERROR")
-IniWrite, %key_LabelNumpad5%, %FileVarImport2%, Binds, key_LabelNumpad5
-	IniRead, key_LabelNumpad6, %FileVarImport%, Binds, key_LabelNumpad6
-	if !(key_LabelNumpad6 = "ERROR")
-IniWrite, %key_LabelNumpad6%, %FileVarImport2%, Binds, key_LabelNumpad6
-	IniRead, key_LabelNumpad7, %FileVarImport%, Binds, key_LabelNumpad7
-	if !(key_LabelNumpad7 = "ERROR")
-IniWrite, %key_LabelNumpad7%, %FileVarImport2%, Binds, key_LabelNumpad7
-	IniRead, key_LabelNumpad8, %FileVarImport%, Binds, key_LabelNumpad8
-	if !(key_LabelNumpad8 = "ERROR")
-IniWrite, %key_LabelNumpad8%, %FileVarImport2%, Binds, key_LabelNumpad8
-	IniRead, key_LabelNumpad9, %FileVarImport%, Binds, key_LabelNumpad9
-	if !(key_LabelNumpad9 = "ERROR")
-IniWrite, %key_LabelNumpad9%, %FileVarImport2%, Binds, key_LabelNumpad9
-	IniRead, key_LabelNumpadAdd, %FileVarImport%, Binds, key_LabelNumpadAdd
-	if !(key_LabelNumpadAdd = "ERROR")
-IniWrite, %key_LabelNumpadAdd%, %FileVarImport2%, Binds, key_LabelNumpadAdd
-	IniRead, key_LabelANumpadAdd, %FileVarImport%, Binds, key_LabelANumpadAdd
-	if !(key_LabelANumpadAdd = "ERROR")
-IniWrite, %key_LabelANumpadAdd%, %FileVarImport2%, Binds, key_LabelANumpadAdd
-	IniRead, key_LabelNumpadSub, %FileVarImport%, Binds, key_LabelNumpadSub
-	if !(key_LabelNumpadSub = "ERROR")
-IniWrite, %key_LabelNumpadSub%, %FileVarImport2%, Binds, key_LabelNumpadSub
-	IniRead, key_LabelANumpadSub, %FileVarImport%, Binds, key_LabelANumpadSub
-	if !(key_LabelANumpadSub = "ERROR")
-IniWrite, %key_LabelANumpadSub%, %FileVarImport2%, Binds, key_LabelANumpadSub
-	IniRead, key_LabelANumpad0, %FileVarImport%, Binds, key_LabelANumpad0
-	if !(key_LabelANumpad0 = "ERROR")
-IniWrite, %key_LabelANumpad0%, %FileVarImport2%, Binds, key_LabelANumpad0
-	IniRead, key_LabelANumpad1, %FileVarImport%, Binds, key_LabelANumpad1
-	if !(key_LabelANumpad1 = "ERROR")
-IniWrite, %key_LabelANumpad1%, %FileVarImport2%, Binds, key_LabelANumpad1
-	IniRead, key_LabelANumpad2, %FileVarImport%, Binds, key_LabelANumpad2
-	if !(key_LabelANumpad2 = "ERROR")
-IniWrite, %key_LabelANumpad2%, %FileVarImport2%, Binds, key_LabelANumpad2
-	IniRead, key_LabelANumpad3, %FileVarImport%, Binds, key_LabelANumpad3
-	if !(key_LabelANumpad3 = "ERROR")
-IniWrite, %key_LabelANumpad3%, %FileVarImport2%, Binds, key_LabelANumpad3
-	IniRead, key_LabelANumpad4, %FileVarImport%, Binds, key_LabelANumpad4
-	if !(key_LabelANumpad4 = "ERROR")
-IniWrite, %key_LabelANumpad4%, %FileVarImport2%, Binds, key_LabelANumpad4
-	IniRead, key_LabelANumpad5, %FileVarImport%, Binds, key_LabelANumpad5
-	if !(key_LabelANumpad5 = "ERROR")
-IniWrite, %key_LabelANumpad5%, %FileVarImport2%, Binds, key_LabelANumpad5
-	IniRead, key_LabelANumpad6, %FileVarImport%, Binds, key_LabelANumpad6
-	if !(key_LabelANumpad6 = "ERROR")
-IniWrite, %key_LabelANumpad6%, %FileVarImport2%, Binds, key_LabelANumpad6
-	IniRead, key_LabelANumpad7, %FileVarImport%, Binds, key_LabelANumpad7
-	if !(key_LabelANumpad7 = "ERROR")
-IniWrite, %key_LabelANumpad7%, %FileVarImport2%, Binds, key_LabelANumpad7
-	IniRead, key_LabelANumpad8, %FileVarImport%, Binds, key_LabelANumpad8
-	if !(key_LabelANumpad8 = "ERROR")
-IniWrite, %key_LabelANumpad8%, %FileVarImport2%, Binds, key_LabelANumpad8
-	IniRead, key_LabelANumpad9, %FileVarImport%, Binds, key_LabelANumpad9
-	if !(key_LabelANumpad9 = "ERROR")
-IniWrite, %key_LabelANumpad9%, %FileVarImport2%, Binds, key_LabelANumpad9
-	IniRead, ExManualMode, %FileVarImport%, Expedition, ExManualMode
-	if !(ExManualMode = "ERROR")
-IniWrite, %ExManualMode%, %FileVarImport2%, Expedition, ExManualMode
-	IniRead, ExMondK1, %FileVarImport%, Expedition, ExMondK1
-	if !(ExMondK1 = "ERROR")
-IniWrite, %ExMondK1%, %FileVarImport2%, Expedition, ExMondK1
-	IniRead, ExMondK2, %FileVarImport%, Expedition, ExMondK2
-	if !(ExMondK2 = "ERROR")
-IniWrite, %ExMondK2%, %FileVarImport2%, Expedition, ExMondK2
-	IniRead, ExMondK3, %FileVarImport%, Expedition, ExMondK3
-	if !(ExMondK3 = "ERROR")
-IniWrite, %ExMondK3%, %FileVarImport2%, Expedition, ExMondK3
-	IniRead, ExMondK4, %FileVarImport%, Expedition, ExMondK4
-	if !(ExMondK4 = "ERROR")
-IniWrite, %ExMondK4%, %FileVarImport2%, Expedition, ExMondK4
-	IniRead, ExMondK5, %FileVarImport%, Expedition, ExMondK5
-	if !(ExMondK5 = "ERROR")
-IniWrite, %ExMondK5%, %FileVarImport2%, Expedition, ExMondK5
-	IniRead, ExMondK6, %FileVarImport%, Expedition, ExMondK6
-	if !(ExMondK6 = "ERROR")
-IniWrite, %ExMondK6%, %FileVarImport2%, Expedition, ExMondK6
-	IniRead, ExLiyK1, %FileVarImport%, Expedition, ExLiyK1
-	if !(ExLiyK1 = "ERROR")
-IniWrite, %ExLiyK1%, %FileVarImport2%, Expedition, ExLiyK1
-	IniRead, ExLiyK2, %FileVarImport%, Expedition, ExLiyK2
-	if !(ExLiyK2 = "ERROR")
-IniWrite, %ExLiyK2%, %FileVarImport2%, Expedition, ExLiyK2
-	IniRead, ExLiyK3, %FileVarImport%, Expedition, ExLiyK3
-	if !(ExLiyK3 = "ERROR")
-IniWrite, %ExLiyK3%, %FileVarImport2%, Expedition, ExLiyK3
-	IniRead, ExLiyK4, %FileVarImport%, Expedition, ExLiyK4
-	if !(ExLiyK4 = "ERROR")
-IniWrite, %ExLiyK4%, %FileVarImport2%, Expedition, ExLiyK4
-	IniRead, ExLiyK5, %FileVarImport%, Expedition, ExLiyK5
-	if !(ExLiyK5 = "ERROR")
-IniWrite, %ExLiyK5%, %FileVarImport2%, Expedition, ExLiyK5
-	IniRead, ExLiyK6, %FileVarImport%, Expedition, ExLiyK6
-	if !(ExLiyK6 = "ERROR")
-IniWrite, %ExLiyK6%, %FileVarImport2%, Expedition, ExLiyK6
-	IniRead, ExInaK1, %FileVarImport%, Expedition, ExInaK1
-	if !(ExInaK1 = "ERROR")
-IniWrite, %ExInaK1%, %FileVarImport2%, Expedition, ExInaK1
-	IniRead, ExInaK2, %FileVarImport%, Expedition, ExInaK2
-	if !(ExInaK2 = "ERROR")
-IniWrite, %ExInaK2%, %FileVarImport2%, Expedition, ExInaK2
-	IniRead, ExInaK3, %FileVarImport%, Expedition, ExInaK3
-	if !(ExInaK3 = "ERROR")
-IniWrite, %ExInaK3%, %FileVarImport2%, Expedition, ExInaK3
-	IniRead, ExInaK4, %FileVarImport%, Expedition, ExInaK4
-	if !(ExInaK4 = "ERROR")
-IniWrite, %ExInaK4%, %FileVarImport2%, Expedition, ExInaK4
-	IniRead, ExInaK5, %FileVarImport%, Expedition, ExInaK5
-	if !(ExInaK5 = "ERROR")
-IniWrite, %ExInaK5%, %FileVarImport2%, Expedition, ExInaK5
-	IniRead, ExInaK6, %FileVarImport%, Expedition, ExInaK6
-	if !(ExInaK6 = "ERROR")
-IniWrite, %ExInaK6%, %FileVarImport2%, Expedition, ExInaK6
-	IniRead, TTimerahk1, %FileVarImport%, Setings, TTimerahk1
-	if !(TTimerahk1 = "ERROR")
-IniWrite, %TTimerahk1%, %FileVarImport2%, Setings, TTimerahk1
+; FileVarImport=data\genConfig.ini
+; FileVarImport2=update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini
+FileRead, GroupNameMap1337Var228, %A_ScriptDir%\data\tofuConfig.ini 	;Прочитать старый конфиг
+Loop, parse, GroupNameMap1337Var228, `n, `r
+{
+	VarLoopFieldEdit1 := A_LoopField
+	VarLoopFieldEdit1 := RegExReplace(VarLoopFieldEdit1, "mi);.*", "") 	;Убрать строки с знаком ";"
+	RegExMatch(VarLoopFieldEdit1, "(.*?)=(.*)", VarLoopFieldEdit1) 	;Найти все значения
+	if (VarLoopFieldEdit1 != "") 	;Если пусто то игнорим
+	{
+		VarLoopFieldEditSta := RegExReplace(VarLoopFieldEdit1, "(\s?)=(.*)") 	;Получить имя
+		VarLoopFieldEditEns := RegExReplace(VarLoopFieldEdit1, "(.*?)=(\s?)") 	;Получить результат
+		
+	IniRead, VarLoopFieldEdit3, %FileVarImport%, Settings, %VarLoopFieldEditSta% 	;Перебрать все настройки
+		if !(VarLoopFieldEdit3 = "ERROR")
+			IniWrite, %VarLoopFieldEditEns%, %FileVarImport2%, Settings, %VarLoopFieldEditSta%	
+
+	}
+}
 Return
+
 
 
 ;=====================================Установщик драйвера
@@ -1663,13 +1321,18 @@ Return
 1ReshadeRun:
 Gui, 1: Submit, NoHide
 Gui, 1: Cancel
+IfNotExist, %EditDir%\Genshin Impact Game\GenshinImpact.exe
+{
+	MsgBox,,, Неверно указан путь`n%EditDir%\Genshin Impact Game\GenshinImpact.exe, 3
+	Return
+}
 ToolTip, Отладка: Удаляем файл dxgi.dll.temp, 0, 0
 FileDelete, %EditDir%\Genshin Impact Game\dxgi.dll.temp
 Loop 30
 {
-sleep 500
-FileCopy, data\reshade\dxgi.dll, %EditDir%\Genshin Impact Game\, 0
-ToolTip, Отладка: Перезапись dxgi.dll, 0, 0
+	sleep 500
+	FileCopy, data\reshade\dxgi.dll, %EditDir%\Genshin Impact Game\, 0
+	ToolTip, Отладка: Перезапись dxgi.dll, 0, 0
 }
 ToolTip, Отладка: Меняем имя dxgi.dll, 0, 0
 FileMove, %EditDir%\Genshin Impact Game\dxgi.dll, %EditDir%\Genshin Impact Game\dxgi.dll.temp, 1
@@ -1685,9 +1348,15 @@ IfMsgBox OK, {
 Return
 }
 Gui, 1: Submit, NoHide
+IfNotExist, %EditDir%\Genshin Impact Game\GenshinImpact.exe
+{
+	MsgBox,,, Неверно указан путь`n%EditDir%\Genshin Impact Game\GenshinImpact.exe, 3
+	Return
+}
 FileCopyDir, data\reshade\Preset, %EditDir%\Genshin Impact Game\Preset
 FileCopyDir, data\reshade\reshade-shaders, %EditDir%\Genshin Impact Game\reshade-shaders
 FileCopy, data\reshade\ReShade.ini, %EditDir%\Genshin Impact Game, 1
+FileCopy, data\reshade\dxgi.dll, %EditDir%\Genshin Impact Game, 1
 SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
 return
 ;=============================Удаление решейда, файлов решейда
@@ -1698,6 +1367,11 @@ IfMsgBox OK, {
 Return
 }
 Gui, 1: Submit, NoHide
+IfNotExist, %EditDir%\Genshin Impact Game\GenshinImpact.exe
+{
+	MsgBox,,, Неверно указан путь`n%EditDir%\Genshin Impact Game\GenshinImpact.exe, 3
+	Return
+}
 FileDelete, %EditDir%\Genshin Impact Game\ReShade64.log
 FileDelete, %EditDir%\Genshin Impact Game\ReShade.ini
 FileDelete, %EditDir%\Genshin Impact Game\dxgi.dll.temp
@@ -1706,6 +1380,27 @@ FileDelete, %EditDir%\Genshin Impact Game\dxgi.log
 FileDelete, %EditDir%\Genshin Impact Game\ReShade.log
 FileRemoveDir, %EditDir%\Genshin Impact Game\Preset, 1
 FileRemoveDir, %EditDir%\Genshin Impact Game\reshade-shaders, 1
+SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
+return
+;=============================Переименовать решейд, Если античит начнет буянить в некст патчах
+1ReshadeReName:
+MsgBox 0x1, ,Reshade ReName?
+IfMsgBox OK, {
+} Else IfMsgBox Cancel, {
+Return
+}
+Gui, 1: Submit, NoHide
+IfNotExist, %EditDir%\Genshin Impact Game\GenshinImpact.exe
+{
+	MsgBox,,, Неверно указан путь`n%EditDir%\Genshin Impact Game\GenshinImpact.exe, 3
+	Return
+}
+IfNotExist, %EditDir%\Genshin Impact Game\dxgi.dll
+{
+	MsgBox,,, Не найден dxgi.dll, 3
+	Return
+}
+FileMove, %EditDir%\Genshin Impact Game\dxgi.dll, %EditDir%\Genshin Impact Game\dxgi.dll.temp, 1
 SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
 return
 
@@ -1823,7 +1518,7 @@ InputBox, RegeditExport1,, Задать имя сохраненой ветки �
 	Gui, 1: Submit, NoHide
 	FileDelete, data\reg\%VarRegeditExport1%.reg
 	RunWait, cmd /k reg export "HKEY_CURRENT_USER\Software\miHoYo" "%A_ScriptDir%\data\reg\%RegeditExport1%.reg" /y & exit
-	IniWrite, %RegeditExport1%, data\genConfig.ini, Setings, RegeditExport1
+	IniWrite, %RegeditExport1%, data\genConfig.ini, Settings, RegeditExport1
 	Gui, 1: Submit, NoHide
 	GuiControl,1:, VarRegeditExport1, %RegeditExport1%
 	}
@@ -1845,7 +1540,7 @@ InputBox, RegeditExport2,, Задать имя сохраненой ветки �
 	Gui, 1: Submit, NoHide
 	FileDelete, data\reg\%VarRegeditExport2%.reg
 	RunWait, cmd /k reg export "HKEY_CURRENT_USER\Software\miHoYo" "%A_ScriptDir%\data\reg\%RegeditExport2%.reg" /y & exit
-	IniWrite, %RegeditExport2%, data\genConfig.ini, Setings, RegeditExport2
+	IniWrite, %RegeditExport2%, data\genConfig.ini, Settings, RegeditExport2
 	Gui, 1: Submit, NoHide
 	GuiControl,1:, VarRegeditExport2, %RegeditExport2%
 	}
@@ -1867,7 +1562,7 @@ InputBox, RegeditExport3,, Задать имя сохраненой ветки �
 	Gui, 1: Submit, NoHide
 	FileDelete, data\reg\%VarRegeditExport3%.reg
 	RunWait, cmd /k reg export "HKEY_CURRENT_USER\Software\miHoYo" "%A_ScriptDir%\data\reg\%RegeditExport3%.reg" /y & exit
-	IniWrite, %RegeditExport3%, data\genConfig.ini, Setings, RegeditExport3
+	IniWrite, %RegeditExport3%, data\genConfig.ini, Settings, RegeditExport3
 	Gui, 1: Submit, NoHide
 	GuiControl,1:, VarRegeditExport3, %RegeditExport3%
 	}
@@ -1889,7 +1584,7 @@ InputBox, RegeditExport4,, Задать имя сохраненой ветки �
 	Gui, 1: Submit, NoHide
 	FileDelete, data\reg\%VarRegeditExport4%.reg
 	RunWait, cmd /k reg export "HKEY_CURRENT_USER\Software\miHoYo" "%A_ScriptDir%\data\reg\%RegeditExport4%.reg" /y & exit
-	IniWrite, %RegeditExport4%, data\genConfig.ini, Setings, RegeditExport4
+	IniWrite, %RegeditExport4%, data\genConfig.ini, Settings, RegeditExport4
 	Gui, 1: Submit, NoHide
 	GuiControl,1:, VarRegeditExport4, %RegeditExport4%
 	}
@@ -1911,7 +1606,7 @@ InputBox, RegeditExport5,, Задать имя сохраненой ветки �
 	Gui, 1: Submit, NoHide
 	FileDelete, data\reg\%VarRegeditExport5%.reg
 	RunWait, cmd /k reg export "HKEY_CURRENT_USER\Software\miHoYo" "%A_ScriptDir%\data\reg\%RegeditExport5%.reg" /y & exit
-	IniWrite, %RegeditExport5%, data\genConfig.ini, Setings, RegeditExport5
+	IniWrite, %RegeditExport5%, data\genConfig.ini, Settings, RegeditExport5
 	Gui, 1: Submit, NoHide
 	GuiControl,1:, VarRegeditExport5, %RegeditExport5%
 	}
@@ -1930,7 +1625,7 @@ Return
 MsgBox 0x1, , Удалить копию реестра "%RegeditExport1%"
 IfMsgBox OK, {
 ZeroVar:=
-IniWrite, %ZeroVar%, data\genConfig.ini, Setings, RegeditExport1
+IniWrite, %ZeroVar%, data\genConfig.ini, Settings, RegeditExport1
 GuiControl,1:, VarRegeditExport1, %ZeroVar%
 FileDelete, data\reg\%RegeditExport1%.reg
 } Else IfMsgBox Cancel, {
@@ -1950,7 +1645,7 @@ Return
 MsgBox 0x1, , Удалить копию реестра "%RegeditExport2%"
 IfMsgBox OK, {
 ZeroVar:=
-IniWrite, %ZeroVar%, data\genConfig.ini, Setings, RegeditExport2
+IniWrite, %ZeroVar%, data\genConfig.ini, Settings, RegeditExport2
 GuiControl,1:, VarRegeditExport2, %ZeroVar%
 FileDelete, data\reg\%RegeditExport2%.reg
 } Else IfMsgBox Cancel, {
@@ -1970,7 +1665,7 @@ Return
 MsgBox 0x1, , Удалить копию реестра "%RegeditExport3%"
 IfMsgBox OK, {
 ZeroVar:=
-IniWrite, %ZeroVar%, data\genConfig.ini, Setings, RegeditExport3
+IniWrite, %ZeroVar%, data\genConfig.ini, Settings, RegeditExport3
 GuiControl,1:, VarRegeditExport3, %ZeroVar%
 FileDelete, data\reg\%RegeditExport3%.reg
 } Else IfMsgBox Cancel, {
@@ -1990,7 +1685,7 @@ Return
 MsgBox 0x1, , Удалить копию реестра "%RegeditExport4%"
 IfMsgBox OK, {
 ZeroVar:=
-IniWrite, %ZeroVar%, data\genConfig.ini, Setings, RegeditExport4
+IniWrite, %ZeroVar%, data\genConfig.ini, Settings, RegeditExport4
 GuiControl,1:, VarRegeditExport4, %ZeroVar%
 FileDelete, data\reg\%RegeditExport4%.reg
 } Else IfMsgBox Cancel, {
@@ -2010,7 +1705,7 @@ Return
 MsgBox 0x1, , Удалить копию реестра "%RegeditExport5%"
 IfMsgBox OK, {
 ZeroVar:=
-IniWrite, %ZeroVar%, data\genConfig.ini, Setings, RegeditExport5
+IniWrite, %ZeroVar%, data\genConfig.ini, Settings, RegeditExport5
 GuiControl,1:, VarRegeditExport5, %ZeroVar%
 FileDelete, data\reg\%RegeditExport5%.reg
 } Else IfMsgBox Cancel, {
@@ -2123,7 +1818,7 @@ Return
 return
 
 ;===============================Отключить все хоткеи, сменить иконку, остановить активные потоки
-PgUp::
+Metkakey_PauseSuspend:
 Suspend, Toggle
 1toggle1Suspend := !1toggle1Suspend
 if (1toggle1Suspend)
@@ -2996,7 +2691,7 @@ sleep 500
 ToolTip
 }
 Return
-;===============================Сяо нормал+холда+ульт
+;===============================Select - %OldMacroBackVar%`nOther macros (genConfig.ini)
 ; *~$!Numpad4::
 LabelANumpad4:
 jopa1:=false
@@ -3166,7 +2861,7 @@ jopa24:=false
 jopa25:=false
 if showtooltipVvoba
 {
-ToolTip, Ganyu Hold (Test 2), 0, 0
+ToolTip, Hu Tao (Test), 0, 0
 sleep 500
 ToolTip
 }
@@ -4293,7 +3988,7 @@ IfWinActive, %gameexe1337%
 }
 }
 
-if jopa18 							;ганьюй холд м2
+if jopa18 							;Hu Tao (test)
 {
 if FIXchat
 {
@@ -4308,57 +4003,46 @@ if FIXchat
 IfWinActive, %gameexe1337%
 {
 
-
-	Loop
-	{
-		if metodVvoda = 2
-		{
-		if MousemoveBow
-		DllCall("mouse_event", uint, 1, int, 27, int, 0, uint, 0, int, 0)
-		}
-		if metodVvoda = 3
-		{
-		if MousemoveBow
-		AHI.SendMouseMoveRelative(mouseid, "27", "0") 	;движение
-		}
-			GetKeyState, SpaceStateAA, %key_animcancel%, P
-			If SpaceStateAA = U
+Loop
+{
+		GetKeyState, SSpaceStateAA, %key_animcancel%, P
+		If SSpaceStateAA = U
 			break
-		SendInput {vk52}
-			loop 32 ; Sleep
-			{
-	if ScRandomT
-	Random, SuperGlobalVarRan,1,2
-	Sleep 50 + SuperGlobalVarRan
-			GetKeyState, SpaceStateAA, %key_animcancel%, P
-			If SpaceStateAA = U
+	SendInput {vk1 Down}
+	Sleep 80
+	SendInput {vk1 up}
+	Sleep 100
+		GetKeyState, SSpaceStateAA, %key_animcancel%, P
+		If SSpaceStateAA = U
 			break
-			}
-		SendInput, {Blind}{vk1}
-
-			loop 3 ; Sleep
-			{
-	if ScRandomT
-	Random, SuperGlobalVarRan,1,2
-	Sleep 50 + SuperGlobalVarRan
-			GetKeyState, SpaceStateAA, %key_animcancel%, P
-			If SpaceStateAA = U
+	SendInput {vk1 Down}
+	Sleep 80
+	SendInput {vk1 up}
+	Sleep 100
+		GetKeyState, SSpaceStateAA, %key_animcancel%, P
+		If SSpaceStateAA = U
 			break
-			}
-
-		SendInput {vk52}
-			loop 11 ; Sleep
-			{
-	if ScRandomT
-	Random, SuperGlobalVarRan,1,2
-	Sleep 50 + SuperGlobalVarRan
-			GetKeyState, SpaceStateAA, %key_animcancel%, P
-			If SpaceStateAA = U
+	SendInput {vk1 Down}
+	Sleep 300
+	SendInput {vk1 up}
+		GetKeyState, SSpaceStateAA, %key_animcancel%, P
+		If SSpaceStateAA = U
 			break
-			}
-	}
-	SendInput {vk52}
-
+	Sleep 50
+	SendInput {vkA0 Down}
+	Sleep 50
+	SendInput {vkA0 up}
+	SendInput {vk41}
+	Sleep 50
+	SendInput {vk44}
+	Sleep 50
+		GetKeyState, SSpaceStateAA, %key_animcancel%, P
+		If SSpaceStateAA = U
+			break
+	SendInput {vk41}
+	Sleep 50
+	SendInput {vk44}
+}
 
 }
 }
@@ -4427,6 +4111,12 @@ IfWinActive, %gameexe1337%
 	ExInaK4=1
 	ExInaK5=1
 	ExInaK6=1
+	ExSumK1=1
+	ExSumK2=1
+	ExSumK3=1
+	ExSumK4=1
+	ExSumK5=1
+	ExSumK6=1
 	}
 		expeditionVar:=1
 		SleepVar:=200
@@ -5341,6 +5031,324 @@ IfWinActive, %gameexe1337%
 		if ExInaK6
 		{
 		ClickVarX:=Round(A_ScreenWidth * 0.59766), ClickVarY:=Round(A_ScreenHeight * 0.40139)
+		Click, %ClickVarX%, %ClickVarY% 
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.89961), ClickVarY:=Round(A_ScreenHeight * 0.94514)
+		Click, %ClickVarX%, %ClickVarY%  	;отозвать\выбрать персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.48047), ClickVarY:=Round(A_ScreenHeight * 0.70000)
+		Click, %ClickVarX%, %ClickVarY%  	;отмена
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.86289), ClickVarY:=Round(A_ScreenHeight * 0.76042)
+		Click, %ClickVarX%, %ClickVarY%  	;свернуть меню выбора персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.89961), ClickVarY:=Round(A_ScreenHeight * 0.94514)
+		Click, %ClickVarX%, %ClickVarY%  	;отозвать\выбрать персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.26133), ClickVarY:=Round(A_ScreenHeight * 0.15000)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 1 персонажа в списке
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.32813), ClickVarY:=Round(A_ScreenHeight * 0.28264)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 2
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.34375), ClickVarY:=Round(A_ScreenHeight * 0.38889)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 3
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.33984), ClickVarY:=Round(A_ScreenHeight * 0.51389)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 4
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.32813), ClickVarY:=Round(A_ScreenHeight * 0.62500)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 5
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.48047), ClickVarY:=Round(A_ScreenHeight * 0.70000)
+		Click, %ClickVarX%, %ClickVarY%  	;отмена
+		sleep %SleepVar%
+		}
+	}
+;====================================================фильтр сброса
+		if !(expeditionVar)
+		Return
+		IfWinNotActive, %gameexe1337%
+		Return
+		if FIXchat
+		{
+			StructSize1337 := A_PtrSize + 16
+			VarSetCapacity(InfoStruct1337, StructSize1337)
+			NumPut(StructSize1337, InfoStruct1337)
+			DllCall("GetCursorInfo", UInt, &InfoStruct1337)
+			Result1337 := NumGet(InfoStruct1337, 8)
+			if (Result1337 = 0)
+				Return
+		}
+	if ExSumK1 or ExSumK2 or ExSumK3 or ExSumK4 or ExSumK5 or ExSumK6
+	{
+ClickVarX:=Round(A_ScreenWidth * (127 / 2560)), ClickVarY:=Round(A_ScreenHeight * (504 / 1440))		
+		Click, %ClickVarX%, %ClickVarY%  	;инадзума
+		sleep %SleepVar%
+		;====================== начало 1 метки
+		if ExSumK1
+		{
+ClickVarX:=Round(A_ScreenWidth * (903 / 2560)), ClickVarY:=Round(A_ScreenHeight * (849 / 1440))
+		Click, %ClickVarX%, %ClickVarY% 
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.89961), ClickVarY:=Round(A_ScreenHeight * 0.94514)
+		Click, %ClickVarX%, %ClickVarY%  	;отозвать\выбрать персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.48047), ClickVarY:=Round(A_ScreenHeight * 0.70000)
+		Click, %ClickVarX%, %ClickVarY%  	;отмена
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.86289), ClickVarY:=Round(A_ScreenHeight * 0.76042)
+		Click, %ClickVarX%, %ClickVarY%  	;свернуть меню выбора персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.89961), ClickVarY:=Round(A_ScreenHeight * 0.94514)
+		Click, %ClickVarX%, %ClickVarY%  	;отозвать\выбрать персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.26133), ClickVarY:=Round(A_ScreenHeight * 0.15000)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 1 персонажа в списке
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.32813), ClickVarY:=Round(A_ScreenHeight * 0.28264)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 2
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.34375), ClickVarY:=Round(A_ScreenHeight * 0.38889)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 3
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.33984), ClickVarY:=Round(A_ScreenHeight * 0.51389)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 4
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.32813), ClickVarY:=Round(A_ScreenHeight * 0.62500)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 5
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.48047), ClickVarY:=Round(A_ScreenHeight * 0.70000)
+		Click, %ClickVarX%, %ClickVarY%  	;отмена
+		sleep %SleepVar%
+		}
+;====================================================фильтр сброса
+		if !(expeditionVar)
+		Return
+		IfWinNotActive, %gameexe1337%
+		Return
+		if FIXchat
+		{
+			StructSize1337 := A_PtrSize + 16
+			VarSetCapacity(InfoStruct1337, StructSize1337)
+			NumPut(StructSize1337, InfoStruct1337)
+			DllCall("GetCursorInfo", UInt, &InfoStruct1337)
+			Result1337 := NumGet(InfoStruct1337, 8)
+			if (Result1337 = 0)
+				Return
+		}
+		;====================== начало 2 метки
+		if ExSumK2
+		{
+ClickVarX:=Round(A_ScreenWidth * (1060 / 2560)), ClickVarY:=Round(A_ScreenHeight * (394 / 1440))
+		Click, %ClickVarX%, %ClickVarY% 
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.89961), ClickVarY:=Round(A_ScreenHeight * 0.94514)
+		Click, %ClickVarX%, %ClickVarY%  	;отозвать\выбрать персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.48047), ClickVarY:=Round(A_ScreenHeight * 0.70000)
+		Click, %ClickVarX%, %ClickVarY%  	;отмена
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.86289), ClickVarY:=Round(A_ScreenHeight * 0.76042)
+		Click, %ClickVarX%, %ClickVarY%  	;свернуть меню выбора персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.89961), ClickVarY:=Round(A_ScreenHeight * 0.94514)
+		Click, %ClickVarX%, %ClickVarY%  	;отозвать\выбрать персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.26133), ClickVarY:=Round(A_ScreenHeight * 0.15000)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 1 персонажа в списке
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.32813), ClickVarY:=Round(A_ScreenHeight * 0.28264)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 2
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.34375), ClickVarY:=Round(A_ScreenHeight * 0.38889)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 3
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.33984), ClickVarY:=Round(A_ScreenHeight * 0.51389)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 4
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.32813), ClickVarY:=Round(A_ScreenHeight * 0.62500)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 5
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.48047), ClickVarY:=Round(A_ScreenHeight * 0.70000)
+		Click, %ClickVarX%, %ClickVarY%  	;отмена
+		sleep %SleepVar%
+		}
+;====================================================фильтр сброса
+		if !(expeditionVar)
+		Return
+		IfWinNotActive, %gameexe1337%
+		Return
+		if FIXchat
+		{
+			StructSize1337 := A_PtrSize + 16
+			VarSetCapacity(InfoStruct1337, StructSize1337)
+			NumPut(StructSize1337, InfoStruct1337)
+			DllCall("GetCursorInfo", UInt, &InfoStruct1337)
+			Result1337 := NumGet(InfoStruct1337, 8)
+			if (Result1337 = 0)
+				Return
+		}
+		;====================== начало 3 метки
+		if ExSumK3
+		{
+ClickVarX:=Round(A_ScreenWidth * (1200 / 2560)), ClickVarY:=Round(A_ScreenHeight * (743 / 1440))
+		Click, %ClickVarX%, %ClickVarY% 
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.89961), ClickVarY:=Round(A_ScreenHeight * 0.94514)
+		Click, %ClickVarX%, %ClickVarY%  	;отозвать\выбрать персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.48047), ClickVarY:=Round(A_ScreenHeight * 0.70000)
+		Click, %ClickVarX%, %ClickVarY%  	;отмена
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.86289), ClickVarY:=Round(A_ScreenHeight * 0.76042)
+		Click, %ClickVarX%, %ClickVarY%  	;свернуть меню выбора персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.89961), ClickVarY:=Round(A_ScreenHeight * 0.94514)
+		Click, %ClickVarX%, %ClickVarY%  	;отозвать\выбрать персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.26133), ClickVarY:=Round(A_ScreenHeight * 0.15000)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 1 персонажа в списке
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.32813), ClickVarY:=Round(A_ScreenHeight * 0.28264)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 2
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.34375), ClickVarY:=Round(A_ScreenHeight * 0.38889)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 3
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.33984), ClickVarY:=Round(A_ScreenHeight * 0.51389)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 4
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.32813), ClickVarY:=Round(A_ScreenHeight * 0.62500)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 5
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.48047), ClickVarY:=Round(A_ScreenHeight * 0.70000)
+		Click, %ClickVarX%, %ClickVarY%  	;отмена
+		sleep %SleepVar%
+		}
+;====================================================фильтр сброса
+		if !(expeditionVar)
+		Return
+		IfWinNotActive, %gameexe1337%
+		Return
+		if FIXchat
+		{
+			StructSize1337 := A_PtrSize + 16
+			VarSetCapacity(InfoStruct1337, StructSize1337)
+			NumPut(StructSize1337, InfoStruct1337)
+			DllCall("GetCursorInfo", UInt, &InfoStruct1337)
+			Result1337 := NumGet(InfoStruct1337, 8)
+			if (Result1337 = 0)
+				Return
+		}
+		;====================== начало 4 метки
+		if ExSumK4
+		{
+ClickVarX:=Round(A_ScreenWidth * (1279 / 2560)), ClickVarY:=Round(A_ScreenHeight * (496 / 1440))
+		Click, %ClickVarX%, %ClickVarY% 
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.89961), ClickVarY:=Round(A_ScreenHeight * 0.94514)
+		Click, %ClickVarX%, %ClickVarY%  	;отозвать\выбрать персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.48047), ClickVarY:=Round(A_ScreenHeight * 0.70000)
+		Click, %ClickVarX%, %ClickVarY%  	;отмена
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.86289), ClickVarY:=Round(A_ScreenHeight * 0.76042)
+		Click, %ClickVarX%, %ClickVarY%  	;свернуть меню выбора персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.89961), ClickVarY:=Round(A_ScreenHeight * 0.94514)
+		Click, %ClickVarX%, %ClickVarY%  	;отозвать\выбрать персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.26133), ClickVarY:=Round(A_ScreenHeight * 0.15000)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 1 персонажа в списке
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.32813), ClickVarY:=Round(A_ScreenHeight * 0.28264)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 2
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.34375), ClickVarY:=Round(A_ScreenHeight * 0.38889)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 3
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.33984), ClickVarY:=Round(A_ScreenHeight * 0.51389)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 4
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.32813), ClickVarY:=Round(A_ScreenHeight * 0.62500)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 5
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.48047), ClickVarY:=Round(A_ScreenHeight * 0.70000)
+		Click, %ClickVarX%, %ClickVarY%  	;отмена
+		sleep %SleepVar%
+		}
+;====================================================фильтр сброса
+		if !(expeditionVar)
+		Return
+		IfWinNotActive, %gameexe1337%
+		Return
+		if FIXchat
+		{
+			StructSize1337 := A_PtrSize + 16
+			VarSetCapacity(InfoStruct1337, StructSize1337)
+			NumPut(StructSize1337, InfoStruct1337)
+			DllCall("GetCursorInfo", UInt, &InfoStruct1337)
+			Result1337 := NumGet(InfoStruct1337, 8)
+			if (Result1337 = 0)
+				Return
+		}
+		;====================== начало 5 метки
+		if ExSumK5
+		{
+ClickVarX:=Round(A_ScreenWidth * (1371 / 2560)), ClickVarY:=Round(A_ScreenHeight * (810 / 1440))
+		Click, %ClickVarX%, %ClickVarY% 
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.89961), ClickVarY:=Round(A_ScreenHeight * 0.94514)
+		Click, %ClickVarX%, %ClickVarY%  	;отозвать\выбрать персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.48047), ClickVarY:=Round(A_ScreenHeight * 0.70000)
+		Click, %ClickVarX%, %ClickVarY%  	;отмена
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.86289), ClickVarY:=Round(A_ScreenHeight * 0.76042)
+		Click, %ClickVarX%, %ClickVarY%  	;свернуть меню выбора персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.89961), ClickVarY:=Round(A_ScreenHeight * 0.94514)
+		Click, %ClickVarX%, %ClickVarY%  	;отозвать\выбрать персонажа
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.26133), ClickVarY:=Round(A_ScreenHeight * 0.15000)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 1 персонажа в списке
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.32813), ClickVarY:=Round(A_ScreenHeight * 0.28264)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 2
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.34375), ClickVarY:=Round(A_ScreenHeight * 0.38889)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 3
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.33984), ClickVarY:=Round(A_ScreenHeight * 0.51389)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 4
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.32813), ClickVarY:=Round(A_ScreenHeight * 0.62500)
+		Click, %ClickVarX%, %ClickVarY%  	;пикнуть 5
+		sleep %SleepVar%
+		ClickVarX:=Round(A_ScreenWidth * 0.48047), ClickVarY:=Round(A_ScreenHeight * 0.70000)
+		Click, %ClickVarX%, %ClickVarY%  	;отмена
+		sleep %SleepVar%
+		}
+;====================================================фильтр сброса
+		if !(expeditionVar)
+		Return
+		IfWinNotActive, %gameexe1337%
+		Return
+		if FIXchat
+		{
+			StructSize1337 := A_PtrSize + 16
+			VarSetCapacity(InfoStruct1337, StructSize1337)
+			NumPut(StructSize1337, InfoStruct1337)
+			DllCall("GetCursorInfo", UInt, &InfoStruct1337)
+			Result1337 := NumGet(InfoStruct1337, 8)
+			if (Result1337 = 0)
+				Return
+		}
+		;====================== начало 6 метки
+		if ExSumK6
+		{
+ClickVarX:=Round(A_ScreenWidth * (1404 / 2560)), ClickVarY:=Round(A_ScreenHeight * (321 / 1440))
 		Click, %ClickVarX%, %ClickVarY% 
 		sleep %SleepVar%
 		ClickVarX:=Round(A_ScreenWidth * 0.89961), ClickVarY:=Round(A_ScreenHeight * 0.94514)
@@ -6483,14 +6491,14 @@ if key_map in %CheckVarKey1MatchList%,%CheckVarKey2MatchList%,%CheckVarKey3Match
 {
 Gui,1: Font
 GuiControl,1: Font, 1Textmap
-IniWrite, %key_map%, data\genConfig.ini, Binds, key_map
+IniWrite, %key_map%, data\genConfig.ini, Settings, key_map
 }
 Else
 {
 Gui,1: Font, cff0000
 GuiControl,1: Font, 1Textmap
 GuiControl,1:, key_map, F1
-IniWrite, F1, data\genConfig.ini, Binds, key_map
+IniWrite, F1, data\genConfig.ini, Settings, key_map
 toogglertumbler:=1
 }
 ; ======================биндим оверлей
@@ -6498,14 +6506,14 @@ if key_overlay in %CheckVarKey1MatchList%,%CheckVarKey2MatchList%,%CheckVarKey3M
 {
 Gui,1: Font
 GuiControl,1: Font, 1Textoverlay
-IniWrite, %key_overlay%, data\genConfig.ini, Binds, key_overlay
+IniWrite, %key_overlay%, data\genConfig.ini, Settings, key_overlay
 }
 Else
 {
 Gui,1: Font, cff0000
 GuiControl,1: Font, 1Textoverlay
 GuiControl,1:, key_overlay, F2
-IniWrite, F2, data\genConfig.ini, Binds, key_overlay
+IniWrite, F2, data\genConfig.ini, Settings, key_overlay
 toogglertumbler:=1
 }
 ; ======================биндим автоходьбу
@@ -6513,14 +6521,14 @@ if key_autowalk in %CheckVarKey1MatchList%,%CheckVarKey2MatchList%,%CheckVarKey3
 {
 Gui,1: Font
 GuiControl,1: Font, 1Textautowalk
-IniWrite, %key_autowalk%, data\genConfig.ini, Binds, key_autowalk
+IniWrite, %key_autowalk%, data\genConfig.ini, Settings, key_autowalk
 }
 Else
 {
 Gui,1: Font, cff0000
 GuiControl,1: Font, 1Textautowalk
 GuiControl,1:, key_autowalk, F3
-IniWrite, F3, data\genConfig.ini, Binds, key_autowalk
+IniWrite, F3, data\genConfig.ini, Settings, key_autowalk
 toogglertumbler:=1
 }
 ; ======================биндим скип нпс
@@ -6528,14 +6536,14 @@ if key_skipNPS in %CheckVarKey1MatchList%,%CheckVarKey2MatchList%,%CheckVarKey3M
 {
 Gui,1: Font
 GuiControl,1: Font, 1TextskipNPS
-IniWrite, %key_skipNPS%, data\genConfig.ini, Binds, key_skipNPS
+IniWrite, %key_skipNPS%, data\genConfig.ini, Settings, key_skipNPS
 }
 Else
 {
 Gui,1: Font, cff0000
 GuiControl,1: Font, 1TextskipNPS
 GuiControl,1:, key_skipNPS, Z
-IniWrite, Z, data\genConfig.ini, Binds, key_skipNPS
+IniWrite, Z, data\genConfig.ini, Settings, key_skipNPS
 toogglertumbler:=1
 }
 ; ======================биндим фастлут
@@ -6543,14 +6551,14 @@ if key_fastlyt in %CheckVarKey1MatchList%,%CheckVarKey2MatchList%,%CheckVarKey3M
 {
 Gui,1: Font
 GuiControl,1: Font, 1Textfastlyt
-IniWrite, %key_fastlyt%, data\genConfig.ini, Binds, key_fastlyt
+IniWrite, %key_fastlyt%, data\genConfig.ini, Settings, key_fastlyt
 }
 Else
 {
 Gui,1: Font, cff0000
 GuiControl,1: Font, 1Textfastlyt
 GuiControl,1:, key_fastlyt, F
-IniWrite, F, data\genConfig.ini, Binds, key_fastlyt
+IniWrite, F, data\genConfig.ini, Settings, key_fastlyt
 toogglertumbler:=1
 }
 ; ======================биндим плавание
@@ -6558,14 +6566,14 @@ if key_autoswim in %CheckVarKey1MatchList%,%CheckVarKey2MatchList%,%CheckVarKey3
 {
 Gui,1: Font
 GuiControl,1: Font, 1Textautoswim
-IniWrite, %key_autoswim%, data\genConfig.ini, Binds, key_autoswim
+IniWrite, %key_autoswim%, data\genConfig.ini, Settings, key_autoswim
 }
 Else
 {
 Gui,1: Font, cff0000
 GuiControl,1: Font, 1Textautoswim
 GuiControl,1:, key_autoswim, N
-IniWrite, N, data\genConfig.ini, Binds, key_autoswim
+IniWrite, N, data\genConfig.ini, Settings, key_autoswim
 toogglertumbler:=1
 }
 ; ======================биндим вичер сенс
@@ -6573,14 +6581,14 @@ if key_vi4er_sens in %CheckVarKey1MatchList%,%CheckVarKey2MatchList%,%CheckVarKe
 {
 Gui,1: Font
 GuiControl,1: Font, 1Textvi4er_sens
-IniWrite, %key_vi4er_sens%, data\genConfig.ini, Binds, key_vi4er_sens
+IniWrite, %key_vi4er_sens%, data\genConfig.ini, Settings, key_vi4er_sens
 }
 Else
 {
 Gui,1: Font, cff0000
 GuiControl,1: Font, 1Textvi4er_sens
 GuiControl,1:, key_vi4er_sens, X
-IniWrite, X, data\genConfig.ini, Binds, key_vi4er_sens
+IniWrite, X, data\genConfig.ini, Settings, key_vi4er_sens
 toogglertumbler:=1
 }
 ; ======================биндим отмену анимации
@@ -6588,14 +6596,14 @@ if key_animcancel in %CheckVarKey1MatchList%,%CheckVarKey2MatchList%,%CheckVarKe
 {
 Gui,1: Font
 GuiControl,1: Font, 1Textanimcancel
-IniWrite, %key_animcancel%, data\genConfig.ini, Binds, key_animcancel
+IniWrite, %key_animcancel%, data\genConfig.ini, Settings, key_animcancel
 }
 Else
 {
 Gui,1: Font, cff0000
 GuiControl,1: Font, 1Textanimcancel
 GuiControl,1:, key_animcancel, V
-IniWrite, V, data\genConfig.ini, Binds, key_animcancel
+IniWrite, V, data\genConfig.ini, Settings, key_animcancel
 toogglertumbler:=1
 }
 ; ======================настройка задржка бхопа
@@ -6603,51 +6611,51 @@ if (Checkbox1bhopDelayMs > -1 and Checkbox1bhopDelayMs < 1001)
 {
 Gui,1: Font
 GuiControl,1: Font, 1TextaMs
-IniWrite, %Checkbox1bhopDelayMs%, data\genConfig.ini, Setings, Checkbox1bhopDelayMs
+IniWrite, %Checkbox1bhopDelayMs%, data\genConfig.ini, Settings, Checkbox1bhopDelayMs
 }
 Else
 {
 Gui,1: Font, cff0000
 GuiControl,1: Font, 1TextaMs
 GuiControl,1:, Checkbox1bhopDelayMs, 100
-IniWrite, 100, data\genConfig.ini, Setings, Checkbox1bhopDelayMs
+IniWrite, 100, data\genConfig.ini, Settings, Checkbox1bhopDelayMs
 toogglertumbler:=1
 }
 
 
-IniWrite, %ONregreadDir%, data\genConfig.ini, Setings, ONregreadDir
-IniWrite, %CheckboxtooltipVvoba%, data\genConfig.ini, Setings, showtooltipVvoba
+IniWrite, %ONregreadDir%, data\genConfig.ini, Settings, ONregreadDir
+IniWrite, %CheckboxtooltipVvoba%, data\genConfig.ini, Settings, showtooltipVvoba
 
 
-IniWrite, %CheckboxFastpickcfg%, data\genConfig.ini, Setings, Fastpickcfg
-IniWrite, %CheckboxAutoExitAHK%, data\genConfig.ini, Setings, AutoExitAHK
-IniWrite, %CheckboxIsAdmin%, data\genConfig.ini, Setings, IsAdmin
-IniWrite, %CheckboxFIXchat%, data\genConfig.ini, Setings, FIXchat
-IniWrite, %CheckboxHighperformancemode%, data\genConfig.ini, Setings, Highperformancemode
-IniWrite, %CheckboxMousemoveBow%, data\genConfig.ini, Extra, MousemoveBow
-IniWrite, %CheckboxGlLanguage%, data\genConfig.ini, Setings, GlLanguage
-IniWrite, %Checkboxshowmegui%, data\genConfig.ini, Setings, showmegui
-IniWrite, %CheckboxScWinrenamer%, data\genConfig.ini, Setings, ScWinrenamer
-IniWrite, %CheckboxScRenamer%, data\genConfig.ini, Setings, ScRenamer
-IniWrite, %CheckboxScScHachCh%, data\genConfig.ini, Setings, ScHachCh
-; IniWrite, %CheckboxScOverlay%, data\genConfig.ini, Setings, ScOverlay
-IniWrite, %CheckboxScRandomT%, data\genConfig.ini, Setings, ScRandomT
+IniWrite, %CheckboxFastpickcfg%, data\genConfig.ini, Settings, Fastpickcfg
+IniWrite, %CheckboxAutoExitAHK%, data\genConfig.ini, Settings, AutoExitAHK
+IniWrite, %CheckboxIsAdmin%, data\genConfig.ini, Settings, IsAdmin
+IniWrite, %CheckboxFIXchat%, data\genConfig.ini, Settings, FIXchat
+IniWrite, %CheckboxHighperformancemode%, data\genConfig.ini, Settings, Highperformancemode
+IniWrite, %CheckboxMousemoveBow%, data\genConfig.ini, Settings, MousemoveBow
+IniWrite, %CheckboxGlLanguage%, data\genConfig.ini, Settings, GlLanguage
+IniWrite, %Checkboxshowmegui%, data\genConfig.ini, Settings, showmegui
+IniWrite, %CheckboxScWinrenamer%, data\genConfig.ini, Settings, ScWinrenamer
+IniWrite, %CheckboxScRenamer%, data\genConfig.ini, Settings, ScRenamer
+IniWrite, %CheckboxScScHachCh%, data\genConfig.ini, Settings, ScHachCh
+; IniWrite, %CheckboxScOverlay%, data\genConfig.ini, Settings, ScOverlay
+IniWrite, %CheckboxScRandomT%, data\genConfig.ini, Settings, ScRandomT
 
-IniWrite, %Checkbox0map%, data\genConfig.ini, Setings, Checkbox1map
-IniWrite, %Checkbox0overlay%, data\genConfig.ini, Setings, Checkbox1overlay
-IniWrite, %Checkbox0autowalk%, data\genConfig.ini, Setings, Checkbox1autowalk
-IniWrite, %Checkbox0fastlyt%, data\genConfig.ini, Setings, Checkbox1fastlyt
-IniWrite, %Checkbox0skipNPS%, data\genConfig.ini, Setings, Checkbox1skipNPS
-IniWrite, %Checkbox0locknpc%, data\genConfig.ini, Setings, Checkbox1locknpc
+IniWrite, %Checkbox0map%, data\genConfig.ini, Settings, Checkbox1map
+IniWrite, %Checkbox0overlay%, data\genConfig.ini, Settings, Checkbox1overlay
+IniWrite, %Checkbox0autowalk%, data\genConfig.ini, Settings, Checkbox1autowalk
+IniWrite, %Checkbox0fastlyt%, data\genConfig.ini, Settings, Checkbox1fastlyt
+IniWrite, %Checkbox0skipNPS%, data\genConfig.ini, Settings, Checkbox1skipNPS
+IniWrite, %Checkbox0locknpc%, data\genConfig.ini, Settings, Checkbox1locknpc
 
-IniWrite, %Checkbox0autoswim%, data\genConfig.ini, Setings, Checkbox1autoswim
-IniWrite, %Checkbox0vi4ersens%, data\genConfig.ini, Setings, Checkbox1vi4ersens
-IniWrite, %Checkbox0animcancel%, data\genConfig.ini, Setings, Checkbox1animcancel
+IniWrite, %Checkbox0autoswim%, data\genConfig.ini, Settings, Checkbox1autoswim
+IniWrite, %Checkbox0vi4ersens%, data\genConfig.ini, Settings, Checkbox1vi4ersens
+IniWrite, %Checkbox0animcancel%, data\genConfig.ini, Settings, Checkbox1animcancel
 
-IniWrite, %Checkbox0bhop%, data\genConfig.ini, Setings, Checkbox1bhop
-IniWrite, %Checkbox0bhopDelay%, data\genConfig.ini, Setings, Checkbox1bhopDelay
+IniWrite, %Checkbox0bhop%, data\genConfig.ini, Settings, Checkbox1bhop
+IniWrite, %Checkbox0bhopDelay%, data\genConfig.ini, Settings, Checkbox1bhopDelay
 
-IniWrite, %VarTabSel%, data\genConfig.ini, Setings, VarTab3Choose
+IniWrite, %VarTabSel%, data\genConfig.ini, Settings, VarTab3Choose
 
 
 If toogglertumbler
@@ -6685,7 +6693,7 @@ if DirVar228 !=
 {
 GuiControl,1:, EditDir, %DirVar228%
 Gui, 1: Submit, NoHide
-IniWrite, %DirVar228%, data\genConfig.ini, Setings, DirGame
+IniWrite, %DirVar228%, data\genConfig.ini, Settings, DirGame
 IfNotExist, %EditDir%\Genshin Impact Game\GenshinImpact.exe
 Msgbox ,,, Не верно указан путь к GenshinImpact.exe:`n%EditDir%\Genshin Impact Game\GenshinImpact.exe,3
 }
@@ -6699,24 +6707,24 @@ AntiVACHashChanger:="fghfh3534gjdgdfgfj6867jhmbdsq4123asddfgdfgaszxxcasdf423dfgh
 pickmap:
 Gui, 1: Submit, nohide
 if list1488 = 1
-IniWrite, 1, data\genConfig.ini, Setings, Map2toggle
+IniWrite, 1, data\genConfig.ini, Settings, Map2toggle
 if list1488 = 2
-IniWrite, 2, data\genConfig.ini, Setings, Map2toggle
+IniWrite, 2, data\genConfig.ini, Settings, Map2toggle
 if list1488 = 3
-IniWrite, 3, data\genConfig.ini, Setings, Map2toggle
+IniWrite, 3, data\genConfig.ini, Settings, Map2toggle
 if list1488 = 4
-IniWrite, 4, data\genConfig.ini, Setings, Map2toggle
+IniWrite, 4, data\genConfig.ini, Settings, Map2toggle
 Return
 
 ;==================================================Выбор метода ввода
 pickinput:
 Gui, 1: Submit, nohide
 if ListKeyDif = 1
-IniWrite, 1, data\genConfig.ini, Setings, metodVvoda
+IniWrite, 1, data\genConfig.ini, Settings, metodVvoda
 if ListKeyDif = 2
-IniWrite, 2, data\genConfig.ini, Setings, metodVvoda
+IniWrite, 2, data\genConfig.ini, Settings, metodVvoda
 if ListKeyDif = 3
-IniWrite, 3, data\genConfig.ini, Setings, metodVvoda
+IniWrite, 3, data\genConfig.ini, Settings, metodVvoda
 Return
 
 
@@ -6729,13 +6737,13 @@ If (ONregreadDir == 1) ; Если в конфиге путь к игре рее�
 RegRead, DirVarGensh, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Genshin Impact, UninstallString
 SplitPath, DirVarGensh,,DirVarGensh
 GuiControl,1:, EditDir, %DirVarGensh%
-IniWrite, 1, data\genConfig.ini, Setings, ONregreadDir
+IniWrite, 1, data\genConfig.ini, Settings, ONregreadDir
 }
 If (ONregreadDir == 0) ; Если в конфиге путь к игре реестр вкл, то:
 {
-IniRead, DirGame, data\genConfig.ini, Setings, DirGame
+IniRead, DirGame, data\genConfig.ini, Settings, DirGame
 GuiControl,1:, EditDir, %DirGame%
-IniWrite, 0, data\genConfig.ini, Setings, ONregreadDir
+IniWrite, 0, data\genConfig.ini, Settings, ONregreadDir
 }
 
 Return
@@ -7498,130 +7506,65 @@ SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
 Return
 
 
-UpdateButton:
-; MsgBox,,, UpdateButton, 1
-; MsgBox Проверить обнову
+
+ForceUpdateButton:
+	MsgBox 0x1, ,Download and instal update?
+	IfMsgBox OK, {
+	;==================================Блок с обновой
 	FileCreateDir, update
-	URLDownloadToFile, https://raw.githubusercontent.com/Kramar1337/GenshinImpact-AHK-flex/main/Genshin`%20AHK/data/inputversion.ini, update\inputversion.ini
-	if(ErrorLevel)
-		{
-		FileRemoveDir, update, 1
-		GuiControl,1:, GitUpPic, data\Github-yel.png
-		IniWrite, 0, data\inputversion.ini, Info, LastStatusCheck
-		MsgBox,,, ErrorLevel - %ErrorLevel%`nОшибка загрузки, 1
-		; MsgBox Ошибка загрузки
-		Return
-		}
-	IniRead, TimeupNew, update\inputversion.ini, Info, Timeup
-	if (TimeupNew = "ERROR")
-		{
-		FileRemoveDir, update, 1
-		GuiControl,1:, GitUpPic, data\Github-yel.png
-		IniWrite, 0, data\inputversion.ini, Info, LastStatusCheck
-		MsgBox,,, ErrorLevel - %ErrorLevel%`nОшибка сервера, 1
-		; MsgBox Ошибка сервера
-		Return
-		}
-	IniRead, TimeupOld, data\inputversion.ini, Info, Timeup
-	if (TimeupOld = "ERROR")
-		{
-		FileRemoveDir, update, 1
-		GuiControl,1:, GitUpPic, data\Github-yel.png
-		IniWrite, 0, data\inputversion.ini, Info, LastStatusCheck
-		MsgBox,,, ErrorLevel - %ErrorLevel%`nОшибка файлов, 1
-		; MsgBox Ошибка файлов
-		Return
-		}
-	If (TimeupNew > TimeupOld)
-		{
-		GuiControl,1:, GitUpPic, data\Github-red.png
-		IniWrite, 2, data\inputversion.ini, Info, LastStatusCheck
-		; MsgBox Обнаружена новая версия
-			ForceUpdateButton:
-			MsgBox 0x1, ,Download and instal update?
-			IfMsgBox OK, {
-			;==================================Блок с обновой
-			IniRead, FinalSizeZip, update\inputversion.ini, Info, FinalSizeZip
-			if (FinalSizeZip = "ERROR")
-				{
-				FileCreateDir, update
-				FinalSizeZip = 87793879
-				}
-			Global FinalSize, FinalSizeZip
-			DownloadFile("https://github.com/Kramar1337/GenshinImpact-AHK-flex/archive/main.zip", "update\main.zip")
-			
-			if !FileExist("update\main.zip")
-				{
-				MsgBox,,, Error`nФайл не скачался "update\main.zip", 1
-				Return
-				}
+	FinalSizeZip = 87793879
+	Global FinalSize, FinalSizeZip
+	DownloadFile("https://github.com/Kramar1337/GenshinImpact-AHK-flex/archive/main.zip", "update\main.zip")
 	
+	if !FileExist("update\main.zip")
+		{
+		MsgBox,,, Error`nФайл не скачался "update\main.zip", 1
+		Return
+		}
 	ArcPath = %A_ScriptDir%\update\main.zip
 	OutPath = %A_ScriptDir%\update
 	Shell := ComObjCreate("Shell.Application")
 	Items := Shell.NameSpace(ArcPath).Items
 	Items.Filter(73952, "*")
 	Shell.NameSpace(OutPath).CopyHere(Items, 16)
-			IfNotExist, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK
-				{
-				FileRemoveDir, update, 1
-				MsgBox,,, Error`nПредыдущая обнова была прервана`nФайлы поломались`nПовтори попытку еще раз, 2
-				Return
-				}
-
-FileCopy, %A_ScriptDir%\data\reg\*.reg, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data\reg\, 1 	;копируем рег файлы из папки со скриптом в новую
-FileCopy, %A_ScriptDir%\data\soundall\*.mid, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data\soundall\, 1 	;копируем миди файлы из папки со скриптом в новую
-FileCopy, %A_ScriptDir%\data\midi_config.json, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data\midi_config.json, 1 	;копируем миди конфиг из папки со скриптом в новую
-
-;======================================================импорт настроек
-FileVarImport=data\genConfig.ini
-FileVarImport2=update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini
-Gosub ImportSettLabel1
-
-FileMoveDir, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data, %A_ScriptDir%, 1
-; FileMove, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\*.*, %A_ScriptDir%, 1
-Loop update\GenshinImpact-AHK-flex-main\Genshin AHK\*.ahk
-{
-}
-FileDelete, %A_ScriptFullPath%
-
-
-If ScRenamer
-{
-SplitPath, savereloadvar,,,,z3z3ext
-SplitPath, savereloadvar,,,z2z2ext
-FileMove, update\GenshinImpact-AHK-flex-main\Genshin AHK\%A_LoopFileName%, %A_ScriptDir%\%z3z3ext%.%z2z2ext%, 1
-}
-Else
-{
-SplitPath, A_ScriptFullPath,,,,z3z3ext
-SplitPath, A_ScriptName,,,z2z2ext
-FileMove, update\GenshinImpact-AHK-flex-main\Genshin AHK\%A_LoopFileName%, %A_ScriptDir%\%z3z3ext%.%z2z2ext%, 1
-}
-
-
-; SplitPath, A_ScriptFullPath,,,,z2z2ext
-; SplitPath, A_ScriptName,,,z3z3ext
-; FileMove, update\GenshinImpact-AHK-flex-main\Genshin AHK\%A_LoopFileName%, %A_ScriptDir%\%z3z3ext%.%z2z2ext%, 1
-FileRemoveDir, update, 1
-MsgBox,,, Ok, 1
-ExitApp
-			
-			
-			;==================================Конец блока с обновой
-			} Else IfMsgBox Cancel, {
-			FileRemoveDir, update, 1
-			Return
-			}
-		}
-	Else
-		{
+	IfNotExist, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK
+	{
 		FileRemoveDir, update, 1
-		GuiControl,1:, GitUpPic, data\Github-gre.png
-		IniWrite, 1, data\inputversion.ini, Info, LastStatusCheck
-		MsgBox,,, Актуальная версия, 1
+		MsgBox,,, Error`nПредыдущая обнова была прервана`nФайлы поломались`nПовтори попытку еще раз, 2
 		Return
-		}
+	}
+	FileCopy, %A_ScriptDir%\data\reg\*.reg, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data\reg\, 1 	;копируем рег файлы из папки со скриптом в новую
+	FileCopy, %A_ScriptDir%\data\soundall\*.mid, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data\soundall\, 1 	;копируем миди файлы из папки со скриптом в новую
+	FileCopy, %A_ScriptDir%\data\midi_config.json, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data\midi_config.json, 1 	;копируем миди конфиг из папки со скриптом в новую
+	;======================================================импорт настроек
+	FileVarImport=data\genConfig.ini
+	FileVarImport2=update\GenshinImpact-AHK-flex-main\Genshin AHK\data\genConfig.ini
+	Gosub ImportSettLabel1
+	FileMoveDir, %A_ScriptDir%\update\GenshinImpact-AHK-flex-main\Genshin AHK\data, %A_ScriptDir%, 1
+	Loop update\GenshinImpact-AHK-flex-main\Genshin AHK\*.ahk
+	{
+	}
+	FileDelete, %A_ScriptFullPath%
+	If ScRenamer
+	{
+		SplitPath, savereloadvar,,,,z3z3ext
+		SplitPath, savereloadvar,,,z2z2ext
+		FileMove, update\GenshinImpact-AHK-flex-main\Genshin AHK\%A_LoopFileName%, %A_ScriptDir%\%z3z3ext%.%z2z2ext%, 1
+	}
+	Else
+	{
+		SplitPath, A_ScriptFullPath,,,,z3z3ext
+		SplitPath, A_ScriptName,,,z2z2ext
+		FileMove, update\GenshinImpact-AHK-flex-main\Genshin AHK\%A_LoopFileName%, %A_ScriptDir%\%z3z3ext%.%z2z2ext%, 1
+	}
+	FileRemoveDir, update, 1
+	MsgBox,,, Ok, 1
+	ExitApp
+	;==================================Конец блока с обновой
+	} Else IfMsgBox Cancel, {
+	FileRemoveDir, update, 1
+	Return
+	}
 Return
 
 
@@ -7677,6 +7620,6 @@ AntiVACHashChanger:="fghfh3534gjdgdfgfj6867jhmbdsq4123asddfgdfgaszxxcasdf423dfgh
 
 
 
-*~$End::
+Metkakey_EndExitapp:
 Exitapp
 Return
