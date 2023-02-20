@@ -4005,43 +4005,40 @@ IfWinActive, %gameexe1337%
 
 Loop
 {
-		GetKeyState, SSpaceStateAA, %key_animcancel%, P
-		If SSpaceStateAA = U
-			break
-	SendInput {vk1 Down}
-	Sleep 80
-	SendInput {vk1 up}
-	Sleep 100
-		GetKeyState, SSpaceStateAA, %key_animcancel%, P
-		If SSpaceStateAA = U
-			break
-	SendInput {vk1 Down}
-	Sleep 80
-	SendInput {vk1 up}
-	Sleep 100
-		GetKeyState, SSpaceStateAA, %key_animcancel%, P
-		If SSpaceStateAA = U
-			break
+	GetKeyState, SSpaceStateAA, %key_animcancel%, P
+	If SSpaceStateAA = U
+	break
+	SendInput {vk1}
+	Sleep 180
+	GetKeyState, SSpaceStateAA, %key_animcancel%, P
+	If SSpaceStateAA = U
+	break
+	SendInput {vk1}
+	Sleep 125
+	GetKeyState, SSpaceStateAA, %key_animcancel%, P
+	If SSpaceStateAA = U
+	break
 	SendInput {vk1 Down}
 	Sleep 300
 	SendInput {vk1 up}
-		GetKeyState, SSpaceStateAA, %key_animcancel%, P
-		If SSpaceStateAA = U
-			break
+	GetKeyState, SSpaceStateAA, %key_animcancel%, P
+	If SSpaceStateAA = U
+	break
 	Sleep 50
 	SendInput {vkA0 Down}
 	Sleep 50
 	SendInput {vkA0 up}
 	SendInput {vk41}
-	Sleep 50
+	Sleep 100
 	SendInput {vk44}
-	Sleep 50
-		GetKeyState, SSpaceStateAA, %key_animcancel%, P
-		If SSpaceStateAA = U
-			break
+	Sleep 100
+	GetKeyState, SSpaceStateAA, %key_animcancel%, P
+	If SSpaceStateAA = U
+	break
 	SendInput {vk41}
-	Sleep 50
+	Sleep 100
 	SendInput {vk44}
+	Sleep 100
 }
 
 }
