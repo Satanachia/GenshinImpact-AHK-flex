@@ -21,7 +21,7 @@ Numpad 3 - Yoimiya N1RR стоять на месте(38 стрел)
 Numpad 4 - Ganyu Venti Yoimiya Gorou Amber Fischl Aloy Tartaglia *Diona *Sara
 Numpad 5 - MachineGun: Ganyu Venti Yoimiya Gorou Yelan
 Numpad 6 - Legit лучники если кикает с сервера
-Numpad 7 - Diluc DragonStrike(Ручной)
+Numpad 7 - Tighnari 3Hit
 Numpad 8 - Hu Tao N2CJ (slow)
 Numpad 9 - Hu Tao H1CJ
 NumpadAdd - Expeditions
@@ -160,11 +160,14 @@ https://pastebin.com/1frUjpa3
 
 
 Запланировано:
-shield strike
-https://www.youtube.com/watch?v=54G-7vVmwjs
-https://keqingmains.com/noelle/
-
  - Жду пачку пресетов решейда от чела в некст году
+
+
+
+Изменения: 18.03.2023
+ - Numpad 7 - Тигнари 3 hit
+ - Diluc DragonStrike переехал в Numpad 4 - Other macros (genConfig.ini) - 20
+ - Исправление оверлея
 
 Изменения: 04.11.2022
  - Убрать чек обновы
@@ -974,7 +977,7 @@ Gui, 99: Add, Text, % "vLabTextMyEdit3" " gLabelNumpad3" " x" round(A_ScreenWidt
 Gui, 99: Add, Text, % "vLabTextMyEdit4" " gLabelNumpad4" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (350 / 1440)) " +BackgroundTrans", Numpad 4 - Ganyu Venti Yoimiya Gorou Amber Fischl Aloy Tartaglia *Diona *Sara
 Gui, 99: Add, Text, % "vLabTextMyEdit5" " gLabelNumpad5" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (400 / 1440)) " +BackgroundTrans", Numpad 5 - MachineGun: Ganyu Venti Yoimiya Gorou Yelan
 Gui, 99: Add, Text, % "vLabTextMyEdit6" " gLabelNumpad6" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (450 / 1440)) " +BackgroundTrans", Numpad 6 - Legit лучники если кикает с сервера
-Gui, 99: Add, Text, % "vLabTextMyEdit7" " gLabelNumpad7" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (500 / 1440)) " +BackgroundTrans", Numpad 7 - Diluc DragonStrike(Ручной)
+Gui, 99: Add, Text, % "vLabTextMyEdit7" " gLabelNumpad7" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (500 / 1440)) " +BackgroundTrans", Numpad 7 - Tighnari 3Hit
 Gui, 99: Add, Text, % "vLabTextMyEdit8" " gLabelNumpad8" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (550 / 1440)) " +BackgroundTrans", Numpad 8 - Hu Tao N2CJ (slow)
 Gui, 99: Add, Text, % "vLabTextMyEdit9" " gLabelNumpad9" " x" round(A_ScreenWidth * (64 / 2560)) " y" round(A_ScreenHeight * (600 / 1440)) " +BackgroundTrans", Numpad 9 - Hu Tao H1CJ
 
@@ -1010,7 +1013,7 @@ Gui, 99: Add, Text, % "vLabTextMyEdit28" " x" round(A_ScreenWidth * (1400 / 2560
 Gui, 99: Add, Text, % "vLabTextMyEdit29" " x" round(A_ScreenWidth * (1400 / 2560)) " y" round(A_ScreenHeight * (550 / 1440)) " +BackgroundTrans", Left - Пролистать оверлей
 Gui, 99: Add, Text, % "vLabTextMyEdit30" " x" round(A_ScreenWidth * (1400 / 2560)) " y" round(A_ScreenHeight * (600 / 1440)) " +BackgroundTrans", Right - Пролистать оверлей
 Gui, 99: Add, Text, % "vLabTextMyEdit31" " x" round(A_ScreenWidth * (1400 / 2560)) " y" round(A_ScreenHeight * (650 / 1440)) " +BackgroundTrans", End - Завершить работу скрипта
-Gui, 99: Add, Text, % "vLabTextMyEdit32" " x" round(A_ScreenWidth * (1400 / 2560)) " y" round(A_ScreenHeight * (700 / 1440)) " +BackgroundTrans", Page Up - *Приостановить-Возобновить работу скрипта
+Gui, 99: Add, Text, % "vLabTextMyEdit32" " x" round(A_ScreenWidth * (1400 / 2560)) " y" round(A_ScreenHeight * (700 / 1440)) " +BackgroundTrans", Page Dn - *Приостановить-Возобновить работу скрипта
 Gui, 99: Add, Text, % "vLabTextMyEdit33" " x" round(A_ScreenWidth * (1400 / 2560)) " y" round(A_ScreenHeight * (750 / 1440)) " +BackgroundTrans", V - Macro Key
 
 Gui, 99: Font, % "s" round(A_ScreenWidth * (20 / 2560)) " q1 c0x400000 Bold Underline", Comic Sans MS
@@ -2445,7 +2448,7 @@ sleep 500
 ToolTip
 }
 Return
-;===============================драгонстрайк дилюк бейдоу
+;===============================драгонстрайк дилюк бейдоу удален. терь Numpad 7 - Тигнари 3 hit
 ; *~$Numpad7::
 LabelNumpad7:
 jopa1:=false
@@ -2475,7 +2478,7 @@ jopa24:=false
 jopa25:=false
 if showtooltipVvoba
 {
-ToolTip, Diluc+Beidou DragonStrike, 0, 0
+ToolTip, Tighnari 3Hit, 0, 0
 sleep 500
 ToolTip
 }
@@ -2826,12 +2829,12 @@ jopa24:=false
 jopa25:=false
 if showtooltipVvoba
 {
-ToolTip, Ganyu Hold (Test 1), 0, 0
+ToolTip, Ganyu Hold, 0, 0
 sleep 500
 ToolTip
 }
 Return
-;===============================Ганьюйка холды v2
+;===============================Hu Tao
 ; *~$!Numpad8::
 LabelANumpad8:
 jopa1:=false
@@ -3604,7 +3607,7 @@ Loop
 }
 
 
-if jopa7 							;_____________________________________дилюк бейдоу драгонстрайк
+if jopa7 							;______дилюк бейдоу драгонстрайк удален. Numpad 7 - Tighnari 3Hit
 {
 if FIXchat
 {
@@ -3618,37 +3621,66 @@ if FIXchat
 }
 IfWinActive, %gameexe1337%
 {
-		Click down
-		Click up
-	if ScRandomT
-	Random, SuperGlobalVarRan,1,15
-	Sleep 360 + SuperGlobalVarRan
-		SendInput {vkA0 down}  	;LShift vkA0
-		Sleep 1
-		SendInput {vkA0 up}  	;LShift vkA0
-		SendInput {vk20 down} 	;Space vk20
-		SendInput {vk20 up} 	;Space vk20
-		; Sleep 25
-		; Click				;авто
-
-
-
-
-		; sleep 1			;Старый драгонстрайк
-		; Click down
-		; Sleep 11
-		; Click up
-		; Sleep 335
-		; Send {LShift down}
-		; Sleep 20
-		; Send {LShift up}
-		; Send {Space down}
-		; Sleep 25
-		; Send {Space up}
-		; Sleep 25
-		; Click down
-		; Sleep 25
-		; Click up
+	TogglerTighnari = 1
+	SendInput {vk52}
+	Loop
+	{
+		if TogglerTighnari
+		{
+		; tooltip 1й удар
+			GetKeyState, SSpaceStateAA, %key_animcancel%, P
+			If SSpaceStateAA = U
+				{
+				TogglerTighnari = 1
+				break
+				}
+			loop 10 ; Sleep 500
+			{
+			if ScRandomT
+			Random, SuperGlobalVarRan,1,2
+			Sleep 50 + SuperGlobalVarRan
+			GetKeyState, SSpaceStateAA, %key_animcancel%, P
+			If SSpaceStateAA = U
+				{
+				TogglerTighnari = 1
+				break
+				}
+			}
+			TogglerTighnari = 0
+			SendInput, {vk1}
+		}
+		Else
+		{
+		; tooltip 2й удар
+			GetKeyState, SSpaceStateAA, %key_animcancel%, P
+			If SSpaceStateAA = U
+				{
+				TogglerTighnari = 1
+				break
+				}
+			loop 18 ; Sleep 900
+			{
+			if ScRandomT
+			Random, SuperGlobalVarRan,1,2
+			Sleep 50 + SuperGlobalVarRan
+			GetKeyState, SSpaceStateAA, %key_animcancel%, P
+			If SSpaceStateAA = U
+				{
+				TogglerTighnari = 1
+				break
+				}
+			}
+			SendInput, {vk1}
+		}
+		GetKeyState, SSpaceStateAA, %key_animcancel%, P
+		If SSpaceStateAA = U
+			{
+			TogglerTighnari = 1
+			break
+			}
+	}
+	TogglerTighnari = 0
+	SendInput {vk52}
 }
 }
 
@@ -6033,7 +6065,32 @@ if OldMacroBackVar = 19 	;====Хутава е-шка драгонстрайк
 		; Click
 	}
 }
-
+if OldMacroBackVar = 20 	;====дилюк бейдоу драгонстрайк
+{
+	if FIXchat
+	{
+		StructSize1337 := A_PtrSize + 16
+		VarSetCapacity(InfoStruct1337, StructSize1337)
+		NumPut(StructSize1337, InfoStruct1337)
+		DllCall("GetCursorInfo", UInt, &InfoStruct1337)
+		Result1337 := NumGet(InfoStruct1337, 8)
+		if (Result1337 <> 0)
+			Return
+	}
+	IfWinActive, %gameexe1337%
+	{
+		Click down
+		Click up
+		if ScRandomT
+		Random, SuperGlobalVarRan,1,15
+		Sleep 360 + SuperGlobalVarRan
+		SendInput {vkA0 down}  	;LShift vkA0
+		Sleep 1
+		SendInput {vkA0 up}  	;LShift vkA0
+		SendInput {vk20 down} 	;Space vk20
+		SendInput {vk20 up} 	;Space vk20
+	}
+}
 
 
 
