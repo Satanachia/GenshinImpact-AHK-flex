@@ -33,7 +33,7 @@ Alt + Numpad 3 - Klee AutoAttack(Удерживать WASD + Macro Key)
 Alt + Numpad 4 - Other macros (genConfig.ini)
 Alt + Numpad 5 - Xiao SpamPlunge(13 прыжков)
 Alt + Numpad 6 - Xiao N1SpamPlunge(11 прыжков)
-Alt + Numpad 7 - Ganyu Hold (Test 1)
+Alt + Numpad 7 - Ganyu Hold
 Alt + Numpad 8 - Hu Tao (Test)
 Alt + Numpad 9 - Swimming (дабл клик вкл, сингл клик выкл)
 Alt + NumpadAdd - Mona-Ayaka infinite swimming (дабл клик вкл, сингл клик выкл)
@@ -161,8 +161,14 @@ https://pastebin.com/1frUjpa3
 
 Запланировано:
  - Жду пачку пресетов решейда от чела в некст году
+ - Бекфлип https://youtu.be/EqSJiplBgpM?t=229
 
 
+
+Изменения: 04.04.2023
+ - up. Alt + Numpad 7 - Ganyu Hold
+ - Рыбалка 4к. Увеличение зоны захвата
+ - Пищалка для свапа аккаунта
 
 Изменения: 18.03.2023
  - Numpad 7 - Тигнари 3 hit
@@ -278,10 +284,20 @@ CoordMode Pixel, Screen 	;искать пиксели от окна
 IniRead, Prozra4nostiFis, data\genConfig.ini, Settings, Prozra4nostiFis
 ; OttenokFis = 11 				;диапазон(0-256), 11 норм находит.
 IniRead, OttenokFis, data\genConfig.ini, Settings, OttenokFis
-X1Fis := round(A_ScreenWidth * .37109)
-Y1Fis := round(A_ScreenHeight * .0625)
-X2Fis := round(A_ScreenWidth * .63281)
-Y2Fis := round(A_ScreenHeight * .16805)
+; round(A_ScreenWidth * (900 / 2560))
+; round(A_ScreenHeight * (70 / 1440))
+; round(A_ScreenWidth * (1680 / 2560))
+; round(A_ScreenHeight * (300 / 1440))
+; X1Fis := round(A_ScreenWidth * .37109) 		; 1424,9856
+; Y1Fis := round(A_ScreenHeight * .0625) 		; 135
+; X2Fis := round(A_ScreenWidth * .63281) 		; 2429,9904
+; Y2Fis := round(A_ScreenHeight * .16805) 	; 362,988
+
+X1Fis := round(A_ScreenWidth * (900 / 2560))
+Y1Fis := round(A_ScreenHeight * (70 / 1440))
+X2Fis := round(A_ScreenWidth * (1680 / 2560))
+Y2Fis := round(A_ScreenHeight * (300 / 1440))
+
 ; OptimizationFis = 1 			;оптимизация рыбалки
 IniRead, OptimizationFis, data\genConfig.ini, Settings, OptimizationFis
 
@@ -1524,6 +1540,7 @@ InputBox, RegeditExport1,, Задать имя сохраненой ветки �
 	IniWrite, %RegeditExport1%, data\genConfig.ini, Settings, RegeditExport1
 	Gui, 1: Submit, NoHide
 	GuiControl,1:, VarRegeditExport1, %RegeditExport1%
+	SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
 	}
 return
 ;=============================Создать копию реестра, 2 слот
@@ -1546,6 +1563,7 @@ InputBox, RegeditExport2,, Задать имя сохраненой ветки �
 	IniWrite, %RegeditExport2%, data\genConfig.ini, Settings, RegeditExport2
 	Gui, 1: Submit, NoHide
 	GuiControl,1:, VarRegeditExport2, %RegeditExport2%
+	SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
 	}
 return
 ;=============================Создать копию реестра, 3 слот
@@ -1568,6 +1586,7 @@ InputBox, RegeditExport3,, Задать имя сохраненой ветки �
 	IniWrite, %RegeditExport3%, data\genConfig.ini, Settings, RegeditExport3
 	Gui, 1: Submit, NoHide
 	GuiControl,1:, VarRegeditExport3, %RegeditExport3%
+	SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
 	}
 return
 ;=============================Создать копию реестра, 4 слот
@@ -1590,6 +1609,7 @@ InputBox, RegeditExport4,, Задать имя сохраненой ветки �
 	IniWrite, %RegeditExport4%, data\genConfig.ini, Settings, RegeditExport4
 	Gui, 1: Submit, NoHide
 	GuiControl,1:, VarRegeditExport4, %RegeditExport4%
+	SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
 	}
 return
 ;=============================Создать копию реестра, 5 слот
@@ -1612,6 +1632,7 @@ InputBox, RegeditExport5,, Задать имя сохраненой ветки �
 	IniWrite, %RegeditExport5%, data\genConfig.ini, Settings, RegeditExport5
 	Gui, 1: Submit, NoHide
 	GuiControl,1:, VarRegeditExport5, %RegeditExport5%
+	SoundPlay, %A_ScriptDir%\data\zinecraft_pick_u.wav
 	}
 return
 
@@ -3999,23 +4020,65 @@ if FIXchat
 }
 IfWinActive, %gameexe1337%
 {
+	TogglerTighnari = 1
 	SendInput {vk52}
 	Loop
 	{
-		GetKeyState, SSpaceStateAA, %key_animcancel%, P
-		If SSpaceStateAA = U
-			break
-		loop 46 ; Sleep 2300
+		if TogglerTighnari
 		{
-	if ScRandomT
-	Random, SuperGlobalVarRan,1,2
-	Sleep 50 + SuperGlobalVarRan
+		; tooltip 1й удар
+			GetKeyState, SSpaceStateAA, %key_animcancel%, P
+			If SSpaceStateAA = U
+				{
+				TogglerTighnari = 1
+				break
+				}
+			loop 35 ; Sleep 500
+			{
+				if ScRandomT
+				Random, SuperGlobalVarRan,1,2
+				Sleep 50 + SuperGlobalVarRan
+				GetKeyState, SSpaceStateAA, %key_animcancel%, P
+				If SSpaceStateAA = U
+				{
+					TogglerTighnari = 1
+					break
+				}
+			}
+			TogglerTighnari = 0
+			SendInput, {vk1}
+		}
+		Else
+		{
+		; tooltip 2й удар
+			GetKeyState, SSpaceStateAA, %key_animcancel%, P
+			If SSpaceStateAA = U
+			{
+				TogglerTighnari = 1
+				break
+			}
+			loop 46 ; Sleep 900
+			{
+				if ScRandomT
+				Random, SuperGlobalVarRan,1,2
+				Sleep 50 + SuperGlobalVarRan
+				GetKeyState, SSpaceStateAA, %key_animcancel%, P
+				If SSpaceStateAA = U
+				{
+					TogglerTighnari = 1
+					break
+				}
+			}
+			SendInput, {vk1}
+		}
 		GetKeyState, SSpaceStateAA, %key_animcancel%, P
 		If SSpaceStateAA = U
+		{
+			TogglerTighnari = 1
 			break
 		}
-		SendInput, {Blind}{vk1}
 	}
+	TogglerTighnari = 0
 	SendInput {vk52}
 }
 }
@@ -7039,11 +7102,25 @@ Pereklu4atelFis = 1
 while Pereklu4atelFis
 {
 sleep %OptimizationFis%
-ImageSearch, FoundXFis, FoundYFis, X1Fis, Y1Fis, X2Fis, Y2Fis, *%OttenokFis%, *%Prozra4nostiFis% data\find.png
+if (A_ScreenWidth > 2560)
+{
+	ImageSearch, FoundXFis, FoundYFis, X1Fis, Y1Fis, X2Fis, Y2Fis, *%OttenokFis%, *%Prozra4nostiFis% data\4kfind.png
+}
+Else
+{
+	ImageSearch, FoundXFis, FoundYFis, X1Fis, Y1Fis, X2Fis, Y2Fis, *%OttenokFis%, *%Prozra4nostiFis% data\find.png
+}
 if ErrorLevel = 0
 	{
 		SendInput {vk1 Up} 	;LButton vk1
-		ImageSearch, FoundX2Fis, FoundY2Fis, X1Fis, Y1Fis, X2Fis, Y2Fis, *%OttenokFis%, *%Prozra4nostiFis% data\find2.png
+		if (A_ScreenWidth > 2560)
+		{
+			ImageSearch, FoundX2Fis, FoundY2Fis, X1Fis, Y1Fis, X2Fis, Y2Fis, *%OttenokFis%, *%Prozra4nostiFis% data\4kfind2.png
+		}
+		Else
+		{
+			ImageSearch, FoundX2Fis, FoundY2Fis, X1Fis, Y1Fis, X2Fis, Y2Fis, *%OttenokFis%, *%Prozra4nostiFis% data\find2.png
+		}
 		if ErrorLevel = 0
 			{
 				if (A_ScreenWidth > 1920)
