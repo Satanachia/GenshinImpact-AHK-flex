@@ -220,8 +220,13 @@ Insert - Включить/отключить ReShade
 <details>
 <summary>==Список изменений==</summary>
 
-Изменения: 18.03.2023
+Изменения: 04.04.2023
 
+ - up. Alt + Numpad 7 - Ganyu Hold
+ - Рыбалка 4к. Увеличение зоны захвата
+ - Пищалка для свапа аккаунта
+
+Изменения: 18.03.2023
  - Numpad 7 - Тигнари 3 hit
  - Diluc DragonStrike переехал в Numpad 4 - Other macros (genConfig.ini) - 20
  - Исправление оверлея
