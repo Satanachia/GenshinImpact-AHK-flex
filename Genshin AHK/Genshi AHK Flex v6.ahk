@@ -6162,6 +6162,10 @@ if OldMacroBackVar = 21 	;====Ganyu more
 	}
 	IfWinActive, %gameexe1337%
 	{
+		SendInput {vk1 up}
+		sleep 225
+		SendInput {vk1 down}
+	
 		startvar1 := A_Tickcount + 1775 ; set variable to be tickcount + delay
 		while(GetKeyState(key_animcancel,"P")) ; hotkey
 		{
@@ -6173,6 +6177,7 @@ if OldMacroBackVar = 21 	;====Ganyu more
 				startvar1 := A_Tickcount + 1775 ;reset the delay
 			}
 		}
+		SendInput {vk1}
 	}
 }
 
